@@ -1,4 +1,4 @@
-NAME	=		pipex
+NAME	=		minishell
 
 SRCS	=		pipex.c parse_envp.c
 
@@ -6,7 +6,7 @@ FLAGS	=		-Wall -Werror -Wextra
 
 LIBFT	=		libft/libft.a
 
-HEADER	=		pipex.h
+HEADER	=		minishell.h
 
 all: $(NAME)
 
