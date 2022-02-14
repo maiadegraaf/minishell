@@ -1,31 +1,34 @@
-NAME	=		pipex
+NAME	=	minishell
 
-SRCS	=		srcs/pipex.c
-				srcs/parse_envp.c
-				srcs/main.c
+SRCS	=	./srcs/main.c \
+			./srcs/parse_envp.c \
+			# ./srcs/pipex/pipex.c \
 
-FLAGS	=		-Wall -Werror -Wextra
+OBJS	=	${SRCS:%.c=%.o}
 
-LIBFT	=		libft/libft.a
+FLAGS	=	-Wall -Werror -Wextra
 
-HEADER	=		includes/minishell.h
+LIBFT	=	./libraries/libft/libft.a
+
+HEADER	=	./includes/minishell.h
 
 all: $(NAME)
 
 %.o: %.c $(HEADER)
 	@echo "Compiling ${notdir $<}"
-	@$(CC) -c $(CFLAGS) -I includes -o $@ $<
+	@$(CC) -c $(FLAGS) -I includes -o $@ $<
 
 $(NAME): $(LIBFT) $(OBJS) $(HEADER)
-	@$(CC) $(LIBFT) $(OBJS) -o $(NAME)
+	@$(CC) $(FLAGS) $(LIBFT) $(OBJS) -lreadline -o $(NAME)
 	@echo "Success"
 
 $(LIBFT):
-	$(MAKE) -C libft
+	$(MAKE) -C ./libraries/libft
 
 clean:
 	@echo "Cleaning"
 	@rm -f $(OBJS)
+	@make fclean -C libraries/libft
 
 fclean: clean
 	@rm -f $(NAME)
