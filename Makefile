@@ -1,26 +1,34 @@
 NAME	=		pipex
 
-SRCS	=		pipex.c parse_envp.c
+SRCS	=		srcs/pipex.c
+				srcs/parse_envp.c
+				srcs/main.c
 
 FLAGS	=		-Wall -Werror -Wextra
 
 LIBFT	=		libft/libft.a
 
-HEADER	=		pipex.h
+HEADER	=		includes/minishell.h
 
 all: $(NAME)
 
-$(NAME): $(LIBFT) $(SRCS) $(HEADER)
-	$(CC) $(LIBFT) $(SRCS) -o $(NAME)
+%.o: %.c $(HEADER)
+	@echo "Compiling ${notdir $<}"
+	@$(CC) -c $(CFLAGS) -I includes -o $@ $<
+
+$(NAME): $(LIBFT) $(OBJS) $(HEADER)
+	@$(CC) $(LIBFT) $(OBJS) -o $(NAME)
+	@echo "Success"
 
 $(LIBFT):
 	$(MAKE) -C libft
 
 clean:
-	make fclean -C libft
+	@echo "Cleaning"
+	@rm -f $(OBJS)
 
 fclean: clean
-	rm -f $(LIBFT)
-	rm -f $(NAME)
+	@rm -f $(NAME)
+	@rm -f $(LIBFT)
 
 re: fclean all
