@@ -6,11 +6,11 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/17 16:16:57 by mgraaf        #+#    #+#                 */
-/*   Updated: 2021/12/17 16:17:02 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/02/14 17:48:27 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "minishell.h"
 
 char	*find_path(char **envp)
 {
@@ -27,7 +27,7 @@ char	*find_path(char **envp)
 	return (path_from_envp);
 }
 
-char	**parse_envp(char **argv, char **envp)
+char	**parse_envp(char **envp)
 {
 	char	*path_from_envp;
 	char	**mypaths;

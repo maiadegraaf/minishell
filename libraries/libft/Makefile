@@ -73,19 +73,21 @@ endif
 all: libft.a
 
 %.o: %.c $(HEADERFILES)
-	$(CC) -c $(CFLAGS) -o $@ $<
+	@echo "Compiling ${notdir $<}"
+	@$(CC) -c $(CFLAGS) -o $@ $<
 
 $(NAME): $(ALL_OBJS)
-	ar -ru $(NAME) $^
+	@ar -ru $(NAME) $^
+	@echo "Libft succesfully created"
 
 bonus: 
-	$(MAKE) WITH_BONUS=1
+	@$(MAKE) WITH_BONUS=1
 
 clean:
-	rm -f $(OBJFILES) $(BONUS_OBJFILES)
+	@rm -f $(OBJFILES) $(BONUS_OBJFILES)
 
 fclean: clean
-	rm -f $(NAME) $^
+	@rm -f $(NAME) $^
 
 re: fclean all
 

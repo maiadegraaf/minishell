@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/16 14:58:07 by mgraaf        #+#    #+#                 */
-/*   Updated: 2021/12/23 15:26:26 by maiadegraaf   ########   odam.nl         */
+/*   Updated: 2022/02/14 14:20:37 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,26 +84,26 @@ void	pipex(t_pipex *info)
 	waitpid(child2, &status, 0);
 }
 
-int	main(int argc, char **argv, char **envp)
-{
-	t_pipex	info;
+// int	main(int argc, char **argv, char **envp)
+// {
+// 	t_pipex	info;
 
-	if (argc != 5)
-	{
-		perror("Invalid number of arguments");
-		exit(EXIT_FAILURE);
-	}
-	info.f1 = open(argv[1], O_RDONLY);
-	info.f2 = open(argv[4], O_CREAT | O_RDWR | O_TRUNC, 0644);
-	if (info.f1 < 0 || info.f2 < 0)
-	{
-		perror("Open ");
-		exit(EXIT_FAILURE);
-	}
-	info.envp = envp;
-	info.cmds1 = ft_split(argv[2], ' ');
-	info.cmds2 = ft_split(argv[3], ' ');
-	info.paths = parse_envp(argv, envp);
-	pipex(&info);
-	return (0);
-}
+// 	if (argc != 5)
+// 	{
+// 		perror("Invalid number of arguments");
+// 		exit(EXIT_FAILURE);
+// 	}
+// 	info.f1 = open(argv[1], O_RDONLY);
+// 	info.f2 = open(argv[4], O_CREAT | O_RDWR | O_TRUNC, 0644);
+// 	if (info.f1 < 0 || info.f2 < 0)
+// 	{
+// 		perror("Open ");
+// 		exit(EXIT_FAILURE);
+// 	}
+// 	info.envp = envp;
+// 	info.cmds1 = ft_split(argv[2], ' ');
+// 	info.cmds2 = ft_split(argv[3], ' ');
+// 	info.paths = parse_envp(argv, envp);
+// 	pipex(&info);
+// 	return (0);
+// }
