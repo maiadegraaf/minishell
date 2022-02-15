@@ -1,32 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   pipex.h                                            :+:    :+:            */
+/*   mini_cd.c                                          :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2021/12/17 10:59:55 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/02/15 17:07:32 by mgraaf        ########   odam.nl         */
+/*   Created: 2022/02/15 15:17:04 by mgraaf        #+#    #+#                 */
+/*   Updated: 2022/02/15 18:03:56 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
-# include "../../libraries/libft/libft.h"
-# include <fcntl.h>
-# include <unistd.h>
-# include <stdio.h>
+#include "builtins.h"
 
-typedef struct s_pipex
+int	mini_cd(t_tools *tools)
 {
-	char	**paths;
-	int		f1;
-	int		f2;
-	char	**envp;
-	char	**cmds1;
-	char	**cmds2;
-}	t_pipex;
-
-//char	**parse_envp(char **envp);
-
-#endif
+	chdir(tools->args[1]);
+	change_path(tools);
+	return (0);
+}

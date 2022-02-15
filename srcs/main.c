@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/14 12:04:02 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/02/14 18:10:58 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/02/15 17:30:17 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	main(int argc, char **argv, char **envp)
 		exit(0);
 	}
 	tools.envp = envp;
-	tools.paths = parse_envp(envp);
+	parse_envp(&tools);
 	while (1)
 	{
 		line = readline(">> ");
