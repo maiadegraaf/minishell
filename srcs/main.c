@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/14 12:04:02 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/02/15 17:30:17 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/02/17 10:23:49 by maiadegraaf   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	find_cmd(t_tools *tools)
 	while ((tools->paths)[i])
 	{
 		mycmd = ft_strjoin((tools->paths)[i], (tools->args)[0]);
-		if (!access(mycmd, F_OK && X_OK))
+		if (!access(mycmd, F_OK))
 			execve(mycmd, tools->args, tools->envp);
 		free(mycmd);
 		i++;
@@ -47,8 +47,7 @@ int	main(int argc, char **argv, char **envp)
 	{
 		line = readline(">> ");
 		add_history(line);
-		if (!ft_strncmp(line, "exit", ft_strlen(line)))
-			exit (0);
+		if (builtins_arr)
 		tools.args = ft_split(line, ' ');
 		process = fork();
 		if (process == 0)

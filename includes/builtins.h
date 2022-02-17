@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/15 15:20:00 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/02/15 18:02:46 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/02/17 10:23:37 by maiadegraaf   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 //builtins
 void	change_path(t_tools *tools);
-void	*init_builtin_arr(char *str);
+void	*builtin_arr(char *str);
 
 int		mini_echo(t_tools *tools);
 
