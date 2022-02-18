@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/17 16:16:57 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/02/15 16:19:13 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/02/17 12:19:04 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	find_pwd(t_tools *tools)
 			tools->pwd = ft_substr(tools->envp[i],
 					4, ft_strlen(tools->envp[i]) - 4);
 		if (!ft_strncmp(tools->envp[i], "OLDPWD=", 7))
-			tools->pwd = ft_substr(tools->envp[i],
+			tools->old_pwd = ft_substr(tools->envp[i],
 					7, ft_strlen(tools->envp[i]) - 7);
 		i++;
 	}

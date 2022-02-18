@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/14 13:46:41 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/02/15 17:42:00 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/02/17 18:12:59 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,22 +19,18 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../srcs/pipex/pipex.h"
-//# include "builtins.h"
-
-typedef struct s_tools
-{
-	char	**args;
-	char	**paths;
-	char	**envp;
-	int		in;
-	int		out;
-	int		err;
-	char	*pwd;
-	char	*old_pwd;
-
-}	t_tools;
+# include "parser.h"
+# include "lexor.h"
+# include "utils.h"
+# include "builtins.h"
 
 int		parse_envp(t_tools *tools);
 int		find_pwd(t_tools *tools);
+
+//builtins
+int	(*builtin_arr(char *str))(t_tools *tools);
+
+int	token_reader(t_tools *tools);
+
 
 #endif

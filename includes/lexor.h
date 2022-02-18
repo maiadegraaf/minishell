@@ -1,35 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   builtins.h                                         :+:    :+:            */
+/*   lexor.h                                            :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/02/15 15:20:00 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/02/17 11:25:57 by mgraaf        ########   odam.nl         */
+/*   Created: 2022/02/17 17:55:06 by mgraaf        #+#    #+#                 */
+/*   Updated: 2022/02/18 10:42:48 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILTINS_H
-# define BUILTINS_H
-# include <dirent.h>
+#ifndef LEXOR_H
+# define LEXOR_H
 # include "minishell.h"
 
-//builtins
-void	change_path(t_tools *tools);
+// typedef struct s_lexor
+// {
+// 	char			*str;
+// 	t_tokens		token;
+// 	struct s_lexor	*next;
+// }	t_lexor;
 
-int		mini_echo(t_tools *tools);
+//handle_tokens
 
-int		mini_cd(t_tools *tools);
-
-int		mini_pwd(t_tools *tools);
-
-int		mini_export(t_tools *tools);
-
-int		mini_unset(t_tools *tools);
-
-int		mini_env(t_tools *tools);
-
-int		mini_exit(t_tools *tools);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/15 11:42:32 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/02/17 10:23:26 by maiadegraaf   ########   odam.nl         */
+/*   Updated: 2022/02/17 14:13:18 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 void	change_path(t_tools *tools)
 {
 	tools->old_pwd = tools->pwd;
-	tools->pwd = getcwd(NULL, 200);
+	tools->pwd = getcwd(NULL, sizeof(NULL));
 }
 
-void	*builtin_arr(char *str)
+int	(*builtin_arr(char *str))(t_tools *tools)
 {
 	static void	*builtins[7][2] = {
 	{"echo", mini_echo},
@@ -34,7 +34,7 @@ void	*builtin_arr(char *str)
 	i = 0;
 	while (i < 7)
 	{
-		if (ft_strncmp(builtins[i][0], str, strlen(builtins[i][0])))
+		if (!ft_strncmp(builtins[i][0], str, strlen(builtins[i][0])))
 			return (builtins[i][1]);
 		i++;
 	}
