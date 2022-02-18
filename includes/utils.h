@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 15:36:23 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/02/18 10:56:44 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/02/18 14:18:33 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void			ft_lexorclear(t_lexor **lst);
 t_lexor			*ft_lexorlast(t_lexor *map);
 
 //
+t_lexor	*token_reader(t_tools *tools);
 int				add_node(char *str, t_tokens token, t_lexor **lexor_list);
 t_tokens		check_token(int c);
 int				handle_token(char *str, int i, t_lexor **lexor_list);

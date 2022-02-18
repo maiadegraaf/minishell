@@ -6,8 +6,13 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 15:28:22 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/02/17 17:11:13 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/02/18 14:24:41 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	parser(t_lexor *lexer)
+{
+	
+}
