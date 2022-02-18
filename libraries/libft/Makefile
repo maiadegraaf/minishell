@@ -62,7 +62,7 @@ BONUS_OBJFILES = ${BONUS_SRCFILES:%.c=%.o}
 
 HEADERFILES := libft.h
 
-CFLAGS	= -Wall -Wextra -Werror
+CFLAGS	= -Wall -Wextra -Werror -g
 
 ifdef WITH_BONUS
 ALL_OBJS = $(OBJFILES) $(BONUS_OBJFILES)

@@ -2,15 +2,33 @@ NAME	=	minishell
 
 SRCS	=	./srcs/main.c \
 			./srcs/parse_envp.c \
-			# ./srcs/pipex/pipex.c \
+			./srcs/utils/t_simple_cmds_utils.c \
+			./srcs/utils/t_lexor_utils.c \
+			./srcs/lexor/token_reader.c \
+			./srcs/lexor/handle_token.c \
+			# ./srcs/builtins/mini_cd.c \
+			./srcs/builtins/builtins.c \
+			# ./srcs/builtins/mini_echo.c \
+			# ./srcs/builtins/mini_exit.c \
+			# ./srcs/builtins/mini_export.c \
+			# ./srcs/builtins/mini_pwd.c \
+			# ./srcs/builtins/mini_unset.c \
+			# ./srcs/builtins/mini_env.c \
+			# ./srcs/parser/parse_args.c \
+			# ./srcs/pipex/pipex.c
+			
 
 OBJS	=	${SRCS:%.c=%.o}
 
-FLAGS	=	-Wall -Werror -Wextra
+FLAGS	=	-Wall -Werror -Wextra -g
 
 LIBFT	=	./libraries/libft/libft.a
 
-HEADER	=	./includes/minishell.h
+HEADER	=	./includes/minishell.h \
+			./includes/lexor.h \
+			./includes/builtins.h \
+			./includes/utils.h \
+			./includes/parser.h
 
 all: $(NAME)
 

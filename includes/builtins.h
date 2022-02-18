@@ -1,32 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   pipex.h                                            :+:    :+:            */
+/*   builtins.h                                         :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2021/12/17 10:59:55 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/02/15 17:07:32 by mgraaf        ########   odam.nl         */
+/*   Created: 2022/02/15 15:20:00 by mgraaf        #+#    #+#                 */
+/*   Updated: 2022/02/17 11:25:57 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
-# include "../../libraries/libft/libft.h"
-# include <fcntl.h>
-# include <unistd.h>
-# include <stdio.h>
+#ifndef BUILTINS_H
+# define BUILTINS_H
+# include <dirent.h>
+# include "minishell.h"
 
-typedef struct s_pipex
-{
-	char	**paths;
-	int		f1;
-	int		f2;
-	char	**envp;
-	char	**cmds1;
-	char	**cmds2;
-}	t_pipex;
+//builtins
+void	change_path(t_tools *tools);
 
-//char	**parse_envp(char **envp);
+int		mini_echo(t_tools *tools);
+
+int		mini_cd(t_tools *tools);
+
+int		mini_pwd(t_tools *tools);
+
+int		mini_export(t_tools *tools);
+
+int		mini_unset(t_tools *tools);
+
+int		mini_env(t_tools *tools);
+
+int		mini_exit(t_tools *tools);
 
 #endif
