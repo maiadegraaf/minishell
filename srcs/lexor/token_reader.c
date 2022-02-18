@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 17:11:20 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/02/18 11:05:42 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/02/18 11:34:49 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,14 @@ int	handle_quotes(int i, char *str, char del, t_lexor **lexor_list)
 	int	j;
 
 	j = 0;
-	if (str[i + j] == del || del == ' ')
+	if (str[i + j] == del)
 	{
 		j++;
 		while (str[i + j] != del && str[i + j])
 			j++;
-		if (!add_node(ft_substr(str, i, j - 1), 0, lexor_list))
+		if (!add_node(ft_substr(str, i, j + 1), 0, lexor_list))
 			printf("EMERGENCY!\n");
+		j++;
 	}
 	return (j);
 }
@@ -57,7 +58,8 @@ int	read_words(int i, char *str, t_lexor **lexor_list)
 	int	j;
 
 	j = 0;
-	while (str[i + j] != ' ' && str[i + j] && !check_token(str[i + j]))
+	while (str[i + j] != ' ' && str[i + j]
+		&& !(check_token(str[i + j]) && str[i + j] == 34 && str[i + j] == 39))
 		j++;
 	if (!add_node(ft_substr(str, i, j), 0, lexor_list))
 		printf("EMERGENCY!\n");
@@ -73,6 +75,7 @@ int	token_reader(t_tools *tools)
 	lexor_list = NULL;
 	while (tools->args[i])
 	{
+		i += skip_spaces(tools->args, i);
 		if (tools->args[i] == 34)
 			i += handle_quotes(i, tools->args, 34, &lexor_list);
 		else if (tools->args[i] == 39)
@@ -81,7 +84,6 @@ int	token_reader(t_tools *tools)
 			i += handle_token(tools->args, i, &lexor_list);
 		else
 			i += read_words(i, tools->args, &lexor_list);
-		i += skip_spaces(tools->args, i);
 	}
 	while (lexor_list)
 	{
