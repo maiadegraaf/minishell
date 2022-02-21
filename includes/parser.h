@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 17:59:38 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/02/21 13:53:33 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/02/21 17:02:46 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ typedef struct s_simple_cmds
 {
 	char					**str;
 	int						(*builtin)(t_tools *);
+	int						num_redirections;
+	t_lexor					*redirections;
 	struct s_simple_cmds	*next;
 }	t_simple_cmds;
 

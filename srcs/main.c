@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/14 12:04:02 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/02/21 13:51:50 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/02/21 17:28:38 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	main(int argc, char **argv, char **envp)
 	parse_envp(&tools);
 	while (1)
 	{
-		line = readline("minishell>> ");
+		line = readline("minishell$ ");
 		add_history(line);
 		while (count_quotes(line) % 2 != 0)
 			line = ft_strjoin(line, readline("> "));

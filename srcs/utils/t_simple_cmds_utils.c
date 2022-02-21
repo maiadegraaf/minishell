@@ -6,13 +6,14 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 15:31:53 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/02/21 13:43:59 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/02/21 17:11:19 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
 
-t_simple_cmds	*ft_simple_cmdsnew(char **str, int (*builtin)(t_tools *))
+t_simple_cmds	*ft_simple_cmdsnew(char **str, int (*builtin)(t_tools *),
+	int num_redirections, t_lexor *redirections)
 {
 	t_simple_cmds	*new_element;
 
@@ -21,6 +22,8 @@ t_simple_cmds	*ft_simple_cmdsnew(char **str, int (*builtin)(t_tools *))
 		return (0);
 	new_element->str = str;
 	new_element->builtin = builtin;
+	new_element->num_redirections = num_redirections;
+	new_element->redirections = redirections;
 	new_element->next = NULL;
 	return (new_element);
 }
