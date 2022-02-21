@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/15 15:17:04 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/02/17 12:48:37 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/02/21 13:46:52 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	mini_cd(t_tools *tools)
 {
-	if (chdir(tools->args[1]))
+	if (chdir(&tools->args[1]))
 		perror("cd");
 	change_path(tools);
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 17:11:20 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/02/21 11:46:33 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/02/21 14:56:30 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ int	read_words(int i, char *str, t_lexor **lexor_list)
 
 	j = 0;
 	while (str[i + j] != ' ' && str[i + j]
-		&& !(check_token(str[i + j]) && str[i + j] == 34 && str[i + j] == 39))
+		&& !(check_token(str[i + j]))
+		&& !(str[i + j] == 34 && str[i + j] == 39))
 		j++;
 	if (!add_node(ft_substr(str, i, j), 0, lexor_list))
 		printf("EMERGENCY!\n");

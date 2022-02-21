@@ -6,13 +6,13 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 15:31:53 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/02/17 18:03:31 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/02/21 13:43:59 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
 
-t_simple_cmds	*ft_simple_cmdsnew(char *str, int token, int (*f)(t_tools *))
+t_simple_cmds	*ft_simple_cmdsnew(char **str, int (*builtin)(t_tools *))
 {
 	t_simple_cmds	*new_element;
 
@@ -20,8 +20,7 @@ t_simple_cmds	*ft_simple_cmdsnew(char *str, int token, int (*f)(t_tools *))
 	if (!new_element)
 		return (0);
 	new_element->str = str;
-	new_element->token = token;
-	new_element->f = f;
+	new_element->builtin = builtin;
 	new_element->next = NULL;
 	return (new_element);
 }
@@ -49,13 +48,13 @@ void	ft_simple_cmdsdelone(t_simple_cmds **lst, char key)
 
 	start = *lst;
 	node = start;
-	if ((*lst)->str[1] == key)
+	if ((*lst)->str[1][1] == key)
 	{
 		*lst = node->next;
 		free(node);
 		return ;
 	}
-	while (node && node->str[1] != key)
+	while (node && node->str[1][1] != key)
 	{
 		prev = node;
 		node = node->next;

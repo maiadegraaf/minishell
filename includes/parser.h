@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 17:59:38 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/02/21 09:59:29 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/02/21 13:53:33 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,13 @@ typedef enum s_tokens
 	PS2,
 }	t_tokens;
 
+typedef struct s_lexor
+{
+	char			*str;
+	t_tokens		token;
+	struct s_lexor	*next;
+}	t_lexor;
+
 typedef struct s_tools
 {
 	char	*args;
@@ -40,13 +47,13 @@ typedef struct s_tools
 
 typedef struct s_simple_cmds
 {
-	char					*str;
-	int						token;
-	int						(*f)(t_tools *);
+	char					**str;
+	int						(*builtin)(t_tools *);
 	struct s_simple_cmds	*next;
 }	t_simple_cmds;
 
 int		parse_envp(t_tools *tools);
 int		find_pwd(t_tools *tools);
+void	parser(t_lexor *lexor_list);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/14 13:46:41 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/02/21 11:47:30 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/02/21 13:52:10 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@
 # include <readline/history.h>
 # include "../srcs/pipex/pipex.h"
 # include "parser.h"
-# include "lexor.h"
 # include "utils.h"
+# include "lexor.h"
 # include "builtins.h"
 
 int		parse_envp(t_tools *tools);

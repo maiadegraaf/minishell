@@ -7,14 +7,15 @@ SRCS	=	./srcs/main.c \
 			./srcs/utils/utils.c \
 			./srcs/lexor/token_reader.c \
 			./srcs/lexor/handle_token.c \
-			# ./srcs/builtins/mini_cd.c \
+			./srcs/parser/parser.c \
 			./srcs/builtins/builtins.c \
-			# ./srcs/builtins/mini_echo.c \
-			# ./srcs/builtins/mini_exit.c \
-			# ./srcs/builtins/mini_export.c \
-			# ./srcs/builtins/mini_pwd.c \
-			# ./srcs/builtins/mini_unset.c \
-			# ./srcs/builtins/mini_env.c \
+			./srcs/builtins/mini_cd.c \
+			./srcs/builtins/mini_echo.c \
+			./srcs/builtins/mini_exit.c \
+			./srcs/builtins/mini_export.c \
+			./srcs/builtins/mini_pwd.c \
+			./srcs/builtins/mini_unset.c \
+			./srcs/builtins/mini_env.c \
 			# ./srcs/parser/parse_args.c \
 			# ./srcs/pipex/pipex.c
 			
