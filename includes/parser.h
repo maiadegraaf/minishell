@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 17:59:38 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/02/18 11:00:17 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/02/21 09:59:29 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ typedef enum s_tokens
 	GREAT_GREAT,
 	LESS,
 	LESS_LESS,
+	PS2,
 }	t_tokens;
 
 typedef struct s_tools

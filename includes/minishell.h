@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/14 13:46:41 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/02/17 18:12:59 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/02/21 11:17:54 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,9 @@
 
 int		parse_envp(t_tools *tools);
 int		find_pwd(t_tools *tools);
+int		count_quotes(char *line);
 
 //builtins
 int	(*builtin_arr(char *str))(t_tools *tools);
-
-int	token_reader(t_tools *tools);
-
 
 #endif

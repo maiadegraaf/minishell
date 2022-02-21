@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 17:11:20 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/02/18 11:05:42 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/02/21 11:07:23 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,10 @@ int	handle_quotes(int i, char *str, char del, t_lexor **lexor_list)
 		j++;
 		while (str[i + j] != del && str[i + j])
 			j++;
-		if (!add_node(ft_substr(str, i, j - 1), 0, lexor_list))
+		if (!add_node(ft_substr(str, i, j + 1), 0, lexor_list))
 			printf("EMERGENCY!\n");
 	}
-	return (j);
+	return (j + 1);
 }
 
 int	read_words(int i, char *str, t_lexor **lexor_list)
@@ -64,7 +64,7 @@ int	read_words(int i, char *str, t_lexor **lexor_list)
 	return (j);
 }
 
-int	token_reader(t_tools *tools)
+t_lexor	*token_reader(t_tools *tools)
 {
 	int		i;
 	t_lexor	*lexor_list;
@@ -83,10 +83,5 @@ int	token_reader(t_tools *tools)
 			i += read_words(i, tools->args, &lexor_list);
 		i += skip_spaces(tools->args, i);
 	}
-	while (lexor_list)
-	{
-		printf("str = %s \t token = %d\n", lexor_list->str, lexor_list->token);
-		lexor_list = lexor_list->next;
-	}
-	return (0);
+	return (lexor_list);
 }

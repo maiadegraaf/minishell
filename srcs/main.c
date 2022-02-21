@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/14 12:04:02 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/02/17 18:00:06 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/02/21 11:44:14 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int	main(int argc, char **argv, char **envp)
 {
 	char	*line;
 	t_tools	tools;
+	t_lexor	*lexor_list = NULL;
 	// int		(*f)(t_tools *);
 	// pid_t	process;
 	// int		status;
@@ -46,19 +47,18 @@ int	main(int argc, char **argv, char **envp)
 	parse_envp(&tools);
 	while (1)
 	{
-		line = readline(">> ");
+		line = readline("minishell>> ");
 		add_history(line);
+		while (count_quotes(line) % 2 != 0)
+			line = ft_strjoin(line, readline("> "));
 		tools.args = line;
-		token_reader(&tools);
-		// f = builtin_arr(tools.args[0]);
-		// if (!f(&tools))
-		// {	
-		// 	printf("HELLO\n");
-		// 	process = fork();
-		// 	if (process == 0)
-		// 		find_cmd(&tools);
-		// 	waitpid(process, &status, 0);
-		// }
+		lexor_list = token_reader(&tools);
+		// parser(lexor_list)
+		while (lexor_list)
+		{
+			printf("str = %s \t token = %d\n", lexor_list->str, lexor_list->token);
+			lexor_list = lexor_list->next;
+		}
 		free(line);
 	}
 	return (0);
