@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/18 10:27:43 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/02/18 11:00:39 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/02/21 10:06:44 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,17 @@
 
 t_tokens	check_token(int c)
 {
-	static int	token_arr[4][2] = {
+	static int	token_arr[5][2] = {
 	{'|', PIPE},
 	{'\n', NEW_LINE},
 	{'>', GREAT},
 	{'<', LESS},
+	{92, PS2},
 	};
 	int			i;
 
 	i = 0;
-	while (i < 4)
+	while (i < 5)
 	{
 		if (token_arr[i][0] == c)
 			return (token_arr[i][1]);

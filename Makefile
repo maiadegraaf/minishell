@@ -4,6 +4,7 @@ SRCS	=	./srcs/main.c \
 			./srcs/parse_envp.c \
 			./srcs/utils/t_simple_cmds_utils.c \
 			./srcs/utils/t_lexor_utils.c \
+			./srcs/utils/utils.c \
 			./srcs/lexor/token_reader.c \
 			./srcs/lexor/handle_token.c \
 			# ./srcs/builtins/mini_cd.c \
