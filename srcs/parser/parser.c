@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 15:28:22 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/02/22 16:08:52 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/02/22 16:17:36 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,7 @@ int	add_redirection(t_lexor **redirections, t_lexor **lexor_list, int *num_redir
 {
 	t_lexor	*node;
 
-	if (!*lexor_list || ((*lexor_list)->token != LESS
-			&& (*lexor_list)->token != GREAT))
+	if (!*lexor_list || !(*lexor_list)->token || (*lexor_list)->token == PS2)
 		return (0);
 	node = ft_lexornew(ft_strdup((*lexor_list)->next->str),
 			(*lexor_list)->token);
@@ -62,15 +61,11 @@ t_simple_cmds	*initialize_cmd(t_lexor *lexor_list, int arg_size)
 	{
 		if (add_redirection(&redirections, &lexor_list, &num_redirections))
 			arg_size--;
-		else
-		{
-			str[i] = ft_strdup(lexor_list->str);
-			i++;
-		}
+		else if (lexor_list->token != PS2)
+			str[i++] = ft_strdup(lexor_list->str);
 		lexor_list = lexor_list->next;
 		arg_size--;
 	}
-	printf("\t\t%d\n", i);
 	str[i] = NULL;
 	i = 0;
 	return (ft_simple_cmdsnew(str, builtin_arr(str[0]),
