@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 15:28:22 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/02/21 18:10:10 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/02/22 11:28:46 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ int	add_redirection(t_lexor **redirections, t_lexor **lexor_list, int *num_redir
 
 	if (!*lexor_list || !(*lexor_list)->token)
 		return (0);
-	node = ft_lexornew(ft_strdup((*lexor_list)->next->str), (*lexor_list)->token);
+	node = ft_lexornew(ft_strdup((*lexor_list)->next->str),
+			(*lexor_list)->token);
 	if (!*redirections)
 		*redirections = node;
 	else
@@ -56,16 +57,25 @@ t_simple_cmds	*initialize_cmd(t_lexor *lexor_list, int arg_size)
 	str = malloc(sizeof(char **) * arg_size);
 	if (!str)
 		return (NULL);
-	str[i] = ft_strdup(lexor_list->str);
-	while (--arg_size >= 1)
+	while (arg_size > 0)
 	{
-		lexor_list = lexor_list->next;
 		if (add_redirection(&redirections, &lexor_list, &num_redirections))
 			arg_size--;
 		else
-			str[++i] = ft_strdup(lexor_list->str);
+		{
+			str[i] = ft_strdup(lexor_list->str);
+			printf("i = %i\t%s\n", i, str[i]);
+			i++;
+		}
+		lexor_list = lexor_list->next;
+		arg_size--;
 	}
-	str[++i] = NULL;
+	str[i] = NULL;
+	printf("i = %i\t%s\n", i, str[i]);
+	i = 0;
+	while (i < 2)
+		printf("%s\n", str[i++]);
+
 	return (ft_simple_cmdsnew(str, builtin_arr(str[0]),
 			num_redirections, redirections));
 }
