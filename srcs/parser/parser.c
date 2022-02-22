@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 15:28:22 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/02/22 16:17:36 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/02/22 16:40:49 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ int	count_args(t_lexor *lexor_list)
 	return (i);
 }
 
-int	add_redirection(t_lexor **redirections, t_lexor **lexor_list, int *num_redirections)
+int	add_redirection(t_lexor **redirections, t_lexor **lexor_list,
+	int *num_redirections)
 {
 	t_lexor	*node;
 
@@ -69,24 +70,23 @@ t_simple_cmds	*initialize_cmd(t_lexor *lexor_list, int arg_size)
 	str[i] = NULL;
 	i = 0;
 	return (ft_simple_cmdsnew(str, builtin_arr(str[0]),
-			num_redirections, redirections));
 }
+			num_redirections, redirections));
 
 //free lexor_list
 //handle malloc errors
+
 void	parser(t_lexor *lexor_list)
 {
 	t_simple_cmds	*simple_cmds;
 	t_simple_cmds	*node;
-	int				arg_size; 
+	int				arg_size;
 
 	simple_cmds = NULL;
 	while (lexor_list)
 	{
 		if (lexor_list->token == PIPE)
 			lexor_list = lexor_list->next;
-		// if (lexor_list->token == PS2)
-		// 	lexor_list = lexor_list->next;
 		arg_size = count_args(lexor_list);
 		node = initialize_cmd(lexor_list, arg_size);
 		if (!simple_cmds)
@@ -96,21 +96,26 @@ void	parser(t_lexor *lexor_list)
 		while (arg_size--)
 			lexor_list = lexor_list->next;
 	}
-	int i = 0;
-	while(simple_cmds)
-	{
-		printf("\n%i\n", i++);
-		while (*simple_cmds->str)
-		{
-			printf("%s\n", *simple_cmds->str++);
-		}
-		if (simple_cmds->redirections)
-			printf("\tredirections:\n");
-		while (simple_cmds->redirections)
-		{
-			printf("\t%s\t%d\n", simple_cmds->redirections->str, simple_cmds->redirections->token);
-			simple_cmds->redirections = simple_cmds->redirections->next;
-		}
-		simple_cmds = simple_cmds->next;
-	}
 }
+
+// >> means write over file
+
+// int i = 0;
+// while(simple_cmds)
+// {
+// 	printf("\n%i\n", i++);
+// 	while (*simple_cmds->str)
+// 	{
+// 		printf("%s\n", *simple_cmds->str++);
+// 	}
+// 	if (simple_cmds->redirections)
+// 		printf("\tredirections:\n");
+// 	while (simple_cmds->redirections)
+// 	{
+// 		printf("\t%s\t%d\n", simple_cmds->redirections->str, simple_cmds->redirections->token);
+// 		simple_cmds->redirections = simple_cmds->redirections->next;
+// 	}
+// 	if (simple_cmds->builtin)
+// 		printf("BUILTIN :)\n");
+// 	simple_cmds = simple_cmds->next;
+// }
