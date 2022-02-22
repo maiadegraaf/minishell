@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/14 12:04:02 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/02/21 11:44:14 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/02/22 15:57:24 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	main(int argc, char **argv, char **envp)
 	{
 		line = readline("minishell>> ");
 		add_history(line);
-		while (count_quotes(line) % 2 != 0)
+		while (count_quotes(line) % 2 != 0 || line[ft_strlen(line) - 1] == 92)
 			line = ft_strjoin(line, readline("> "));
 		tools.args = line;
 		lexor_list = token_reader(&tools);
