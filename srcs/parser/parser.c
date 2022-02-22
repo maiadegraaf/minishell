@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 15:28:22 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/02/22 11:28:46 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/02/22 16:08:52 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ int	add_redirection(t_lexor **redirections, t_lexor **lexor_list, int *num_redir
 {
 	t_lexor	*node;
 
-	if (!*lexor_list || !(*lexor_list)->token)
+	if (!*lexor_list || ((*lexor_list)->token != LESS
+			&& (*lexor_list)->token != GREAT))
 		return (0);
 	node = ft_lexornew(ft_strdup((*lexor_list)->next->str),
 			(*lexor_list)->token);
@@ -54,7 +55,7 @@ t_simple_cmds	*initialize_cmd(t_lexor *lexor_list, int arg_size)
 	i = 0;
 	num_redirections = 0;
 	redirections = NULL;
-	str = malloc(sizeof(char **) * arg_size);
+	str = malloc(sizeof(char **) * arg_size + 1);
 	if (!str)
 		return (NULL);
 	while (arg_size > 0)
@@ -64,18 +65,14 @@ t_simple_cmds	*initialize_cmd(t_lexor *lexor_list, int arg_size)
 		else
 		{
 			str[i] = ft_strdup(lexor_list->str);
-			printf("i = %i\t%s\n", i, str[i]);
 			i++;
 		}
 		lexor_list = lexor_list->next;
 		arg_size--;
 	}
+	printf("\t\t%d\n", i);
 	str[i] = NULL;
-	printf("i = %i\t%s\n", i, str[i]);
 	i = 0;
-	while (i < 2)
-		printf("%s\n", str[i++]);
-
 	return (ft_simple_cmdsnew(str, builtin_arr(str[0]),
 			num_redirections, redirections));
 }
@@ -86,13 +83,15 @@ void	parser(t_lexor *lexor_list)
 {
 	t_simple_cmds	*simple_cmds;
 	t_simple_cmds	*node;
-	int				arg_size;
+	int				arg_size; 
 
 	simple_cmds = NULL;
 	while (lexor_list)
 	{
 		if (lexor_list->token == PIPE)
 			lexor_list = lexor_list->next;
+		// if (lexor_list->token == PS2)
+		// 	lexor_list = lexor_list->next;
 		arg_size = count_args(lexor_list);
 		node = initialize_cmd(lexor_list, arg_size);
 		if (!simple_cmds)
@@ -103,12 +102,13 @@ void	parser(t_lexor *lexor_list)
 			lexor_list = lexor_list->next;
 	}
 	int i = 0;
-
 	while(simple_cmds)
 	{
 		printf("\n%i\n", i++);
 		while (*simple_cmds->str)
+		{
 			printf("%s\n", *simple_cmds->str++);
+		}
 		if (simple_cmds->redirections)
 			printf("\tredirections:\n");
 		while (simple_cmds->redirections)
