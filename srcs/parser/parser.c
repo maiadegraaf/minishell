@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 15:28:22 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/02/22 16:40:49 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/02/22 16:41:16 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,8 @@ t_simple_cmds	*initialize_cmd(t_lexor *lexor_list, int arg_size)
 	str[i] = NULL;
 	i = 0;
 	return (ft_simple_cmdsnew(str, builtin_arr(str[0]),
-}
 			num_redirections, redirections));
+}
 
 //free lexor_list
 //handle malloc errors
