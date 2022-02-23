@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 17:11:20 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/02/21 14:56:30 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/02/23 15:39:26 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ t_lexor	*token_reader(t_tools *tools)
 
 	i = 0;
 	lexor_list = NULL;
+	i += skip_spaces(tools->args, i);
 	while (tools->args[i])
 	{
 		i += skip_spaces(tools->args, i);
@@ -85,6 +86,7 @@ t_lexor	*token_reader(t_tools *tools)
 			i += handle_token(tools->args, i, &lexor_list);
 		else
 			i += read_words(i, tools->args, &lexor_list);
+		i += skip_spaces(tools->args, i);
 	}
 	return (lexor_list);
 }
