@@ -1,14 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   handle_redirections.c                              :+:    :+:            */
+/*   executor.h                                         :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/02/21 16:00:27 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/02/24 10:22:09 by mgraaf        ########   odam.nl         */
+/*   Created: 2022/02/24 15:17:39 by mgraaf        #+#    #+#                 */
+/*   Updated: 2022/02/24 15:19:56 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "minishell.h"
 
-#include "parser.h"
+int	executor(t_tools *tools);

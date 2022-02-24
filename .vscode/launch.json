@@ -9,7 +9,7 @@
             "name": "(lldb) Launch",
             "type": "lldb",
             "request": "launch",
-            "program": "${workspaceFolder}",
+            "program": "${workspaceFolder}/minishell",
             "args": [],
             "stopAtEntry": true,
             "cwd": "${workspaceFolder}",

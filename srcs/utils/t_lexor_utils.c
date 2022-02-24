@@ -40,26 +40,32 @@ void	ft_lexoradd_back(t_lexor **lst, t_lexor *new)
 	tmp->next = new;
 }
 
-void	ft_lexordelone(t_lexor **lst, char key)
+void	ft_lexordelone(t_lexor **lst, int i)
 {
 	t_lexor	*node;
 	t_lexor	*prev;
 	t_lexor	*start;
+	int		j;
 
+	j = 0;
 	start = *lst;
 	node = start;
-	if ((*lst)->str[1] == key)
+	if (j == i)
 	{
 		*lst = node->next;
 		free(node);
 		return ;
 	}
-	while (node && node->str[1] != key)
+	while (node && j < i)
 	{
 		prev = node;
 		node = node->next;
+		j++;
 	}
-	prev->next = node->next;
+	if (node->next)
+		prev->next = node->next;
+	else
+		prev->next = NULL;
 	free(node);
 	*lst = start;
 }

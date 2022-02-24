@@ -6,13 +6,13 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 15:28:22 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/02/24 10:44:04 by alfred        ########   odam.nl         */
+/*   Updated: 2022/02/24 15:29:45 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	count_args(t_lexor *lexor_list)
+int	count_args(t_lexor *lexor_list, t_tools *tools)
 {
 	t_lexor	*tmp;
 	int		i;
@@ -23,6 +23,11 @@ int	count_args(t_lexor *lexor_list)
 	{
 		i++;
 		tmp = tmp->next;
+	}
+	if (tmp)
+	{
+		if (tmp->token == PIPE)
+			tools->pipes++;
 	}
 	return (i);
 }
@@ -75,12 +80,10 @@ t_simple_cmds	*initialize_cmd(t_lexor *lexor_list, int arg_size)
 		// 	printf("test");
 		else if (lexor_list->token != PS2)
 			str[i++] = ft_strdup(lexor_list->str);
-		printf("%u\n", lexor_list->token);
 		lexor_list = lexor_list->next;
 		arg_size--;
 	}
 	str[i] = NULL;
-	i = 0;
 	return (ft_simple_cmdsnew(str, builtin_arr(str[0]),
 			num_redirections, redirections));
 }
@@ -88,7 +91,7 @@ t_simple_cmds	*initialize_cmd(t_lexor *lexor_list, int arg_size)
 //free lexor_list
 //handle malloc errors
 
-void	parser(t_lexor *lexor_list)
+void	parser(t_lexor *lexor_list, t_tools *tools)
 {
 	t_simple_cmds	*simple_cmds;
 	t_simple_cmds	*node;
@@ -101,7 +104,7 @@ void	parser(t_lexor *lexor_list)
 			lexor_list = lexor_list->next;
 		else if (lexor_list->token == PS2)
 			lexor_list = lexor_list->next;
-		arg_size = count_args(lexor_list);
+		arg_size = count_args(lexor_list, tools);
 		node = initialize_cmd(lexor_list, arg_size);
 		if (!simple_cmds)
 			simple_cmds = node;
@@ -110,25 +113,26 @@ void	parser(t_lexor *lexor_list)
 		while (arg_size--)
 			lexor_list = lexor_list->next;
 	}
-	int i = 0;
-	while(simple_cmds)
-	{
-		printf("\n%i\n", i++);
-		while (*simple_cmds->str)
-		{
-			printf("%s\n", *simple_cmds->str++);
-		}
-		if (simple_cmds->redirections)
-			printf("\tredirections:\n");
-		while (simple_cmds->redirections)
-		{
-			printf("\t%s\t%d\n", simple_cmds->redirections->str, simple_cmds->redirections->token);
-			simple_cmds->redirections = simple_cmds->redirections->next;
-		}
-		if (simple_cmds->builtin)
-			printf("BUILTIN :)\n");
-		simple_cmds = simple_cmds->next;
-	}
+	tools->simple_cmds = simple_cmds;
 }
 
+	// int i = 0;
+	// while(simple_cmds)
+	// {
+	// 	printf("\n%i\n", i++);
+	// 	while (*simple_cmds->str)
+	// 	{
+	// 		printf("%s\n", *simple_cmds->str++);
+	// 	}
+	// 	if (simple_cmds->redirections)
+	// 		printf("\tredirections:\n");
+	// 	while (simple_cmds->redirections)
+	// 	{
+	// 		printf("\t%s\t%d\n", simple_cmds->redirections->str, simple_cmds->redirections->token);
+	// 		simple_cmds->redirections = simple_cmds->redirections->next;
+	// 	}
+	// 	if (simple_cmds->builtin)
+	// 		printf("BUILTIN :)\n");
+	// 	simple_cmds = simple_cmds->next;
+	// }
 // >> means write over file
