@@ -6,9 +6,11 @@
 /*   By: fpolycar <fpolycar@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/21 11:17:26 by fpolycar      #+#    #+#                 */
-/*   Updated: 2022/02/21 11:17:31 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/02/23 12:19:51 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "minishell.h"
 
 int	count_quotes(char *line)
 {
@@ -24,4 +26,29 @@ int	count_quotes(char *line)
 		i++;
 	}
 	return (nb);
+}
+
+void	delete_char(char *str, char c)
+{
+	int	len;
+	int	i;
+	int	j;
+
+	len = ft_strlen(str);
+	i = 0;
+	while (i < len)
+	{
+		if (str[i] == c)
+		{
+			j = i;
+			while (j < len)
+			{
+				str[i] = str[j + 1];
+				j++;
+			}
+			len--;
+			i--;
+		}
+		i++;
+	}
 }

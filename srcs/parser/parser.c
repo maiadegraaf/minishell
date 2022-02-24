@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 15:28:22 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/02/22 15:57:26 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/02/24 10:44:04 by alfred        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	count_args(t_lexor *lexor_list)
 
 	i = 0;
 	tmp = lexor_list;
-	while (tmp && tmp->token != PIPE)
+	while (tmp && tmp->token != PIPE && tmp->token != PS2)
 	{
 		i++;
 		tmp = tmp->next;
@@ -27,12 +27,12 @@ int	count_args(t_lexor *lexor_list)
 	return (i);
 }
 
-int	add_redirection(t_lexor **redirections, t_lexor **lexor_list, int *num_redirections)
+int	add_redirection(t_lexor **redirections, t_lexor **lexor_list,
+	int *num_redirections)
 {
 	t_lexor	*node;
 
-	if (!*lexor_list || ((*lexor_list)->token != LESS
-			&& (*lexor_list)->token != GREAT))
+	if (!*lexor_list || !(*lexor_list)->token || (*lexor_list)->token == PS2)
 		return (0);
 	node = ft_lexornew(ft_strdup((*lexor_list)->next->str),
 			(*lexor_list)->token);
@@ -43,6 +43,15 @@ int	add_redirection(t_lexor **redirections, t_lexor **lexor_list, int *num_redir
 	*lexor_list = (*lexor_list)->next;
 	num_redirections++;
 	return (1);
+}
+
+int	ps2_token(t_lexor **lexor_list)
+{
+	if (*lexor_list && (*lexor_list)->token == PS2)
+	{
+		*lexor_list = (*lexor_list)->next;
+	}
+	return (0);
 }
 
 t_simple_cmds	*initialize_cmd(t_lexor *lexor_list, int arg_size)
@@ -62,15 +71,14 @@ t_simple_cmds	*initialize_cmd(t_lexor *lexor_list, int arg_size)
 	{
 		if (add_redirection(&redirections, &lexor_list, &num_redirections))
 			arg_size--;
-		else
-		{
-			str[i] = ft_strdup(lexor_list->str);
-			i++;
-		}
+		// else if (ps2_token(&lexor_list))
+		// 	printf("test");
+		else if (lexor_list->token != PS2)
+			str[i++] = ft_strdup(lexor_list->str);
+		printf("%u\n", lexor_list->token);
 		lexor_list = lexor_list->next;
 		arg_size--;
 	}
-	printf("\t\t%d\n", i);
 	str[i] = NULL;
 	i = 0;
 	return (ft_simple_cmdsnew(str, builtin_arr(str[0]),
@@ -79,19 +87,20 @@ t_simple_cmds	*initialize_cmd(t_lexor *lexor_list, int arg_size)
 
 //free lexor_list
 //handle malloc errors
+
 void	parser(t_lexor *lexor_list)
 {
 	t_simple_cmds	*simple_cmds;
 	t_simple_cmds	*node;
-	int				arg_size; 
+	int				arg_size;
 
 	simple_cmds = NULL;
 	while (lexor_list)
 	{
 		if (lexor_list->token == PIPE)
 			lexor_list = lexor_list->next;
-		// if (lexor_list->token == PS2)
-		// 	lexor_list = lexor_list->next;
+		else if (lexor_list->token == PS2)
+			lexor_list = lexor_list->next;
 		arg_size = count_args(lexor_list);
 		node = initialize_cmd(lexor_list, arg_size);
 		if (!simple_cmds)
@@ -116,6 +125,10 @@ void	parser(t_lexor *lexor_list)
 			printf("\t%s\t%d\n", simple_cmds->redirections->str, simple_cmds->redirections->token);
 			simple_cmds->redirections = simple_cmds->redirections->next;
 		}
+		if (simple_cmds->builtin)
+			printf("BUILTIN :)\n");
 		simple_cmds = simple_cmds->next;
 	}
 }
+
+// >> means write over file

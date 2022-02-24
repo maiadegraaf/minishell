@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/14 12:04:02 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/02/22 15:57:24 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/02/23 15:39:03 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ int	main(int argc, char **argv, char **envp)
 	char	*line;
 	t_tools	tools;
 	t_lexor	*lexor_list = NULL;
-	// int		(*f)(t_tools *);
 	// pid_t	process;
 	// int		status;
 
@@ -47,18 +46,23 @@ int	main(int argc, char **argv, char **envp)
 	parse_envp(&tools);
 	while (1)
 	{
-		line = readline("minishell>> ");
+		line = readline("minishell$ ");
 		add_history(line);
 		while (count_quotes(line) % 2 != 0 || line[ft_strlen(line) - 1] == 92)
+		{
+			if (line[ft_strlen(line) - 1] == 92)
+				line = ft_substr(line, 0, ft_strlen(line) - 1);
 			line = ft_strjoin(line, readline("> "));
+		}
+		delete_char(line, 92);
 		tools.args = line;
 		lexor_list = token_reader(&tools);
-		// parser(lexor_list)
-		while (lexor_list)
-		{
-			printf("str = %s \t token = %d\n", lexor_list->str, lexor_list->token);
-			lexor_list = lexor_list->next;
-		}
+		parser(lexor_list);
+		// while (lexor_list)
+		// {
+		// 	printf("str = %s \t token = %d\n", lexor_list->str, lexor_list->token);
+		// 	lexor_list = lexor_list->next;
+		// }
 		free(line);
 	}
 	return (0);
