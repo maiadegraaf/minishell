@@ -6,7 +6,7 @@
 /*   By: fpolycar <fpolycar@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/21 11:17:26 by fpolycar      #+#    #+#                 */
-/*   Updated: 2022/02/23 12:19:51 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/02/24 15:48:19 by alfred        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	count_quotes(char *line)
 	return (nb);
 }
 
-void	delete_char(char *str, char c)
+char	*delete_char(char *str, char c)
 {
 	int	len;
 	int	i;
@@ -45,10 +45,12 @@ void	delete_char(char *str, char c)
 			{
 				str[i] = str[j + 1];
 				j++;
+				i++;
 			}
 			len--;
 			i--;
 		}
 		i++;
 	}
+	return (str);
 }

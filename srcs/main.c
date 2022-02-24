@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/14 12:04:02 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/02/23 15:39:03 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/02/24 15:40:34 by alfred        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	main(int argc, char **argv, char **envp)
 				line = ft_substr(line, 0, ft_strlen(line) - 1);
 			line = ft_strjoin(line, readline("> "));
 		}
-		delete_char(line, 92);
+		line = delete_char(line, '\\');
 		tools.args = line;
 		lexor_list = token_reader(&tools);
 		parser(lexor_list);
