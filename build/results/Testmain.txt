@@ -1,6 +1,0 @@
-test/Testmain.c:41:test_AverageThreeBytes_should_AverageMidRangeValues:PASS
-test/Testmain.c:42:test_AverageThreeBytes_should_AverageHighValues:PASS
-
------------------------
-2 Tests 0 Failures 0 Ignored 
-OK
