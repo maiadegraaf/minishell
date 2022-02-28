@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/18 10:27:43 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/02/23 12:00:01 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/02/28 10:27:41 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_tokens	check_token(int c)
 	{'\n', NEW_LINE},
 	{'>', GREAT},
 	{'<', LESS},
-	{92, PS2},
+	{'$', DOLLAR},
 	};
 	int			i;
 

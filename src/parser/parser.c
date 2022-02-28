@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 15:28:22 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/02/23 15:46:19 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/02/28 15:48:27 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,9 @@ void	parser(t_lexor *lexor_list)
 		while (arg_size--)
 			lexor_list = lexor_list->next;
 	}
+}
+
+// >> means write over file
 int i = 0;
 while(simple_cmds)
 {
@@ -128,6 +131,3 @@ while(simple_cmds)
 		printf("BUILTIN :)\n");
 	simple_cmds = simple_cmds->next;
 }
-}
-
-// >> means write over file
