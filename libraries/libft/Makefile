@@ -73,7 +73,6 @@ endif
 all: libft.a
 
 %.o: %.c $(HEADERFILES)
-	@echo "Compiling ${notdir $<}"
 	@$(CC) -c $(CFLAGS) -o $@ $<
 
 $(NAME): $(ALL_OBJS)
