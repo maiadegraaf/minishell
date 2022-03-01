@@ -2,6 +2,7 @@ NAME = minishell
 
 CC = gcc
 
+LIBFTP = libraries/libft
 PATHB = build/
 PATHO = build/objs/
 PATHS = src/
@@ -26,15 +27,14 @@ FLAGS	=	-Wall -Werror -Wextra -g
 
 LIBFT	=	./libraries/libft/libft.a
 
-HEADER	=	$(wildcard ./includes/*.c) 
+HEADER	=	$(wildcard ./includes/*.h) 
 	
-INCLUDES =-Iincludes -Isrc/pipex
+INCLUDES =-Iincludes -I$(PATHP) -I$(LIBFTP)
 
 
 all: $(BUILD_PATHS) $(NAME)
 
-$(PATHO)%.o:: $(PATHS)%.c 
-	@echo $(OBJS)
+$(PATHO)%.o:: $(PATHS)%.c
 	@echo "Compiling ${notdir $<}			in	$(PATHS)"
 	@$(CC) -c $(FLAGS) $(INCLUDES) $< -o $@
 
