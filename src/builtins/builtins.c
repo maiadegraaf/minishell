@@ -6,7 +6,11 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/15 11:42:32 by mgraaf        #+#    #+#                 */
+<<<<<<< HEAD:srcs/builtins/builtins.c
 /*   Updated: 2022/02/24 15:04:55 by mgraaf        ########   odam.nl         */
+=======
+/*   Updated: 2022/02/24 15:09:05 by alfred        ########   odam.nl         */
+>>>>>>> 13faa8f204671af4932f2f2f0432effe154044f3:src/builtins/builtins.c
 /*                                                                            */
 /* ************************************************************************** */
 

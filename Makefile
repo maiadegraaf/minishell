@@ -1,60 +1,89 @@
-NAME	=	minishell
+NAME = testexe
+CLEANUP=rm -f
+MKDIR=mkdir -p
+TARGET_EXTENSION=out
 
-SRCS	=	./srcs/main.c \
-			./srcs/parse_envp.c \
-			./srcs/utils/t_simple_cmds_utils.c \
-			./srcs/utils/t_lexor_utils.c \
-			./srcs/utils/utils.c \
-			./srcs/lexor/token_reader.c \
-			./srcs/lexor/handle_token.c \
-			./srcs/parser/parser.c \
-			./srcs/builtins/builtins.c \
-			./srcs/builtins/mini_cd.c \
-			./srcs/builtins/mini_echo.c \
-			./srcs/builtins/mini_exit.c \
-			./srcs/builtins/mini_export.c \
-			./srcs/builtins/mini_pwd.c \
-			./srcs/builtins/mini_unset.c \
-			./srcs/builtins/mini_env.c \
-			./srcs/executor/executor.c \
-			./srcs/executor/check_redirections.c \
-			# ./srcs/parser/parse_args.c \
-			# ./srcs/pipex/pipex.c
-			
+.PHONY: clean
+.PHONY: test
 
-OBJS	=	${SRCS:%.c=%.o}
+PATHU = unity/src/
+PATHI = includes/
+PATHS = src/
+PATHSL = src/lexor
+PATHSP = src/parser
+PATHP = src/pipex
+PATHT = test/
+PATHB = build/
+PATHD = build/depends/
+PATHO = build/objs/
+PATHR = build/results/
 
-FLAGS	=	-Wall -Werror -Wextra -g
+BUILD_PATHS = $(PATHB) $(PATHD) $(PATHO) $(PATHR)
 
-LIBFT	=	./libraries/libft/libft.a
+SRCT = $(wildcard $(PATHT)*.c)
 
-HEADER	=	./includes/minishell.h \
-			./includes/lexor.h \
-			./includes/builtins.h \
-			./includes/utils.h \
-			./includes/parser.h \
-			./includes/executor.h
+COMPILE=gcc -c
+LINK=gcc
+DEPEND=gcc -MM -MG -MF
+CFLAGS=-Wall -Werror -Wextra -I. -I$(PATHU) -I$(PATHS) -I$(PATHP) -I$(PATHI) -DTEST
 
-all: $(NAME)
+RESULTS = $(patsubst $(PATHT)Test%.c,$(PATHR)Test%.txt,$(SRCT))
 
-%.o: %.c $(HEADER)
-	@echo "Compiling ${notdir $<}"
-	@$(CC) -c $(FLAGS) -I includes -o $@ $<
+PASSED = `grep -s PASS $(PATHR)*.txt`
+FAIL = `grep -s FAIL $(PATHR)*.txt`
+IGNORE = `grep -s IGNORE $(PATHR)*.txt`
 
-$(NAME): $(LIBFT) $(OBJS) $(HEADER)
-	@$(CC) $(FLAGS) $(LIBFT) $(OBJS) -lreadline -o $(NAME)
-	@echo "Success"
+test: $(BUILD_PATHS) $(RESULTS)
+	@echo "-----------------------\nIGNORES:\n-----------------------"
+	@echo "$(IGNORE)"
+	@echo "-----------------------\nFAILURES:\n-----------------------"
+	@echo "$(FAIL)"
+	@echo "-----------------------\nPASSED:\n-----------------------"
+	@echo "$(PASSED)"
+	@echo "\nDONE"
 
-$(LIBFT):
-	$(MAKE) -C ./libraries/libft
+$(PATHR)%.txt: $(PATHB)%.$(TARGET_EXTENSION)
+	-./$< > $@ 2>&1
+
+$(PATHB)Test%.$(TARGET_EXTENSION): $(PATHO)Test%.o $(PATHO)%.o $(PATHU)unity.o #$(PATHD)Test%.d
+	$(LINK) -o $@ $^
+
+$(PATHO)%.o:: $(PATHT)%.c
+	$(COMPILE) $(CFLAGS) $< -o $@
+
+$(PATHO)%.o:: $(PATHS)%.c
+	$(COMPILE) $(CFLAGS) $< -o $@
+
+$(PATHO)%.o:: $(PATHSL)%.c
+	$(COMPILE) $(CFLAGS) $< -o $@
+
+$(PATHO)%.o:: $(PATHSP)%.c
+	$(COMPILE) $(CFLAGS) $< -o $@
+
+$(PATHO)%.o:: $(PATHU)%.c $(PATHU)%.h
+	$(COMPILE) $(CFLAGS) $< -o $@
+
+$(PATHD)%.d:: $(PATHT)%.c
+	$(DEPEND) $@ $<
+
+$(PATHB):
+	$(MKDIR) $(PATHB)
+
+$(PATHD):
+	$(MKDIR) $(PATHD)
+
+$(PATHO):
+	$(MKDIR) $(PATHO)
+
+$(PATHR):
+	$(MKDIR) $(PATHR)
 
 clean:
-	@echo "Cleaning"
-	@rm -f $(OBJS)
-	@make fclean -C libraries/libft
+	$(CLEANUP) $(PATHO)*.o
+	$(CLEANUP) $(PATHB)*.$(TARGET_EXTENSION)
+	$(CLEANUP) $(PATHR)*.txt
 
-fclean: clean
-	@rm -f $(NAME)
-	@rm -f $(LIBFT)
-
-re: fclean all
+.PRECIOUS: $(PATHB)Test%.$(TARGET_EXTENSION)
+.PRECIOUS: $(PATHD)%.d
+.PRECIOUS: $(PATHO)%.o
+.PRECIOUS: $(PATHR)%.txt

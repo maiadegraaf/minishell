@@ -6,7 +6,11 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 15:28:22 by mgraaf        #+#    #+#                 */
+<<<<<<< HEAD:srcs/parser/parser.c
 /*   Updated: 2022/02/24 15:29:45 by mgraaf        ########   odam.nl         */
+=======
+/*   Updated: 2022/02/28 16:13:34 by fpolycar      ########   odam.nl         */
+>>>>>>> 13faa8f204671af4932f2f2f0432effe154044f3:src/parser/parser.c
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +41,19 @@ int	add_redirection(t_lexor **redirections, t_lexor **lexor_list,
 {
 	t_lexor	*node;
 
-	if (!*lexor_list || !(*lexor_list)->token || (*lexor_list)->token == PS2)
-		return (0);
-	node = ft_lexornew(ft_strdup((*lexor_list)->next->str),
-			(*lexor_list)->token);
-	if (!*redirections)
-		*redirections = node;
-	else
-		ft_lexoradd_back(redirections, node);
-	*lexor_list = (*lexor_list)->next;
-	num_redirections++;
-	return (1);
+	if (*lexor_list && ((*lexor_list)->token == LESS || (*lexor_list)->token == GREAT))
+	{
+		node = ft_lexornew(ft_strdup((*lexor_list)->next->str),
+				(*lexor_list)->token);
+		if (!*redirections)
+			*redirections = node;
+		else
+			ft_lexoradd_back(redirections, node);
+		*lexor_list = (*lexor_list)->next;
+		num_redirections++;
+		return (1);
+	}
+	return (0);
 }
 
 int	ps2_token(t_lexor **lexor_list)
@@ -55,6 +61,7 @@ int	ps2_token(t_lexor **lexor_list)
 	if (*lexor_list && (*lexor_list)->token == PS2)
 	{
 		*lexor_list = (*lexor_list)->next;
+		return (1);
 	}
 	return (0);
 }
@@ -76,10 +83,16 @@ t_simple_cmds	*initialize_cmd(t_lexor *lexor_list, int arg_size)
 	{
 		if (add_redirection(&redirections, &lexor_list, &num_redirections))
 			arg_size--;
+<<<<<<< HEAD:srcs/parser/parser.c
 		// else if (ps2_token(&lexor_list))
 		// 	printf("test");
 		else if (lexor_list->token != PS2)
 			str[i++] = ft_strdup(lexor_list->str);
+=======
+		// else if (lexor_list->token != PS2)
+		str[i++] = ft_strdup(lexor_list->str);
+		// printf("%u\n", lexor_list->token);
+>>>>>>> 13faa8f204671af4932f2f2f0432effe154044f3:src/parser/parser.c
 		lexor_list = lexor_list->next;
 		arg_size--;
 	}
@@ -103,8 +116,13 @@ void	parser(t_lexor *lexor_list, t_tools *tools)
 		if (lexor_list->token == PIPE)
 			lexor_list = lexor_list->next;
 		else if (lexor_list->token == PS2)
+<<<<<<< HEAD:srcs/parser/parser.c
 			lexor_list = lexor_list->next;
 		arg_size = count_args(lexor_list, tools);
+=======
+			ps2_token(&lexor_list);
+		arg_size = count_args(lexor_list);
+>>>>>>> 13faa8f204671af4932f2f2f0432effe154044f3:src/parser/parser.c
 		node = initialize_cmd(lexor_list, arg_size);
 		if (!simple_cmds)
 			simple_cmds = node;
@@ -113,6 +131,7 @@ void	parser(t_lexor *lexor_list, t_tools *tools)
 		while (arg_size--)
 			lexor_list = lexor_list->next;
 	}
+<<<<<<< HEAD:srcs/parser/parser.c
 	tools->simple_cmds = simple_cmds;
 }
 
@@ -136,3 +155,40 @@ void	parser(t_lexor *lexor_list, t_tools *tools)
 	// 	simple_cmds = simple_cmds->next;
 	// }
 // >> means write over file
+=======
+}
+
+// >> means write over file
+int i = 0;
+while(simple_cmds)
+{
+	printf("\n%i\n", i++);
+	while (*simple_cmds->str)
+	{
+		printf("%s\n", *simple_cmds->str++);
+	}
+	if (simple_cmds->redirections)
+		printf("\tredirections:\n");
+	while (simple_cmds->redirections)
+	{
+		printf("\n%i\n", i++);
+		while (*simple_cmds->str)
+		{
+			printf("%s\n", *simple_cmds->str++);
+		}
+		if (simple_cmds->redirections)
+			printf("\tredirections:\n");
+		while (simple_cmds->redirections)
+		{
+			printf("\t%s\t%d\n", simple_cmds->redirections->str, simple_cmds->redirections->token);
+			simple_cmds->redirections = simple_cmds->redirections->next;
+		}
+		if (simple_cmds->builtin)
+			printf("BUILTIN :)\n");
+		simple_cmds = simple_cmds->next;
+	}
+	if (simple_cmds->builtin)
+		printf("BUILTIN :)\n");
+	simple_cmds = simple_cmds->next;
+}
+>>>>>>> 13faa8f204671af4932f2f2f0432effe154044f3:src/parser/parser.c
