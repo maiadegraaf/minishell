@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/14 12:04:02 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/03/01 13:43:19 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/03/01 13:51:34 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,3 +50,8 @@ int	main(int argc, char **argv, char **envp)
 	}
 	return (0);
 }
+
+// int8_t AverageThreeBytes(int8_t a, int8_t b, int8_t c)
+// {
+// return (int8_t)(((int16_t)a + (int16_t)b + (int16_t)c) / 3);
+// }
