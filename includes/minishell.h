@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/14 13:46:41 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/03/01 16:28:18 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/03/01 19:41:17 by maiadegraaf   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include "utils.h"
 # include "lexor.h"
 # include "builtins.h"
+# include "executor.h"
 
 int		parse_envp(t_tools *tools);
 int		find_pwd(t_tools *tools);

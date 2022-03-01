@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 17:59:38 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/02/28 09:41:55 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/03/01 18:18:38 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,20 +29,23 @@ typedef struct s_lexor
 {
 	char			*str;
 	t_tokens		token;
+	int				i;
 	struct s_lexor	*next;
+	struct s_lexor	*prev;
 }	t_lexor;
 
 typedef struct s_tools
 {
-	char	*args;
-	char	**paths;
-	char	**envp;
-	int		in;
-	int		out;
-	int		err;
-	char	*pwd;
-	char	*old_pwd;
-	int		pipes;
+	char					*args;
+	char					**paths;
+	char					**envp;
+	struct s_simple_cmds	*simple_cmds;
+	int						in;
+	int						out;
+	int						err;
+	char					*pwd;
+	char					*old_pwd;
+	int						pipes;
 }	t_tools;
 
 typedef struct s_simple_cmds
@@ -56,6 +59,6 @@ typedef struct s_simple_cmds
 
 int		parse_envp(t_tools *tools);
 int		find_pwd(t_tools *tools);
-void	parser(t_lexor *lexor_list);
+void	parser(t_lexor *lexor_list, t_tools *tools);
 
 #endif

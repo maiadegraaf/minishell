@@ -6,13 +6,14 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 15:28:22 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/03/01 09:55:26 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/03/01 18:39:17 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+void	print_parser(t_simple_cmds *simple_cmds);
 
-int	count_args(t_lexor *lexor_list)
+int	count_args(t_lexor *lexor_list, t_tools *tools)
 {
 	t_lexor	*tmp;
 	int		i;
@@ -24,27 +25,66 @@ int	count_args(t_lexor *lexor_list)
 		i++;
 		tmp = tmp->next;
 	}
+	if (tmp)
+	{
+		if (tmp->token == PIPE)
+			tools->pipes++;
+	}
 	return (i);
 }
 
-int	add_redirection(t_lexor **redirections, t_lexor **lexor_list,
-	int *num_redirections)
+int	handle_heredoc(t_lexor **lexor_list, t_lexor **redirections)
 {
 	t_lexor	*node;
 
-	if (*lexor_list && ((*lexor_list)->token == LESS || (*lexor_list)->token == GREAT))
+	if ((*lexor_list)->prev->str)
 	{
-		node = ft_lexornew(ft_strdup((*lexor_list)->next->str),
-				(*lexor_list)->token);
-		if (!*redirections)
-			*redirections = node;
-		else
-			ft_lexoradd_back(redirections, node);
-		*lexor_list = (*lexor_list)->next;
-		num_redirections++;
-		return (1);
+		node = ft_lexornew(ft_strdup((*lexor_list)->prev->str), GREAT_GREAT);
+		if (!node)
+			printf("EMERGENCY!!\n");
+		ft_lexoradd_back(redirections, node);
+		ft_lexordelone(lexor_list, (*lexor_list)->prev->i);
 	}
-	return (0);
+	node = ft_lexornew(ft_strdup((*lexor_list)->next->str), GREAT_GREAT);
+	if (!node)
+		printf("EMERGENCY!!\n");
+	ft_lexoradd_back(redirections, node);
+	ft_lexordelone(lexor_list, (*lexor_list)->next->i);
+	ft_lexordelone(lexor_list, (*lexor_list)->i);
+	return (1);
+}
+
+t_lexor	*rm_redirections(t_lexor **lexor_list, int arg_size,
+	int *num_redirections)
+{
+	t_lexor	*redirections;
+	t_lexor	*node;
+
+	redirections = NULL;
+	while (arg_size > 0)
+	{
+		if (*lexor_list && (*lexor_list)->token == GREAT_GREAT)
+		{
+			handle_heredoc(lexor_list, &redirections);
+			num_redirections++;
+		}
+		else if (*lexor_list && ((*lexor_list)->token >= GREAT
+				&& (*lexor_list)->token <= LESS_LESS))
+		{
+			node = ft_lexornew(ft_strdup((*lexor_list)->next->str),
+					(*lexor_list)->token);
+			if (!node)
+				printf("EMERGENCY!!\n");
+			ft_lexoradd_back(&redirections, node);
+			ft_lexordelone(lexor_list, (*lexor_list)->next->i);
+			ft_lexordelone(lexor_list, (*lexor_list)->i);
+			num_redirections++;
+		}
+		if (*lexor_list)
+			*lexor_list = (*lexor_list)->next;
+		arg_size--;
+	}
+	return (redirections);
 }
 
 t_simple_cmds	*initialize_cmd(t_lexor *lexor_list, int arg_size)
@@ -56,14 +96,12 @@ t_simple_cmds	*initialize_cmd(t_lexor *lexor_list, int arg_size)
 
 	i = 0;
 	num_redirections = 0;
-	redirections = NULL;
+	redirections = rm_redirections(&lexor_list, arg_size, &num_redirections);
 	str = malloc(sizeof(char **) * arg_size + 1);
 	if (!str)
 		return (NULL);
 	while (arg_size > 0)
 	{
-		if (add_redirection(&redirections, &lexor_list, &num_redirections))
-			arg_size--;
 		str[i++] = ft_strdup(lexor_list->str);
 		lexor_list = lexor_list->next;
 		arg_size--;
@@ -77,58 +115,56 @@ t_simple_cmds	*initialize_cmd(t_lexor *lexor_list, int arg_size)
 //free lexor_list
 //handle malloc errors
 
-void	parser(t_lexor *lexor_list)
+void	parser(t_lexor *lexor_list, t_tools *tools)
 {
-	t_simple_cmds	*simple_cmds;
 	t_simple_cmds	*node;
 	int				arg_size;
 
-	simple_cmds = NULL;
+	tools->simple_cmds = NULL;
 	while (lexor_list)
 	{
 		if (lexor_list->token == PIPE)
 			lexor_list = lexor_list->next;
-		arg_size = count_args(lexor_list);
+		arg_size = count_args(lexor_list, tools);
 		node = initialize_cmd(lexor_list, arg_size);
-		if (!simple_cmds)
-			simple_cmds = node;
+		if (!tools->simple_cmds)
+			tools->simple_cmds = node;
 		else
-			ft_simple_cmdsadd_back(&simple_cmds, node);
+			ft_simple_cmdsadd_back(&tools->simple_cmds, node);
 		while (arg_size--)
 			lexor_list = lexor_list->next;
 	}
+	print_parser(tools->simple_cmds);
 }
 
-// >> means write over file
-// int i = 0;
-// while(simple_cmds)
-// {
-// 	printf("\n%i\n", i++);
-// 	while (*simple_cmds->str)
-// 	{
-// 		printf("%s\n", *simple_cmds->str++);
-// 	}
-// 	if (simple_cmds->redirections)
-// 		printf("\tredirections:\n");
-// 	while (simple_cmds->redirections)
-// 	{
-// 		printf("\n%i\n", i++);
-// 		while (*simple_cmds->str)
-// 		{
-// 			printf("%s\n", *simple_cmds->str++);
-// 		}
-// 		if (simple_cmds->redirections)
-// 			printf("\tredirections:\n");
-// 		while (simple_cmds->redirections)
-// 		{
-// 			printf("\t%s\t%d\n", simple_cmds->redirections->str, simple_cmds->redirections->token);
-// 			simple_cmds->redirections = simple_cmds->redirections->next;
-// 		}
-// 		if (simple_cmds->builtin)
-// 			printf("BUILTIN :)\n");
-// 		simple_cmds = simple_cmds->next;
-// 	}
-// 	if (simple_cmds->builtin)
-// 		printf("BUILTIN :)\n");
-// 	simple_cmds = simple_cmds->next;
-// }
+void	print_parser(t_simple_cmds *simple_cmds)
+{
+	int				i = 0;
+
+	while (simple_cmds)
+	{
+		printf("\n>>>%i<<<\n", i++);
+		while (*simple_cmds->str)
+		{
+			printf("%s\n", *simple_cmds->str++);
+		}
+		if (simple_cmds->redirections)
+			printf("\nredirections:\n");
+		while (simple_cmds->redirections)
+		{
+			printf("%s\t", simple_cmds->redirections->str);
+			if (simple_cmds->redirections->token == 3)
+				printf("GREAT\n");
+			else if (simple_cmds->redirections->token == 4)
+				printf("GREAT_GREAT\n");
+			else if (simple_cmds->redirections->token == 5)
+				printf("LESS\n");
+			else if (simple_cmds->redirections->token == 6)
+				printf("LESS_LESS\n");
+			simple_cmds->redirections = simple_cmds->redirections->next;
+		}
+		if (simple_cmds->builtin)
+			printf("BUILTIN :)\n");
+		simple_cmds = simple_cmds->next;
+	}
+}

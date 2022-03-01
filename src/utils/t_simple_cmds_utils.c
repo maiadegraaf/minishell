@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 15:31:53 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/02/21 17:11:19 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/02/24 16:59:22 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,28 +43,16 @@ void	ft_simple_cmdsadd_back(t_simple_cmds **lst, t_simple_cmds *new)
 	tmp->next = new;
 }
 
-void	ft_simple_cmdsdelone(t_simple_cmds **lst, char key)
+void	ft_simple_cmds_rm_first(t_simple_cmds **lst)
 {
-	t_simple_cmds	*node;
-	t_simple_cmds	*prev;
-	t_simple_cmds	*start;
+	t_simple_cmds	*tmp;
 
-	start = *lst;
-	node = start;
-	if ((*lst)->str[1][1] == key)
-	{
-		*lst = node->next;
-		free(node);
+	if (!*lst)
 		return ;
-	}
-	while (node && node->str[1][1] != key)
-	{
-		prev = node;
-		node = node->next;
-	}
-	prev->next = node->next;
-	free(node);
-	*lst = start;
+	tmp = (*lst)->next;
+	ft_lexorclear(&(*lst)->redirections);
+	free(*lst);
+	*lst = tmp;
 }
 
 void	ft_simple_cmdsclear(t_simple_cmds **lst)
