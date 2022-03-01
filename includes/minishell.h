@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/14 13:46:41 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/02/23 12:16:34 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/02/28 16:13:44 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <string.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-# include "../srcs/pipex/pipex.h"
+# include "pipex.h"
 # include "parser.h"
 # include "utils.h"
 # include "lexor.h"
@@ -26,8 +26,7 @@
 
 int		parse_envp(t_tools *tools);
 int		find_pwd(t_tools *tools);
-int		count_quotes(char *line);
-void	delete_char(char *str, char c);
+int8_t AverageThreeBytes(int8_t a, int8_t b, int8_t c);
 
 //builtins
 int	(*builtin_arr(char *str))(t_tools *tools);
