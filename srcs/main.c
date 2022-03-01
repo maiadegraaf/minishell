@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/14 12:04:02 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/02/24 17:33:48 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/02/25 12:20:04 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,11 @@ int	implement_tools(t_tools *tools)
 	tools->in = dup(0);
 	tools->out = dup(1);
 	tools->err = dup(2);
-
 	return (1);
 }
 
 int	main(int argc, char **argv, char **envp)
 {
-	char	*line;
 	t_tools	tools;
 	t_lexor	*lexor_list = NULL;
 
@@ -37,19 +35,18 @@ int	main(int argc, char **argv, char **envp)
 	implement_tools(&tools);
 	while (1)
 	{
-		line = readline("minishell$ ");
-		add_history(line);
-		while (count_quotes(line) % 2 != 0 || line[ft_strlen(line) - 1] == 92)
+		tools.args = readline("minishell$ ");
+		add_history(tools.args);
+		while (count_quotes(tools.args) % 2 != 0 || tools.args[ft_strlen(tools.args) - 1] == 92)
 		{
-			if (line[ft_strlen(line) - 1] == 92)
-				line = ft_substr(line, 0, ft_strlen(line) - 1);
-			line = ft_strjoin(line, readline("> "));
+			if (tools.args[ft_strlen(tools.args) - 1] == 92)
+				tools.args = ft_substr(tools.args, 0, ft_strlen(tools.args) - 1);
+			tools.args = ft_strjoin(tools.args, readline("> "));
 		}
-		tools.args = line;
 		lexor_list = token_reader(&tools);
 		parser(lexor_list, &tools);
 		executor(&tools);
-		free(line);
+		free(tools.args);
 	}
 	return (0);
 }

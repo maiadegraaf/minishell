@@ -17,6 +17,7 @@ SRCS	=	./srcs/main.c \
 			./srcs/builtins/mini_unset.c \
 			./srcs/builtins/mini_env.c \
 			./srcs/executor/executor.c \
+			./srcs/executor/check_redirections.c \
 			# ./srcs/parser/parse_args.c \
 			# ./srcs/pipex/pipex.c
 			

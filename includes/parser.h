@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 17:59:38 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/02/24 15:20:42 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/02/25 14:39:29 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ typedef struct s_simple_cmds
 	t_lexor					*redirections;
 	struct s_simple_cmds	*next;
 }	t_simple_cmds;
-
 
 int		parse_envp(t_tools *tools);
 int		find_pwd(t_tools *tools);

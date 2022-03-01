@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/24 15:09:50 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/02/24 17:51:05 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/02/25 14:41:17 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,68 +18,18 @@ int	find_cmd(char **args, char **paths, char **envp)
 	char	*mycmd;
 
 	i = 0;
-	printf("HELLO\n");
+	fprintf(stderr, "in find_cmd\n");
 	while (paths[i])
 	{
 		mycmd = ft_strjoin(paths[i], args[0]);
+		fprintf(stderr, "%i\n", i);
 		if (!access(mycmd, F_OK))
 			execve(mycmd, args, envp);
 		free(mycmd);
 		i++;
 	}
+	printf("HELO\n");
 	return (1);
-}
-
-int	check_outfile(t_tools *tools)
-{
-	t_lexor	*start;
-
-	start = tools->simple_cmds->redirections;
-	while (tools->simple_cmds->redirections)
-	{
-		if (tools->simple_cmds->redirections->token == GREAT
-			|| tools->simple_cmds->redirections->token == GREAT_GREAT)
-		{
-			if (tools->simple_cmds->redirections->token == GREAT)
-				tools->out = open(tools->simple_cmds->redirections->str,
-						O_CREAT | O_RDWR | O_TRUNC | O_APPEND, 0644);
-			else
-				tools->out = open(tools->simple_cmds->redirections->str,
-						O_CREAT | O_RDWR | O_TRUNC, 0644);
-			if (tools->out < 0)
-			{
-				perror("Open ");
-				// do more stuff (ie lots of freeing)
-			}
-		}
-		tools->simple_cmds->redirections
-			= tools->simple_cmds->redirections->next;
-	}
-	tools->simple_cmds->redirections = start;
-	return (tools->out);
-}
-
-int	check_infile(t_tools *tools)
-{
-	t_lexor	*start;
-
-	start = tools->simple_cmds->redirections;
-	while (tools->simple_cmds->redirections)
-	{
-		if (tools->simple_cmds->redirections->token == LESS)
-		{
-			tools->in = open(tools->simple_cmds->redirections->str, O_RDONLY);
-			if (tools->in < 0)
-			{
-				perror("Open ");
-				// do more stuff (ie lots of freeing)
-			}
-		}
-		tools->simple_cmds->redirections
-			= tools->simple_cmds->redirections->next;
-	}
-	tools->simple_cmds->redirections = start;
-	return (tools->in);
 }
 
 int	executor(t_tools *tools)
@@ -96,17 +46,14 @@ int	executor(t_tools *tools)
 		dup2(tools->in, 0);
 		close(tools->in);
 		if (i == tools->pipes)
-		{
-			tools->out = dup(1);
 			check_outfile(tools);
-		}
 		else
 		{
 			pipe(end);
 			tools->out = end[1];
 			tools->in = end[0];
 		}
-		printf("HELo\n");
+		fprintf(stderr, "\nb4 dup out: in = %d out = %d\nend[0] = %d, end[1] = %d\n", tools->in, tools->out, end[0], end[1]);
 		dup2(tools->out, 1);
 		close(tools->out);
 		ret = fork();
@@ -117,12 +64,13 @@ int	executor(t_tools *tools)
 		}
 		if (ret == 0)
 		{
-			printf("b4 find_cmd\n");
+			fprintf(stderr, "\nb4 find_cmd: %s\nin = %d out = %d\n", tools->simple_cmds->str[0], tools->in, tools->out);
 			find_cmd(tools->simple_cmds->str, tools->paths, tools->envp);
 		}
 		i++;
+		fprintf(stderr, "\nguess who's back\n");
 		ft_simple_cmds_rm_first(&tools->simple_cmds);
-		waitpid(ret, &status, 0);
 	}
+	waitpid(ret, &status, 0);
 	return (0);
 }
