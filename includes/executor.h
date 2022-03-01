@@ -1,21 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   mini_cd.c                                          :+:    :+:            */
+/*   executor.h                                         :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/02/15 15:17:04 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/02/25 15:02:13 by mgraaf        ########   odam.nl         */
+/*   Created: 2022/02/24 15:17:39 by mgraaf        #+#    #+#                 */
+/*   Updated: 2022/02/25 11:53:28 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtins.h"
+#ifndef EXECUTOR_H
+# define EXECUTOR_H
+# include "minishell.h"
 
-int	mini_cd(t_tools *tools)
-{
-	if (chdir(&tools->args[1]))
-		perror("cd");
-	change_path(tools);
-	return (1);
-}
+int	check_outfile(t_tools *tools);
+int	check_infile(t_tools *tools);
+int	executor(t_tools *tools);
+
+#endif

@@ -1,3 +1,4 @@
 *.o
 libft.a
 minishell
+build

@@ -6,36 +6,24 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/14 12:04:02 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/02/28 16:13:20 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/03/01 13:51:34 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// int	find_cmd(t_tools *tools)
-// {
-// 	int		i;
-// 	char	*mycmd;
-
-// 	i = 0;
-// 	while ((tools->paths)[i])
-// 	{
-// 		mycmd = ft_strjoin((tools->paths)[i], (tools->args)[0]);
-// 		if (!access(mycmd, F_OK))
-// 			execve(mycmd, tools->args, tools->envp);
-// 		free(mycmd);
-// 		i++;
-// 	}
-// 	return (1);
-// }
+int	implement_tools(t_tools *tools)
+{
+	tools->in = dup(0);
+	tools->out = dup(1);
+	tools->err = dup(2);
+	return (1);
+}
 
 int	main(int argc, char **argv, char **envp)
 {
-	char	*line;
 	t_tools	tools;
 	t_lexor	*lexor_list = NULL;
-	// pid_t	process;
-	// int		status;
 
 	if (argc != 1 || argv[1])
 	{
@@ -44,19 +32,26 @@ int	main(int argc, char **argv, char **envp)
 	}
 	tools.envp = envp;
 	parse_envp(&tools);
+	implement_tools(&tools);
 	while (1)
 	{
-		line = readline("minishell$ ");
-		add_history(line);
-		tools.args = line;
+		tools.args = readline("minishell$ ");
+		add_history(tools.args);
+		while (count_quotes(tools.args) % 2 != 0 || tools.args[ft_strlen(tools.args) - 1] == 92)
+		{
+			if (tools.args[ft_strlen(tools.args) - 1] == 92)
+				tools.args = ft_substr(tools.args, 0, ft_strlen(tools.args) - 1);
+			tools.args = ft_strjoin(tools.args, readline("> "));
+		}
 		lexor_list = token_reader(&tools);
-		// parser(lexor_list);
-		// while (lexor_list)
-		// {
-		// 	printf("str = %s \t token = %d\n", lexor_list->str, lexor_list->token);
-		// 	lexor_list = lexor_list->next;
-		// }
-		free(line);
+		parser(lexor_list, &tools);
+		executor(&tools);
+		free(tools.args);
 	}
 	return (0);
 }
+
+// int8_t AverageThreeBytes(int8_t a, int8_t b, int8_t c)
+// {
+// return (int8_t)(((int16_t)a + (int16_t)b + (int16_t)c) / 3);
+// }
