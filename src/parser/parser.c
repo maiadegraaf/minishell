@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 15:28:22 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/03/01 09:55:26 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/03/02 12:10:13 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ t_simple_cmds	*initialize_cmd(t_lexor *lexor_list, int arg_size)
 //free lexor_list
 //handle malloc errors
 
-void	parser(t_lexor *lexor_list)
+t_simple_cmds	*parser(t_lexor *lexor_list)
 {
 	t_simple_cmds	*simple_cmds;
 	t_simple_cmds	*node;
@@ -97,38 +97,39 @@ void	parser(t_lexor *lexor_list)
 		while (arg_size--)
 			lexor_list = lexor_list->next;
 	}
+int i = 0;
+while(simple_cmds)
+{
+	printf("\n%i\n", i++);
+	while (*simple_cmds->str)
+	{
+		printf("%s\n", *simple_cmds->str++);
+	}
+	if (simple_cmds->redirections)
+		printf("\tredirections:\n");
+	while (simple_cmds->redirections)
+	{
+		printf("\n%i\n", i++);
+		while (*simple_cmds->str)
+		{
+			printf("%s\n", *simple_cmds->str++);
+		}
+		if (simple_cmds->redirections)
+			printf("\tredirections:\n");
+		while (simple_cmds->redirections)
+		{
+			printf("\t%s\t%d\n", simple_cmds->redirections->str, simple_cmds->redirections->token);
+			simple_cmds->redirections = simple_cmds->redirections->next;
+		}
+		if (simple_cmds->builtin)
+			printf("BUILTIN :)\n");
+		simple_cmds = simple_cmds->next;
+	}
+	if (simple_cmds->builtin)
+		printf("BUILTIN :)\n");
+	simple_cmds = simple_cmds->next;
+}
+	return (simple_cmds);
 }
 
 // >> means write over file
-// int i = 0;
-// while(simple_cmds)
-// {
-// 	printf("\n%i\n", i++);
-// 	while (*simple_cmds->str)
-// 	{
-// 		printf("%s\n", *simple_cmds->str++);
-// 	}
-// 	if (simple_cmds->redirections)
-// 		printf("\tredirections:\n");
-// 	while (simple_cmds->redirections)
-// 	{
-// 		printf("\n%i\n", i++);
-// 		while (*simple_cmds->str)
-// 		{
-// 			printf("%s\n", *simple_cmds->str++);
-// 		}
-// 		if (simple_cmds->redirections)
-// 			printf("\tredirections:\n");
-// 		while (simple_cmds->redirections)
-// 		{
-// 			printf("\t%s\t%d\n", simple_cmds->redirections->str, simple_cmds->redirections->token);
-// 			simple_cmds->redirections = simple_cmds->redirections->next;
-// 		}
-// 		if (simple_cmds->builtin)
-// 			printf("BUILTIN :)\n");
-// 		simple_cmds = simple_cmds->next;
-// 	}
-// 	if (simple_cmds->builtin)
-// 		printf("BUILTIN :)\n");
-// 	simple_cmds = simple_cmds->next;
-// }

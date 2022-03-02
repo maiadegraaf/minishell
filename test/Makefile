@@ -16,7 +16,6 @@ PATHSU = ../src/utils/
 PATHSB = ../src/builtins/
 PATHT = ../test/
 PATHB = ../build/
-PATHD = ../build/depends/
 PATHO = ../build/objs/
 PATHR = ../build/results/
 
@@ -62,7 +61,7 @@ test: $(BUILD_PATHS) $(RESULTS)
 $(PATHR)%.txt: $(PATHO)%.$(TARGET_EXTENSION)
 	-./$< > $@ 2>&1
 
-$(PATHO)Test%.$(TARGET_EXTENSION): $(LIBFT) $(OBJS) $(PATHO)Test%.o $(PATHO)%.o $(PATHU)unity.o #$(PATHD)Test%.d
+$(PATHO)Test%.$(TARGET_EXTENSION): $(LIBFT) $(OBJS) $(PATHO)Test%.o $(PATHO)%.o $(PATHU)unity.o 
 	$(LINK) -lreadline -o  $@ $^
 
 $(PATHO)%.o:: $(PATHT)%.c $(HEADERS)
@@ -89,9 +88,6 @@ $(PATHO)%.o:: $(PATHU)%.c $(PATHU)%.h
 $(PATHB):
 	$(MKDIR) $(PATHB)
 
-$(PATHD):
-	$(MKDIR) $(PATHD)
-
 $(PATHO):
 	$(MKDIR) $(PATHO)
 
@@ -105,6 +101,7 @@ clean:
 	$(CLEANUP) $(PATHO)*.o
 	$(CLEANUP) $(PATHB)*.$(TARGET_EXTENSION)
 	$(CLEANUP) $(PATHR)*.txt
+	rm -rdf $(PATHB)
 	make fclean -C $(PATHLIBFT)
 
 re: clean test

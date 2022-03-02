@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/14 12:04:02 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/03/01 09:49:07 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/03/02 11:59:16 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	main(int argc, char **argv, char **envp)
 		add_history(line);
 		tools.args = line;
 		lexor_list = token_reader(&tools);
-		// parser(lexor_list);
+		parser(lexor_list);
 		// while (lexor_list)
 		// {
 		// 	printf("str = %s \t token = %d\n", lexor_list->str, lexor_list->token);
@@ -60,8 +60,3 @@ int	main(int argc, char **argv, char **envp)
 	}
 	return (0);
 }
-
-// int8_t AverageThreeBytes(int8_t a, int8_t b, int8_t c)
-// {
-// return (int8_t)(((int16_t)a + (int16_t)b + (int16_t)c) / 3);
-// }
