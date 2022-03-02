@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 15:28:22 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/03/02 13:59:29 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/03/02 14:28:17 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ t_simple_cmds	*initialize_cmd(t_lexor *lexor_list, int arg_size)
 //free lexor_list
 //handle malloc errors
 
-t_simple_cmds	*parser(t_lexor *lexor_list)
+t_simple_cmds	*parser(t_lexor *lexor_list, t_tools *tools)
 {
 	t_simple_cmds	*node;
 	int				arg_size;
@@ -135,6 +135,7 @@ t_simple_cmds	*parser(t_lexor *lexor_list)
 			lexor_list = lexor_list->next;
 	}
 	print_parser(tools->simple_cmds);
+	return (node);
 }
 
 void	print_parser(t_simple_cmds *simple_cmds)

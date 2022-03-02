@@ -52,7 +52,7 @@ void	ft_lexordelone(t_lexor **lst, int key)
 {
 	t_lexor	*node;
 	t_lexor	*prev;
-	t_lexor *tmp;
+	// t_lexor *tmp;
 	t_lexor	*start;
 
 	start = *lst;
