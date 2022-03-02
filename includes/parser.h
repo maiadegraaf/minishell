@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 17:59:38 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/03/02 11:10:27 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/03/02 13:57:48 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,20 +29,23 @@ typedef struct s_lexor
 {
 	char			*str;
 	t_tokens		token;
+	int				i;
 	struct s_lexor	*next;
+	struct s_lexor	*prev;
 }	t_lexor;
 
 typedef struct s_tools
 {
-	char	*args;
-	char	**paths;
-	char	**envp;
-	int		in;
-	int		out;
-	int		err;
-	char	*pwd;
-	char	*old_pwd;
-	int		pipes;
+	char					*args;
+	char					**paths;
+	char					**envp;
+	struct s_simple_cmds	*simple_cmds;
+	int						in;
+	int						out;
+	int						err;
+	char					*pwd;
+	char					*old_pwd;
+	int						pipes;
 }	t_tools;
 
 typedef struct s_simple_cmds

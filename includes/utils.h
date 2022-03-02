@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 15:36:23 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/02/21 17:11:45 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/02/24 16:58:36 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,14 @@
 t_simple_cmds	*ft_simple_cmdsnew(char **str, int (*builtin)(t_tools *),
 					int num_redirections, t_lexor *redirections);
 void			ft_simple_cmdsadd_back(t_simple_cmds **lst, t_simple_cmds *new);
-void			ft_simple_cmdsdelone(t_simple_cmds **lst, char key);
+void			ft_simple_cmds_rm_first(t_simple_cmds **lst);
 void			ft_simple_cmdsclear(t_simple_cmds **lst);
 t_simple_cmds	*ft_simple_cmdslast(t_simple_cmds *map);
 
 //t_lexor_utils
 t_lexor			*ft_lexornew(char *str, int token);
 void			ft_lexoradd_back(t_lexor **lst, t_lexor *new);
-void			ft_lexordelone(t_lexor **lst, char key);
+void			ft_lexordelone(t_lexor **lst, int i);
 void			ft_lexorclear(t_lexor **lst);
 t_lexor			*ft_lexorlast(t_lexor *map);
 

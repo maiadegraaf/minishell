@@ -11,15 +11,17 @@ PATHSP = src/parser/
 PATHSB = src/builtins/
 PATHSU = src/utils/
 PATHP = src/pipex/
+PATHEX = src/executor/
 
 
-BUILD_PATHS = $(PATHB) $(PATHD) $(PATHO) $(PATHR)
+BUILD_PATHS = $(PATHB) $(PATHD) $(PATHO) $(PATHR) $(PATHEX)
 
 src	=	$(wildcard $(PATHS)*.c) \
 		$(wildcard $(PATHSL)*.c) \
 		$(wildcard $(PATHSP)*.c) \
 		$(wildcard $(PATHSB)*.c) \
-		$(wildcard $(PATHSU)*.c) 
+		$(wildcard $(PATHSU)*.c) \
+		$(wildcard $(PATHEX)*.c)
 
 OBJS	=	$(addprefix $(PATHO), $(notdir $(patsubst %.c, %.o, $(src))))
 
@@ -54,18 +56,22 @@ $(PATHO)%.o:: $(PATHSU)%.c $(HEADERS)
 	@echo "Compiling ${notdir $<}			in	$(PATHSU)"
 	@$(CC) -c $(FLAGS) $(INCLUDES) $< -o $@
 
+$(PATHO)%.o:: $(PATHEX)%.c $(HEADERS)
+	@echo "Compiling ${notdir $<}			in	$(PATHEX)"
+	@$(CC) -c $(FLAGS) $(INCLUDES) $< -o $@
+
 $(NAME): $(LIBFT) $(OBJS) $(HEADERS)
 	@$(CC) $(FLAGS) $(LIBFT) $(OBJS) -lreadline -o $(NAME)
 	@echo "Success"
 
 $(LIBFT):
-	$(MAKE) -C ./libraries/libft
+	@$(MAKE) -C ./libraries/libft
 
 $(PATHB):
-	$(MKDIR) $(PATHB)
+	@$(MKDIR) $(PATHB)
 
 $(PATHO):
-	$(MKDIR) $(PATHO)
+	@$(MKDIR) $(PATHO)
 
 clean:
 	@echo "Cleaning"
