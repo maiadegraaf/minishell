@@ -22,7 +22,7 @@ t_lexor	*ft_lexornew(char *str, int token)
 		return (0);
 	new_element->str = str;
 	new_element->token = token;
-	new_element->i	= i++;
+	new_element->i = i++;
 	new_element->next = NULL;
 	new_element->prev = NULL;
 	return (new_element);
@@ -52,7 +52,6 @@ void	ft_lexordelone(t_lexor **lst, int key)
 {
 	t_lexor	*node;
 	t_lexor	*prev;
-	// t_lexor *tmp;
 	t_lexor	*start;
 
 	start = *lst;
@@ -69,7 +68,8 @@ void	ft_lexordelone(t_lexor **lst, int key)
 		node = node->next;
 	}
 	prev->next = node->next;
-	node->next->prev = prev;
+	if (prev->next)
+		prev->next->prev = prev;
 	free(node);
 	*lst = start;
 }
