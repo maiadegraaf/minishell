@@ -14,7 +14,7 @@ PATHP = src/pipex/
 PATHEX = src/executor/
 
 
-BUILD_PATHS = $(PATHB) $(PATHD) $(PATHO) $(PATHR) $(PATHEX)
+BUILD_PATHS = $(PATHB) $(PATHO) $(PATHR) $(PATHEX)
 
 src	=	$(wildcard $(PATHS)*.c) \
 		$(wildcard $(PATHSL)*.c) \
@@ -84,4 +84,4 @@ fclean: clean
 
 re: fclean all
 
-# .PRECIOUS: $(PATHO)%.o
+.PRECIOUS: $(PATHO)%.o
