@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 15:28:22 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/03/03 12:17:12 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/03/03 15:48:37 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,63 +33,68 @@ int	count_args(t_lexor *lexor_list, t_tools *tools)
 	return (i);
 }
 
-int	handle_heredoc(t_lexor **lexor_list, t_lexor **redirections,
-	int *arg_size, int *num_redirections)
+// int	handle_heredoc(t_lexor **lexor_list, t_lexor **redirections,
+// 	int *arg_size, int *num_redirections)
+// {
+// 	t_lexor	*node;
+
+// 	if ((*lexor_list)->prev->str)
+// 	{
+// 		node = ft_lexornew(ft_strdup((*lexor_list)->prev->str), LESS_LESS);
+// 		if (!node)
+// 			printf("EMERGENCY!!\n");
+// 		ft_lexoradd_back(redirections, node);
+// 		// ft_lexordelone(lexor_list, (*lexor_list)->prev->i);
+// 		arg_size--;
+// 	}
+// 	node = ft_lexornew(ft_strdup((*lexor_list)->next->str), LESS_LESS);
+// 	if (!node)
+// 		printf("EMERGENCY!!\n");
+// 	ft_lexoradd_back(redirections, node);
+// 	ft_lexordelone(lexor_list, (*lexor_list)->next->i);
+// 	ft_lexordelone(lexor_list, (*lexor_list)->i);
+// 	arg_size -= 2;
+// 	num_redirections++;
+// 	return (1);
+// }
+
+// t_lexor	*find_redirections(t_lexor *lexor_list, int *arg_size,
+// 	int *num_redirections)
+// {
+// 	t_lexor	*redirections;
+// 	// t_lexor	*node = NULL;
+
+// 	redirections = NULL;
+// 	// while (*arg_size > 0)
+// 	// {
+// 	// 	// printf("%d\n", *arg_size);
+// 	// 	// if (lexor_list && lexor_list->token == LESS_LESS) // if it is LESS_LESS -> heredoc
+// 			printf("%d\n", *arg_size);
+// 	// 		// handle_heredoc(&lexor_list, &redirections,
+// 	// 		// 	arg_size, num_redirections);
+// 	// 	// else if (lexor_list && (lexor_list->token >= GREAT
+// 	// 	// 		&& lexor_list->token <= LESS_LESS))
+// 	// 	// {
+// 	// 	// 	node = ft_lexornew(ft_strdup(lexor_list->next->str),
+// 	// 	// 			lexor_list->token);
+// 	// 	// 	if (!node)
+// 	// 	// 		printf("EMERGENCY!!\n");
+// 	// 	// 	ft_lexoradd_back(&redirections, node);
+// 	// 	// 	ft_lexordelone(&lexor_list, lexor_list->i);
+// 	// 	// 	ft_lexordelone(&lexor_list, lexor_list->i);
+// 	// 	// 	arg_size -= 2;
+// 			num_redirections++;
+// 	// 	// }
+// 		if (lexor_list)
+// 			lexor_list = lexor_list->next;
+// 	// 	arg_size--;
+// 	// }
+// 	return (redirections);
+// }
+
+t_lexor find_redirections()
 {
-	t_lexor	*node;
-
-	if ((*lexor_list)->prev->str)
-	{
-		node = ft_lexornew(ft_strdup((*lexor_list)->prev->str), GREAT_GREAT);
-		if (!node)
-			printf("EMERGENCY!!\n");
-		ft_lexoradd_back(redirections, node);
-		ft_lexordelone(lexor_list, (*lexor_list)->prev->i);
-		arg_size--;
-	}
-	node = ft_lexornew(ft_strdup((*lexor_list)->next->str), GREAT_GREAT);
-	if (!node)
-		printf("EMERGENCY!!\n");
-	ft_lexoradd_back(redirections, node);
-	ft_lexordelone(lexor_list, (*lexor_list)->next->i);
-	ft_lexordelone(lexor_list, (*lexor_list)->i);
-	arg_size -= 2;
-	num_redirections++;
-	return (1);
-}
-
-t_lexor	*find_redirections(t_lexor *lexor_list, int *arg_size,
-	int *num_redirections)
-{
-	t_lexor	*redirections;
-	t_lexor	*node;
-	// t_lexor *tmp;
-
-	// tmp = lexor_list;
-	redirections = NULL;
-	while (arg_size > 0)
-	{
-		if (lexor_list && lexor_list->token == GREAT_GREAT)
-			handle_heredoc(&lexor_list, &redirections,
-				arg_size, num_redirections);
-		else if (lexor_list && (lexor_list->token >= GREAT
-				&& lexor_list->token <= LESS_LESS))
-		{
-			node = ft_lexornew(ft_strdup(lexor_list->next->str),
-					lexor_list->token);
-			if (!node)
-				printf("EMERGENCY!!\n");
-			ft_lexoradd_back(&redirections, node);
-			ft_lexordelone(&lexor_list, lexor_list->i);
-			ft_lexordelone(&lexor_list, lexor_list->i);
-			arg_size -= 2;
-			num_redirections++;
-		}
-		if (lexor_list)
-			lexor_list = lexor_list->next;
-		arg_size--;
-	}
-	return (redirections);
+	
 }
 
 t_simple_cmds	*initialize_cmd(t_lexor *lexor_list, int arg_size)
@@ -101,9 +106,7 @@ t_simple_cmds	*initialize_cmd(t_lexor *lexor_list, int arg_size)
 
 	i = 0;
 	num_redirections = 0;
-	redirections = find_redirections(lexor_list, &arg_size, &num_redirections);
-	printf("HELLO\n");
-	printf("%d\n", arg_size);
+	redirections = find_redirections(lexor_list, &arg_size, &num_redirections); //current lexor, arg size, 0
 	str = malloc(sizeof(char **) * arg_size + 1);
 	if (!str)
 		return (NULL);
@@ -131,8 +134,8 @@ t_simple_cmds	*parser(t_lexor *lexor_list, t_tools *tools)
 	tools->simple_cmds = NULL;
 	while (lexor_list)
 	{
-		// if (lexor_list->token == PIPE)
-		// 	lexor_list = lexor_list->next;
+		if (lexor_list->token == PIPE)
+			lexor_list = lexor_list->next;
 		arg_size = count_args(lexor_list, tools);
 		node = initialize_cmd(lexor_list, arg_size);
 		if (!tools->simple_cmds)

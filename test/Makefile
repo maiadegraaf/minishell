@@ -36,7 +36,7 @@ COMPILE=gcc -c
 
 LINK=gcc
 
-CFLAGS=-Wall -Werror -Wextra -I. -I$(PATHU) -I$(PATHLIBFT) -I$(PATHS) -I$(PATHP) -I$(PATHI)
+CFLAGS= -I. -I$(PATHU) -I$(PATHLIBFT) -I$(PATHS) -I$(PATHP) -I$(PATHI)
 
 RESULTS = $(patsubst $(PATHT)Test%.c,$(PATHR)Test%.txt, $(SRCT))
 
