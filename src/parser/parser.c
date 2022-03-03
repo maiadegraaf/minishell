@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 15:28:22 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/03/02 14:28:17 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/03/03 11:05:24 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,9 @@ t_lexor	*rm_redirections(t_lexor **lexor_list, int arg_size,
 {
 	t_lexor	*redirections;
 	t_lexor	*node;
+	// t_lexor *tmp;
 
+	// tmp = lexor_list;
 	redirections = NULL;
 	while (arg_size > 0)
 	{
@@ -91,12 +93,12 @@ t_simple_cmds	*initialize_cmd(t_lexor *lexor_list, int arg_size)
 {
 	char	**str;
 	int		i;
-	t_lexor	*redirections;
+	t_lexor	*redirections = NULL;
 	int		num_redirections;
 
 	i = 0;
 	num_redirections = 0;
-	redirections = rm_redirections(&lexor_list, arg_size, &num_redirections);
+	// redirections = rm_redirections(&lexor_list, arg_size, &num_redirections);
 	str = malloc(sizeof(char **) * arg_size + 1);
 	if (!str)
 		return (NULL);
@@ -120,11 +122,12 @@ t_simple_cmds	*parser(t_lexor *lexor_list, t_tools *tools)
 	t_simple_cmds	*node;
 	int				arg_size;
 
+
 	tools->simple_cmds = NULL;
 	while (lexor_list)
 	{
-		if (lexor_list->token == PIPE)
-			lexor_list = lexor_list->next;
+		// if (lexor_list->token == PIPE)
+		// 	lexor_list = lexor_list->next;
 		arg_size = count_args(lexor_list, tools);
 		node = initialize_cmd(lexor_list, arg_size);
 		if (!tools->simple_cmds)
