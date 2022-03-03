@@ -58,16 +58,16 @@ t_lexor *make_expected_redirection(char *str, int token, int i)
 char **make_array(char *str, ...)
 {
 	va_list arg;
-	char **arr;
+	char **arr = NULL;
 	char *test = "test";
 	int i;
 
 	i = 0;
-	va_start(arg, *str);
+	va_start(arg, str);
 	while (test)
 	{
 		test = va_arg(arg, char*);
-		*arr[i] = test;
+		arr[i] = test;
 		i++;
 	}
 	va_end(arg);
@@ -85,6 +85,7 @@ void test_lexer_2(void)
 	init_test("test test | test");
 
 	assert_parser(make_array("test", "test"), NULL, 0, make_expected_redirection(NULL, 0, 0));
+	assert_parser(NULL, NULL, 0, make_expected_redirection(NULL, 0, 0));
 	assert_parser(make_array("test"), NULL, 0, make_expected_redirection(NULL, 0, 0));
 }
 

@@ -6,7 +6,7 @@
 /*   By: fpolycar <fpolycar@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/28 11:12:08 by fpolycar      #+#    #+#                 */
-/*   Updated: 2022/03/02 10:53:47 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/03/03 11:03:25 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,12 +119,9 @@ void test_lexer_9(void)
 {
     init_test("test $BLA$BLA=10$BLA");
     assert_token(0, "test");
-    assert_token(DOLLAR, NULL);
-    assert_token(0, "BLA");
-    assert_token(DOLLAR, NULL);
-    assert_token(0, "BLA=10");
-    assert_token(DOLLAR, NULL);
-    assert_token(0, "BLA");
+    assert_token(DOLLAR, "BLA");
+    assert_token(DOLLAR, "BLA=10");
+    assert_token(DOLLAR, "BLA");
 }
 
 int main(void)
