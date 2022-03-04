@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 15:28:22 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/03/04 10:25:37 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/03/04 10:57:36 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,11 @@ int	count_args(t_lexor *lexor_list, t_tools *tools)
 	return (i);
 }
 
-int	handle_heredoc(t_parser_tools *parser_tools)
+int	handle_heredoc(t_parser_tools *parser_tools, t_lexor *tmp)
 {
 	t_lexor	*node;
 
+		// printf("%s\n", parser_tools->lexor_list->prev->str);
 	if (parser_tools->lexor_list->prev->str)
 	{
 		node = ft_lexornew(ft_strdup(parser_tools->lexor_list->prev->str), LESS_LESS);
@@ -47,12 +48,12 @@ int	handle_heredoc(t_parser_tools *parser_tools)
 		ft_lexordelone(&parser_tools->lexor_list, parser_tools->lexor_list->prev->i);
 		parser_tools->arg_size--;
 	}
-	node = ft_lexornew(ft_strdup(parser_tools->lexor_list->next->str), LESS_LESS);
+	node = ft_lexornew(ft_strdup(tmp->next->str), tmp->token);
 	if (!node)
 		printf("EMERGENCY!!\n");
 	ft_lexoradd_back(&parser_tools->redirections, node);
-	ft_lexordelone(&parser_tools->lexor_list, parser_tools->lexor_list->i);
-	ft_lexordelone(&parser_tools->lexor_list, parser_tools->lexor_list->i);
+	ft_lexordelone(&parser_tools->lexor_list, tmp->i);
+	ft_lexordelone(&parser_tools->lexor_list, tmp->next->i);
 	parser_tools->arg_size--;
 	parser_tools->num_redirections++;
 	return (1);
@@ -68,7 +69,7 @@ void	find_redirections(t_parser_tools *parser_tools)
 	{
 		printf("%d\n", parser_tools->arg_size);
 		if (tmp && tmp->token == LESS_LESS)
-			handle_heredoc(parser_tools);
+			handle_heredoc(parser_tools, tmp);
 		else if (tmp && (tmp->token >= GREAT
 				&& tmp->token <= LESS))
 		{
