@@ -5,36 +5,51 @@ TARGET_EXTENSION=out
 .PHONY: clean
 .PHONY: test
 
+PATHLIBFT = ../libraries/libft
 PATHU = ../unity/src/
 PATHI = ../includes/
 PATHS = ../src/
 PATHSL = ../src/lexor/
 PATHSP = ../src/parser/
 PATHP = ../src/pipex/
+PATHSU = ../src/utils/
+PATHSB = ../src/builtins/
 PATHT = ../test/
 PATHB = ../build/
-PATHD = ../build/depends/
 PATHO = ../build/objs/
 PATHR = ../build/results/
 
+LIBFT	=	../libraries/libft/libft.a
+
 BUILD_PATHS = $(PATHB) $(PATHD) $(PATHO) $(PATHR)
 
-HEADER	=	$(wildcard ../includes/*.c) 
+HEADER	=	$(wildcard $(PATHI)*.h) 
 
 SRCT = $(wildcard $(PATHT)*.c)
 
-COMPILE=gcc -c
-LINK=gcc
-DEPEND=gcc -MM -MG -MF
-CFLAGS=-Wall -Werror -Wextra -I. -I$(PATHU) -I$(PATHS) -I$(PATHP) -I$(PATHI) -DTEST
+src	=	$(wildcard $(PATHSL)*.c) \
+		$(wildcard $(PATHSP)*.c) \
+		$(wildcard $(PATHSU)*.c) \
+		$(wildcard $(PATHSB)*.c)
 
-RESULTS = $(patsubst $(PATHT)Test%.c,$(PATHR)Test%.txt,$(SRCT))
+COMPILE=gcc -c
+
+LINK=gcc
+
+CFLAGS= -I. -I$(PATHU) -I$(PATHLIBFT) -I$(PATHS) -I$(PATHP) -I$(PATHI)
+
+RESULTS = $(patsubst $(PATHT)Test%.c,$(PATHR)Test%.txt, $(SRCT))
+
+OBJS = $(addprefix $(PATHO), $(notdir $(patsubst %.c, %.o, $(src))))
 
 PASSED = `grep -s PASS $(PATHR)*.txt`
+
 FAIL = `grep -s FAIL $(PATHR)*.txt`
+
 IGNORE = `grep -s IGNORE $(PATHR)*.txt`
 
 test: $(BUILD_PATHS) $(RESULTS)
+	@echo $(PATHO)
 	@echo "-----------------------\nIGNORES:\n-----------------------"
 	@echo "$(IGNORE)"
 	@echo "-----------------------\nFAILURES:\n-----------------------"
@@ -43,17 +58,17 @@ test: $(BUILD_PATHS) $(RESULTS)
 	@echo "$(PASSED)"
 	@echo "\nDONE"
 
-$(PATHR)%.txt: $(PATHB)%.$(TARGET_EXTENSION)
+$(PATHR)%.txt: $(PATHO)%.$(TARGET_EXTENSION)
 	-./$< > $@ 2>&1
 
-$(PATHB)Test%.$(TARGET_EXTENSION): $(PATHO)Test%.o $(PATHO)%.o $(PATHU)unity.o #$(PATHD)Test%.d
-	$(LINK) $(CFLAGS) -o $@ $^
+$(PATHO)Test%.$(TARGET_EXTENSION): $(LIBFT) $(OBJS) $(PATHO)Test%.o $(PATHO)%.o $(PATHU)unity.o 
+	$(LINK) -lreadline -o  $@ $^
 
 $(PATHO)%.o:: $(PATHT)%.c $(HEADERS)
 	$(COMPILE) $(CFLAGS) $< -o $@
 
-$(PATHO)%.o:: $(PATHS)%.c $(HEADERS)
-	$(COMPILE) $(CFLAGS) $< -o $@
+# $(PATHO)%.o:: $(PATHS)%.c $(HEADERS)
+# 	$(COMPILE) $(CFLAGS) $< -o $@
 
 $(PATHO)%.o:: $(PATHSL)%.c $(HEADERS)
 	$(COMPILE) $(CFLAGS) $< -o $@
@@ -61,17 +76,17 @@ $(PATHO)%.o:: $(PATHSL)%.c $(HEADERS)
 $(PATHO)%.o:: $(PATHSP)%.c $(HEADERS)
 	$(COMPILE) $(CFLAGS) $< -o $@
 
+$(PATHO)%.o:: $(PATHSU)%.c $(HEADERS)
+	$(COMPILE) $(CFLAGS) $< -o $@
+
+$(PATHO)%.o:: $(PATHSB)%.c $(HEADERS)
+	$(COMPILE) $(CFLAGS) $< -o $@
+
 $(PATHO)%.o:: $(PATHU)%.c $(PATHU)%.h
 	$(COMPILE) $(CFLAGS) $< -o $@
 
-$(PATHD)%.d:: $(PATHT)%.c
-	$(DEPEND) $@ $<
-
 $(PATHB):
 	$(MKDIR) $(PATHB)
-
-$(PATHD):
-	$(MKDIR) $(PATHD)
 
 $(PATHO):
 	$(MKDIR) $(PATHO)
@@ -79,13 +94,17 @@ $(PATHO):
 $(PATHR):
 	$(MKDIR) $(PATHR)
 
+$(LIBFT):
+	$(MAKE) -C $(PATHLIBFT)
+
 clean:
 	$(CLEANUP) $(PATHO)*.o
 	$(CLEANUP) $(PATHB)*.$(TARGET_EXTENSION)
 	$(CLEANUP) $(PATHR)*.txt
+	rm -rdf $(PATHB)
+	make fclean -C $(PATHLIBFT)
 
-fclean:
-	clean
+re: clean test
 
 .PRECIOUS: $(PATHB)Test%.$(TARGET_EXTENSION)
 .PRECIOUS: $(PATHD)%.d

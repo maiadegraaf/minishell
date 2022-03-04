@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   Testmain.c                                         :+:    :+:            */
+/*   Testtoken_reader.c                                 :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: fpolycar <fpolycar@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/28 11:12:08 by fpolycar      #+#    #+#                 */
-/*   Updated: 2022/03/01 13:38:49 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/03/03 11:03:25 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "unity.h"
-#include "minishell.h"
+#include "lexor.h"
 
-t_tools tools;
-t_lexor *lexor;
+t_tools test_tools;
+t_lexor *test_lexor;
 
 void setUp(void) {
     // set stuff up here
@@ -26,25 +26,115 @@ void tearDown(void) {
 
 void init_test(char *line)
 {
-    tools.args = line;
-    
+    test_tools.args = line;
+    test_lexor = token_reader(&test_tools);
 }
 
-void test_parser_1(void)
+void assert_token(int token, char *expected)
+{
+    TEST_ASSERT_EQUAL_STRING(expected, test_lexor->str);
+    TEST_ASSERT_EQUAL_INT(token, test_lexor->token);
+    test_lexor = test_lexor->next;
+}
+
+void test_lexer_1(void)
 {
     init_test("   test   ");
-    TEST_ASSERT_EQUAL_STRING("echo", token_reader(&tools)->str);
+    assert_token( 0, "test");
 }
 
+void test_lexer_2(void)
+{
+    init_test("   test  | test ");
+    assert_token(0, "test");
+    assert_token(PIPE, NULL);
+    assert_token(0, "test");
+}
 
-// TEST_ASSERT_EQUAL_STRING("echo", token_reader(&tools)->str);
-// TEST_ASSERT_EQUAL_HEX8(33, AverageThreeBytes(33, 33, 33));
-// }
+void test_lexer_3(void)
+{
+    init_test("   test test test          test || test       test");
+    assert_token(0, "test");
+    assert_token(0, "test");
+    assert_token(0, "test");
+    assert_token(0, "test");
+    assert_token(PIPE, NULL);
+    assert_token(PIPE, NULL);
+    assert_token(0, "test");
+    assert_token(0, "test");
+}
 
+void test_lexer_4(void)
+{
+    init_test("   test   \n\n  test\n \ntest");
+    assert_token(0, "test");
+    assert_token(NEW_LINE, NULL);
+    assert_token(NEW_LINE, NULL);
+    assert_token(0, "test");
+    assert_token(NEW_LINE, NULL);
+    assert_token(NEW_LINE, NULL);
+    assert_token(0, "test");
+}
+
+void test_lexer_5(void)
+{
+    init_test("test '  test | test' '  ");
+    assert_token(0, "test");
+    assert_token(0, "'  test | test'");
+}
+
+void test_lexer_6(void)
+{
+    init_test("test    \" |  test\"");
+    assert_token(0, "test");
+    assert_token(0, "\" |  test\"");
+}
+
+void test_lexer_7(void)
+{
+    init_test("test < | test > | test << | test >> |");
+    assert_token(0, "test");
+    assert_token(LESS, NULL);
+    assert_token(PIPE, NULL);
+    assert_token(0, "test");
+    assert_token(GREAT, NULL);
+    assert_token(PIPE, NULL);
+    assert_token(0, "test");
+    assert_token(LESS_LESS, NULL);
+    assert_token(PIPE, NULL);
+    assert_token(0, "test");
+    assert_token(GREAT_GREAT, NULL);
+    assert_token(PIPE, NULL);
+}
+
+void test_lexer_8(void)
+{
+    init_test("test -nBa -n");
+    assert_token(0, "test");
+    assert_token(0, "-nBa");
+    assert_token(0, "-n");
+}
+
+void test_lexer_9(void)
+{
+    init_test("test $BLA$BLA=10$BLA");
+    assert_token(0, "test");
+    assert_token(DOLLAR, "BLA");
+    assert_token(DOLLAR, "BLA=10");
+    assert_token(DOLLAR, "BLA");
+}
 
 int main(void)
 {
-UNITY_BEGIN();
-RUN_TEST(test_parser_1);
-return UNITY_END();
+    UNITY_BEGIN();
+    RUN_TEST(test_lexer_1);
+    RUN_TEST(test_lexer_2);
+    RUN_TEST(test_lexer_3);
+    RUN_TEST(test_lexer_4);
+    RUN_TEST(test_lexer_5);
+    RUN_TEST(test_lexer_6);
+    RUN_TEST(test_lexer_7);
+    RUN_TEST(test_lexer_8);
+    RUN_TEST(test_lexer_9);
+    return UNITY_END();
 }

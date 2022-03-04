@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/14 12:04:02 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/03/01 13:51:34 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/03/03 13:14:51 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,12 @@ int	implement_tools(t_tools *tools)
 int	main(int argc, char **argv, char **envp)
 {
 	t_tools	tools;
-	t_lexor	*lexor_list = NULL;
+	t_lexor	*lexor_list;
 
+	lexor_list = NULL;
 	if (argc != 1 || argv[1])
 	{
-		printf("Please do not enter any arguments\n");
+		printf("This program does not accept arguments\n");
 		exit(0);
 	}
 	tools.envp = envp;
@@ -37,21 +38,10 @@ int	main(int argc, char **argv, char **envp)
 	{
 		tools.args = readline("minishell$ ");
 		add_history(tools.args);
-		while (count_quotes(tools.args) % 2 != 0 || tools.args[ft_strlen(tools.args) - 1] == 92)
-		{
-			if (tools.args[ft_strlen(tools.args) - 1] == 92)
-				tools.args = ft_substr(tools.args, 0, ft_strlen(tools.args) - 1);
-			tools.args = ft_strjoin(tools.args, readline("> "));
-		}
 		lexor_list = token_reader(&tools);
 		parser(lexor_list, &tools);
-		executor(&tools);
+		// executor(&tools);
 		free(tools.args);
 	}
 	return (0);
 }
-
-// int8_t AverageThreeBytes(int8_t a, int8_t b, int8_t c)
-// {
-// return (int8_t)(((int16_t)a + (int16_t)b + (int16_t)c) / 3);
-// }

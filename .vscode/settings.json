@@ -1,8 +1,0 @@
-{
-	"files.autoSave": "onFocusChange",
-	"files.associations": {
-		"stdio.h": "c",
-		"readline.h": "c",
-		"libft.h": "c"
-	}
-}
