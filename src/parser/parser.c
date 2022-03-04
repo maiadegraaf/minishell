@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 15:28:22 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/03/04 10:04:11 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/03/04 10:25:37 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	handle_heredoc(t_parser_tools *parser_tools)
 	ft_lexoradd_back(&parser_tools->redirections, node);
 	ft_lexordelone(&parser_tools->lexor_list, parser_tools->lexor_list->i);
 	ft_lexordelone(&parser_tools->lexor_list, parser_tools->lexor_list->i);
-	parser_tools->arg_size -= 2;
+	parser_tools->arg_size--;
 	parser_tools->num_redirections++;
 	return (1);
 }
@@ -70,15 +70,15 @@ void	find_redirections(t_parser_tools *parser_tools)
 		if (tmp && tmp->token == LESS_LESS)
 			handle_heredoc(parser_tools);
 		else if (tmp && (tmp->token >= GREAT
-				&& tmp->token <= LESS_LESS))
+				&& tmp->token <= LESS))
 		{
 			node = ft_lexornew(ft_strdup(tmp->next->str), tmp->token);
 			if (!node)
 				printf("EMERGENCY!!\n");
 			ft_lexoradd_back(&parser_tools->redirections, node);
 			ft_lexordelone(&parser_tools->lexor_list, tmp->i);
-			ft_lexordelone(&parser_tools->lexor_list, tmp->i);
-			parser_tools->arg_size -= 2;
+			ft_lexordelone(&parser_tools->lexor_list, tmp->next->i);
+			parser_tools->arg_size--;
 			parser_tools->num_redirections++;
 		}
 		if (parser_tools->lexor_list)
@@ -95,6 +95,13 @@ t_simple_cmds	*initialize_cmd(t_parser_tools *parser_tools)
 	i = 0;
 	find_redirections(parser_tools);
 	str = malloc(sizeof(char **) * parser_tools->arg_size + 1);
+	t_lexor	*tmp;
+	tmp = parser_tools->lexor_list;
+	while (tmp && tmp->token != PIPE)
+	{
+		parser_tools->arg_size++;
+		tmp = tmp->next;
+	}
 	if (!str)
 		return (NULL);
 	while (parser_tools->arg_size > 0)
@@ -139,7 +146,8 @@ t_simple_cmds	*parser(t_lexor *lexor_list, t_tools *tools)
 			tools->simple_cmds = node;
 		else
 			ft_simple_cmdsadd_back(&tools->simple_cmds, node);
-		while (parser_tools.arg_size--)
+		lexor_list = parser_tools.lexor_list;
+		if (lexor_list && lexor_list->token == PIPE)
 			lexor_list = lexor_list->next;
 	}
 	print_parser(tools->simple_cmds);
