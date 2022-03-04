@@ -67,7 +67,10 @@ void	ft_lexordelone(t_lexor **lst, int key)
 		prev = node;
 		node = node->next;
 	}
-	prev->next = node->next;
+	if (node)
+		prev->next = node->next;
+	else
+		prev->next = NULL;
 	if (prev->next)
 		prev->next->prev = prev;
 	free(node);
