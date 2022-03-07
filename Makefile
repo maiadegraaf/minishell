@@ -33,7 +33,6 @@ HEADER	=	$(wildcard ./includes/*.h)
 	
 INCLUDES =-Iincludes -I$(PATHP) -I$(LIBFTP)
 
-
 all: $(BUILD_PATHS) $(NAME)
 
 $(PATHO)%.o:: $(PATHS)%.c

@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 15:28:22 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/03/04 11:28:30 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/03/04 12:01:30 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,31 +14,10 @@
 
 void	print_parser(t_simple_cmds *simple_cmds);
 
-int	count_args(t_lexor *lexor_list, t_tools *tools)
-{
-	t_lexor	*tmp;
-	int		i;
-
-	i = 0;
-	tmp = lexor_list;
-	while (tmp && tmp->token != PIPE)
-	{
-		i++;
-		tmp = tmp->next;
-	}
-	if (tmp)
-	{
-		if (tmp->token == PIPE)
-			tools->pipes++;
-	}
-	return (i);
-}
-
 int	handle_heredoc(t_parser_tools *parser_tools, t_lexor *tmp)
 {
 	t_lexor	*node;
 
-	printf("%s %d\n", tmp->prev->str, tmp->token);
 	if (tmp->prev->str && tmp->token == LESS_LESS)
 	{
 		node = ft_lexornew(ft_strdup(tmp->prev->str), LESS_LESS);
@@ -67,7 +46,6 @@ void	find_redirections(t_parser_tools *parser_tools)
 	tmp = parser_tools->lexor_list;
 	while (parser_tools->arg_size > 0)
 	{
-		printf("%d\n", parser_tools->arg_size);
 		if (tmp && tmp->token == LESS_LESS)
 			handle_heredoc(parser_tools, tmp);
 		else if (tmp && (tmp->token >= GREAT
@@ -96,13 +74,7 @@ t_simple_cmds	*initialize_cmd(t_parser_tools *parser_tools)
 	i = 0;
 	find_redirections(parser_tools);
 	str = malloc(sizeof(char **) * parser_tools->arg_size + 1);
-	t_lexor	*tmp;
-	tmp = parser_tools->lexor_list;
-	while (tmp && tmp->token != PIPE)
-	{
-		parser_tools->arg_size++;
-		tmp = tmp->next;
-	}
+	parser_tools->arg_size = count_args(parser_tools->lexor_list);
 	if (!str)
 		return (NULL);
 	while (parser_tools->arg_size > 0)
@@ -116,17 +88,6 @@ t_simple_cmds	*initialize_cmd(t_parser_tools *parser_tools)
 			parser_tools->num_redirections, parser_tools->redirections));
 }
 
-t_parser_tools	init_parser_tools(t_lexor *lexor_list, int arg_size)
-{
-	t_parser_tools	parser_tools;
-
-	parser_tools.lexor_list = lexor_list;
-	parser_tools.redirections = NULL;
-	parser_tools.arg_size = arg_size;
-	parser_tools.num_redirections = 0;
-	return (parser_tools);
-}
-
 //free lexor_list
 //handle malloc errors
 
@@ -136,12 +97,12 @@ t_simple_cmds	*parser(t_lexor *lexor_list, t_tools *tools)
 	t_parser_tools	parser_tools;
 
 	tools->simple_cmds = NULL;
+	count_pipes(lexor_list, tools);
 	while (lexor_list)
 	{
 		if (lexor_list->token == PIPE)
 			lexor_list = lexor_list->next;
-		parser_tools = init_parser_tools(lexor_list,
-				count_args(lexor_list, tools));
+		parser_tools = init_parser_tools(lexor_list);
 		node = initialize_cmd(&parser_tools);
 		if (!tools->simple_cmds)
 			tools->simple_cmds = node;
