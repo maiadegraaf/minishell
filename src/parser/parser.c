@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 15:28:22 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/03/08 16:14:49 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/03/08 16:37:29 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,23 +17,22 @@ void	print_parser(t_simple_cmds *simple_cmds);
 int	handle_heredoc(t_parser_tools *parser_tools, t_lexor *tmp)
 {
 	t_lexor	*node;
+	int		itmp;
 
+	itmp = tmp->i;
+	if (tmp->prev->str && tmp->token == LESS_LESS)
+	{
+		ft_lexordelone(&parser_tools->lexor_list, itmp - 1);
+		parser_tools->arg_size--;
+	}
 	node = ft_lexornew(ft_strjoin(ft_strdup(tmp->prev->str),
 		ft_strjoin("|", ft_strdup(tmp->next->str))), tmp->token);
 	if (!node)
 		printf("EMERGENCY!!\n");
 	ft_lexoradd_back(&parser_tools->redirections, node);
-	printf("%d\n\n", tmp->i);
-	ft_lexordelone(&parser_tools->lexor_list, tmp->i);
-	printf("%d\n\n", tmp->i);
-	ft_lexordelone(&parser_tools->lexor_list, 0);
-	printf("%d\n\n", tmp->i);
+	ft_lexordelone(&parser_tools->lexor_list, itmp);
+	ft_lexordelone(&parser_tools->lexor_list, itmp + 1);
 	parser_tools->arg_size--;
-	// if (tmp->prev->str && tmp->token == LESS_LESS)
-	// {
-	// 	ft_lexordelone(&parser_tools->lexor_list, tmp->i + 1);
-	// 	parser_tools->arg_size--;
-	// }
 	parser_tools->num_redirections++;
 	return (1);
 }
@@ -121,9 +120,12 @@ void	print_parser(t_simple_cmds *simple_cmds)
 	while (simple_cmds)
 	{
 		printf("\n>>>%i<<<\n", i++);
-		while (*simple_cmds->str)
+		if (*simple_cmds->str)
 		{
-			printf("%s\n", *simple_cmds->str++);
+			while (*simple_cmds->str)
+			{
+				printf("%s\n", *simple_cmds->str++);
+			}
 		}
 		if (simple_cmds->redirections)
 			printf("\nredirections:\n");
