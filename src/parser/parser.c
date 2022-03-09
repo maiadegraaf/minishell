@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 15:28:22 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/03/08 16:37:29 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/03/09 14:18:42 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,9 @@ void	find_redirections(t_parser_tools *parser_tools)
 	t_lexor	*tmp;
 
 	tmp = parser_tools->lexor_list;
-	while (parser_tools->arg_size > 0)
+	while (tmp)
 	{
+			printf("in =%d \n", parser_tools->arg_size);
 		if (tmp && tmp->token == LESS_LESS)
 			handle_heredoc(parser_tools, tmp);
 		else if (tmp && (tmp->token >= GREAT
@@ -55,14 +56,14 @@ void	find_redirections(t_parser_tools *parser_tools)
 				printf("EMERGENCY!!\n");
 			ft_lexoradd_back(&parser_tools->redirections, node);
 			ft_lexordelone(&parser_tools->lexor_list, tmp->i);
-			ft_lexordelone(&parser_tools->lexor_list, tmp->next->i);
-			parser_tools->arg_size--;
+			// parser_tools->arg_size--;
 			parser_tools->num_redirections++;
 		}
+		parser_tools->arg_size--;
 		if (parser_tools->lexor_list)
 			tmp = tmp->next;
-		parser_tools->arg_size--;
 	}
+			// ft_lexordelone(&parser_tools->lexor_list, 0);
 }
 
 t_simple_cmds	*initialize_cmd(t_parser_tools *parser_tools)
@@ -71,14 +72,17 @@ t_simple_cmds	*initialize_cmd(t_parser_tools *parser_tools)
 	int		i;
 
 	i = 0;
-	find_redirections(parser_tools);
 	parser_tools->arg_size = count_args(parser_tools->lexor_list);
 	str = malloc(sizeof(char **) * parser_tools->arg_size + 1);
+	find_redirections(parser_tools);
+	parser_tools->arg_size = count_args(parser_tools->lexor_list);
+	printf("%d", parser_tools->arg_size);
 	if (!str)
 		return (NULL);
 	while (parser_tools->arg_size > 0)
 	{
-		str[i++] = ft_strdup(parser_tools->lexor_list->str);
+		if (parser_tools->lexor_list->str)
+			str[i++] = ft_strdup(parser_tools->lexor_list->str);
 		parser_tools->lexor_list = parser_tools->lexor_list->next;
 		parser_tools->arg_size--;
 	}
