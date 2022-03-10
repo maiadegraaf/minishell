@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 15:28:22 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/03/09 14:18:42 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/03/10 16:06:24 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,22 @@ void	print_parser(t_simple_cmds *simple_cmds);
 int	handle_heredoc(t_parser_tools *parser_tools, t_lexor *tmp)
 {
 	t_lexor	*node;
-	int		itmp;
 
-	itmp = tmp->i;
-	if (tmp->prev->str && tmp->token == LESS_LESS)
+	tmp = tmp->prev;
+	if (tmp->str && tmp->token == LESS_LESS)
 	{
-		ft_lexordelone(&parser_tools->lexor_list, itmp - 1);
+		ft_lexordelone(&parser_tools->lexor_list, tmp->prev->i);
 		parser_tools->arg_size--;
 	}
+	tmp = tmp->next;
 	node = ft_lexornew(ft_strjoin(ft_strdup(tmp->prev->str),
 		ft_strjoin("|", ft_strdup(tmp->next->str))), tmp->token);
 	if (!node)
 		printf("EMERGENCY!!\n");
 	ft_lexoradd_back(&parser_tools->redirections, node);
-	ft_lexordelone(&parser_tools->lexor_list, itmp);
-	ft_lexordelone(&parser_tools->lexor_list, itmp + 1);
+	ft_lexordelone(&parser_tools->lexor_list, tmp->i);
+	tmp = tmp->next;
+	ft_lexordelone(&parser_tools->lexor_list, tmp->i);
 	parser_tools->arg_size--;
 	parser_tools->num_redirections++;
 	return (1);
@@ -43,9 +44,9 @@ void	find_redirections(t_parser_tools *parser_tools)
 	t_lexor	*tmp;
 
 	tmp = parser_tools->lexor_list;
-	while (tmp)
+	while (parser_tools->arg_size)
 	{
-			printf("in =%d \n", parser_tools->arg_size);
+		printf("arg =%d \n", parser_tools->arg_size);
 		if (tmp && tmp->token == LESS_LESS)
 			handle_heredoc(parser_tools, tmp);
 		else if (tmp && (tmp->token >= GREAT
@@ -56,12 +57,14 @@ void	find_redirections(t_parser_tools *parser_tools)
 				printf("EMERGENCY!!\n");
 			ft_lexoradd_back(&parser_tools->redirections, node);
 			ft_lexordelone(&parser_tools->lexor_list, tmp->i);
-			// parser_tools->arg_size--;
+			tmp = tmp->next;
+			ft_lexordelone(&parser_tools->lexor_list, tmp->i);
+			parser_tools->arg_size--;
 			parser_tools->num_redirections++;
 		}
-		parser_tools->arg_size--;
 		if (parser_tools->lexor_list)
 			tmp = tmp->next;
+		parser_tools->arg_size--;
 	}
 			// ft_lexordelone(&parser_tools->lexor_list, 0);
 }
