@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 15:28:22 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/03/10 16:06:24 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/03/11 14:20:13 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,12 @@ int	handle_heredoc(t_parser_tools *parser_tools, t_lexor *tmp)
 	{
 		ft_lexordelone(&parser_tools->lexor_list, tmp->prev->i);
 		parser_tools->arg_size--;
+		tmp = tmp->next;
+		node = ft_lexornew(ft_strjoin(ft_strdup(tmp->prev->str),
+			ft_strjoin("|", ft_strdup(tmp->next->str))), tmp->token);
 	}
-	tmp = tmp->next;
-	node = ft_lexornew(ft_strjoin(ft_strdup(tmp->prev->str),
-		ft_strjoin("|", ft_strdup(tmp->next->str))), tmp->token);
+		node = ft_lexornew(ft_strdup(tmp->next->str),
+			tmp->token);
 	if (!node)
 		printf("EMERGENCY!!\n");
 	ft_lexoradd_back(&parser_tools->redirections, node);
