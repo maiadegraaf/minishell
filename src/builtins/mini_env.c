@@ -6,13 +6,13 @@
 /*   By: maiadegraaf <maiadegraaf@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/16 12:09:05 by maiadegraaf   #+#    #+#                 */
-/*   Updated: 2022/02/17 12:19:23 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/03/15 12:53:28 by maiadegraaf   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
-int	mini_env(t_tools *tools)
+int	mini_env(t_tools *tools, t_simple_cmds *simple_cmd)
 {
 	int	i;
 

@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/15 11:42:32 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/03/10 11:18:04 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/03/15 12:53:14 by maiadegraaf   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	change_path(t_tools *tools)
 	tools->pwd = getcwd(NULL, sizeof(NULL));
 }
 
-int	(*builtin_arr(char *str))(t_tools *tools)
+int	(*builtin_arr(char *str))(t_tools *tools, t_simple_cmds *simple_cmd)
 {
 	static void	*builtins[7][2] = {
 	{"echo", mini_echo},

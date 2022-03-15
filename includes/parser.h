@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 17:59:38 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/03/07 15:10:47 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/03/15 12:54:11 by maiadegraaf   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@ typedef struct s_lexor
 	struct s_lexor	*prev;
 }	t_lexor;
 
-
-
 typedef struct s_parser_tools
 {
 	t_lexor	*lexor_list;
@@ -61,7 +59,7 @@ typedef struct s_tools
 typedef struct s_simple_cmds
 {
 	char					**str;
-	int						(*builtin)(t_tools *);
+	int						(*builtin)(t_tools *, t_simple_cmds *));
 	int						num_redirections;
 	t_lexor					*redirections;
 	struct s_simple_cmds	*next;
