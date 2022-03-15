@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/15 11:42:32 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/03/03 10:29:38 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/03/10 11:18:04 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,11 @@ int	(*builtin_arr(char *str))(t_tools *tools)
 	i = 0;
 	while (i < 7)
 	{
-		if (!ft_strncmp(builtins[i][0], str, ft_strlen(str)))
-			return (builtins[i][1]);
+		if (str)
+		{
+			if (!ft_strncmp(builtins[i][0], str, ft_strlen(builtins[i][0])))
+				return (builtins[i][1]);
+		}
 		i++;
 	}
 	return (NULL);

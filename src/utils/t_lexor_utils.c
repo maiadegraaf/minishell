@@ -77,6 +77,28 @@ void	ft_lexordelone(t_lexor **lst, int key)
 	*lst = start;
 }
 
+void deleteNode(t_lexor **head_ref, int key)
+{
+
+	t_lexor *temp;
+	t_lexor	*prev;
+ 
+	temp = *head_ref;
+    if (temp != NULL && temp->i == key) {
+        *head_ref = temp->next; 
+        free(temp);
+        return;
+    }
+    while (temp != NULL && temp->i != key) {
+        prev = temp;
+        temp = temp->next;
+    }
+    if (temp == NULL)
+        return;
+    prev->next = temp->next;
+    free(temp);
+}
+
 void	ft_lexorclear(t_lexor **lst)
 {
 	t_lexor	*tmp;
