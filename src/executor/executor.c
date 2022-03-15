@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/24 15:09:50 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/03/14 18:17:52 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/03/15 10:05:42 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,5 +74,3 @@ int	executor(t_tools *tools)
 	waitpid(ret, &status, 0);
 	return (0);
 }
-
-lexer $
