@@ -6,7 +6,7 @@
 /*   By: maiadegraaf <maiadegraaf@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/16 12:09:05 by maiadegraaf   #+#    #+#                 */
-/*   Updated: 2022/03/15 12:53:28 by maiadegraaf   ########   odam.nl         */
+/*   Updated: 2022/03/15 13:25:32 by maiadegraaf   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	mini_env(t_tools *tools, t_simple_cmds *simple_cmd)
 
 	i = 0;
 	printf("HELLO\n");
+	(void) simple_cmd;
 	while (tools->envp[i])
 	{
 		if (!ft_strncmp(tools->envp[i], "PWD=", 4))

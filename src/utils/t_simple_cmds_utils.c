@@ -6,13 +6,14 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 15:31:53 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/02/24 16:59:22 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/03/15 13:36:11 by maiadegraaf   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
 
-t_simple_cmds	*ft_simple_cmdsnew(char **str, int (*builtin)(t_tools *),
+t_simple_cmds	*ft_simple_cmdsnew(char **str,
+	int (*builtin)(t_tools *, t_simple_cmds *),
 	int num_redirections, t_lexor *redirections)
 {
 	t_simple_cmds	*new_element;
