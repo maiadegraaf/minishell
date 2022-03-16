@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/15 15:20:00 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/03/01 17:00:19 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/03/15 13:25:05 by maiadegraaf   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,18 @@
 //builtins
 void	change_path(t_tools *tools);
 
-int		mini_echo(t_tools *tools);
+int		mini_echo(t_tools *tools, t_simple_cmds *simple_cmd);
 
-int		mini_cd(t_tools *tools);
+int		mini_cd(t_tools *tools, t_simple_cmds *simple_cmd);
 
-int		mini_pwd(t_tools *tools);
+int		mini_pwd(t_tools *tools, t_simple_cmds *simple_cmd);
 
-int		mini_export(t_tools *tools);
+int		mini_export(t_tools *tools, t_simple_cmds *simple_cmd);
 
-int		mini_unset(t_tools *tools);
+int		mini_unset(t_tools *tools, t_simple_cmds *simple_cmd);
 
-int		mini_env(t_tools *tools);
+int		mini_env(t_tools *tools, t_simple_cmds *simple_cmd);
 
-int		mini_exit(t_tools *tools);
+int		mini_exit(t_tools *tools, t_simple_cmds *simple_cmd);
 
 #endif

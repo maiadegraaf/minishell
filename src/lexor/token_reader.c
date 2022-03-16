@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 17:11:20 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/03/15 11:03:38 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/03/15 14:04:49 by maiadegraaf   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,38 +36,6 @@ int	add_node(char *str, t_tokens token, t_lexor **lexor_list)
 	return (1);
 }
 
-int	handle_quotes_inside_word(int i, char *str, char del)
-{
-	int	j;
-
-	j = 0;
-	if (str[i + j] == del)
-	{
-		j++;
-		while (str[i + j] != del && str[i + j])
-			j++;
-		j++;
-	}
-	return (j);
-}
-
-int	handle_quotes(int i, char *str, char del, t_lexor **lexor_list)
-{
-	int	j;
-
-	j = 0;
-	if (str[i + j] == del)
-	{
-		j++;
-		while (str[i + j] != del && str[i + j])
-			j++;
-		if (!add_node(ft_substr(str, i, j + 1), 0, lexor_list))
-			printf("EMERGENCY!\n");
-		j++;
-	}
-	return (j + 1);
-}
-
 int	read_words(int i, char *str, t_lexor **lexor_list)
 {
 	int	j;
@@ -82,7 +50,6 @@ int	read_words(int i, char *str, t_lexor **lexor_list)
 		else
 			j++;
 	}
-	printf("%d %d\n", i, j);
 	if (!add_node(ft_substr(str, i, j), 0, lexor_list))
 		printf("EMERGENCY!\n");
 	return (j);

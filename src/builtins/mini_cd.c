@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/15 15:17:04 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/03/15 12:53:17 by maiadegraaf   ########   odam.nl         */
+/*   Updated: 2022/03/15 13:25:38 by maiadegraaf   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int	mini_cd(t_tools *tools, t_simple_cmds *simple_cmd)
 {
+	(void) simple_cmd;
 	if (chdir(&tools->args[1]))
 		perror("cd");
 	change_path(tools);
