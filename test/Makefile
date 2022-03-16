@@ -14,6 +14,7 @@ PATHSP = ../src/parser/
 PATHP = ../src/pipex/
 PATHSU = ../src/utils/
 PATHSB = ../src/builtins/
+PATHSE = ../src/error/
 PATHT = ../test/
 PATHB = ../build/
 PATHO = ../build/objs/
@@ -30,7 +31,8 @@ SRCT = $(wildcard $(PATHT)*.c)
 src	=	$(wildcard $(PATHSL)*.c) \
 		$(wildcard $(PATHSP)*.c) \
 		$(wildcard $(PATHSU)*.c) \
-		$(wildcard $(PATHSB)*.c)
+		$(wildcard $(PATHSB)*.c) \
+		$(wildcard $(PATHSE)*.c)
 
 COMPILE=gcc -c
 
@@ -80,6 +82,9 @@ $(PATHO)%.o:: $(PATHSU)%.c $(HEADERS)
 	$(COMPILE) $(CFLAGS) $< -o $@
 
 $(PATHO)%.o:: $(PATHSB)%.c $(HEADERS)
+	$(COMPILE) $(CFLAGS) $< -o $@
+
+$(PATHO)%.o:: $(PATHSE)%.c $(HEADERS)
 	$(COMPILE) $(CFLAGS) $< -o $@
 
 $(PATHO)%.o:: $(PATHU)%.c $(PATHU)%.h
