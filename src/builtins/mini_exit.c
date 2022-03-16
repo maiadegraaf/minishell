@@ -6,7 +6,7 @@
 /*   By: maiadegraaf <maiadegraaf@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 10:10:47 by maiadegraaf   #+#    #+#                 */
-/*   Updated: 2022/03/15 13:25:45 by maiadegraaf   ########   odam.nl         */
+/*   Updated: 2022/03/16 10:05:57 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,6 @@ int	mini_exit(t_tools *tools, t_simple_cmds *simple_cmd)
 {
 	(void) simple_cmd;
 	free(tools->args);
-	exit(0);
+	exit(STDERR_FILENO);
 	return (1);
 }

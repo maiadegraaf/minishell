@@ -6,7 +6,7 @@
 /*   By: fpolycar <fpolycar@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/28 11:12:08 by fpolycar      #+#    #+#                 */
-/*   Updated: 2022/03/15 10:52:59 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/03/16 10:15:44 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,9 @@ void test_lexer_3(void)
 
 void test_lexer_4(void)
 {
-    init_test("   test   \n\n  test\n \ntest");
+    init_test("   test     test test");
     assert_token(0, "test");
-    assert_token(NEW_LINE, NULL);
-    assert_token(NEW_LINE, NULL);
     assert_token(0, "test");
-    assert_token(NEW_LINE, NULL);
-    assert_token(NEW_LINE, NULL);
     assert_token(0, "test");
 }
 
