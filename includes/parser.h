@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 17:59:38 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/03/07 15:10:47 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/03/15 16:18:04 by maiadegraaf   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,10 @@
 typedef enum s_tokens
 {
 	PIPE = 1,
-	NEW_LINE,
 	GREAT,
 	GREAT_GREAT,
 	LESS,
 	LESS_LESS,
-	DOLLAR,
 }	t_tokens;
 
 typedef struct s_lexor
@@ -33,8 +31,6 @@ typedef struct s_lexor
 	struct s_lexor	*next;
 	struct s_lexor	*prev;
 }	t_lexor;
-
-
 
 typedef struct s_parser_tools
 {
@@ -61,7 +57,7 @@ typedef struct s_tools
 typedef struct s_simple_cmds
 {
 	char					**str;
-	int						(*builtin)(t_tools *);
+	int						(*builtin)(t_tools *, struct s_simple_cmds *);
 	int						num_redirections;
 	t_lexor					*redirections;
 	struct s_simple_cmds	*next;
@@ -75,5 +71,10 @@ t_simple_cmds	*parser(t_lexor *lexor_list, t_tools *tools);
 t_parser_tools	init_parser_tools(t_lexor *lexor_list);
 void			count_pipes(t_lexor *lexor_list, t_tools *tools);
 int				count_args(t_lexor *lexor_list);
+
+//handle_redirections
+int				add_new_redirection(t_lexor *tmp, t_parser_tools *parser_tools);
+int				handle_heredoc(t_parser_tools *parser_tools, t_lexor *tmp);
+void			rm_redirections(t_parser_tools *parser_tools);
 
 #endif

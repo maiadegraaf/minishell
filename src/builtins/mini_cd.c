@@ -6,14 +6,15 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/15 15:17:04 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/02/25 15:02:13 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/03/15 13:25:38 by maiadegraaf   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
-int	mini_cd(t_tools *tools)
+int	mini_cd(t_tools *tools, t_simple_cmds *simple_cmd)
 {
+	(void) simple_cmd;
 	if (chdir(&tools->args[1]))
 		perror("cd");
 	change_path(tools);
