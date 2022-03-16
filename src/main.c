@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/14 12:04:02 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/03/15 16:56:50 by maiadegraaf   ########   odam.nl         */
+/*   Updated: 2022/03/16 14:13:53 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,9 @@ int	main(int argc, char **argv, char **envp)
 		tools.args = readline("minishell$ ");
 		add_history(tools.args);
 		lexor_list = token_reader(&tools);
-		parser(lexor_list, &tools);
+		tools.simple_cmds = parser(lexor_list, &tools);
 		// executor(&tools);
+		builtin_arr(tools.args)(&tools, tools.simple_cmds);
 		free(tools.args);
 	}
 	return (0);

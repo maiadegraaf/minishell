@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/15 11:42:32 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/03/15 12:53:14 by maiadegraaf   ########   odam.nl         */
+/*   Updated: 2022/03/16 15:16:31 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	change_path(t_tools *tools)
 {
 	tools->old_pwd = tools->pwd;
 	tools->pwd = getcwd(NULL, sizeof(NULL));
+	
 }
 
 int	(*builtin_arr(char *str))(t_tools *tools, t_simple_cmds *simple_cmd)
@@ -36,10 +37,10 @@ int	(*builtin_arr(char *str))(t_tools *tools, t_simple_cmds *simple_cmd)
 	{
 		if (str)
 		{
-			if (!ft_strncmp(builtins[i][0], str, ft_strlen(builtins[i][0])))
+			if (!ft_strncmp(builtins[i][0], str, ft_strlen((builtins[i][0]))))
 				return (builtins[i][1]);
 		}
 		i++;
 	}
-	return (NULL);
+	return (mini_continue);
 }
