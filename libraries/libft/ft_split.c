@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/16 14:23:50 by mgraaf        #+#    #+#                 */
-/*   Updated: 2021/12/16 14:23:52 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/03/17 11:50:57 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	free_arr(char **split_arr)
 	i = 0;
 	while (split_arr[i])
 	{
-		free (split_arr[i]);
+		free(split_arr[i]);
 		i++;
 	}
 }
