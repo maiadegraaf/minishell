@@ -6,7 +6,7 @@
 /*   By: maiadegraaf <maiadegraaf@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 10:11:56 by maiadegraaf   #+#    #+#                 */
-/*   Updated: 2022/03/16 17:02:02 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/03/17 10:58:21 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,21 +43,48 @@ int variable_exist(t_tools *tools, t_simple_cmds *simple_cmd)
 	return (0);
 }
 
+int check_parameter(char *str)
+{
+	int i;
+
+	i = 0;
+	if (ft_isdigit(str[0]))
+	{
+		ft_putendl_fd("export: not an identifier", STDERR_FILENO);
+		return (1);
+	}
+	if (str[0] == '=')
+	{
+		ft_putendl_fd("export: bad assignment", STDERR_FILENO);
+		return (2);
+	}
+	return (0);
+}
+
 int	mini_export(t_tools *tools, t_simple_cmds *simple_cmd)
 {
-	(void) simple_cmd;
 	int	i;
 
 	i = 0;
-	variable_exist(tools, simple_cmd);
-	// if (simple_cmd->str[1])
-	// {
-	// 		i = 0;
-	// 		while(tools->envp[i])
-	// 			i++;
-	// 		tools->envp[i] = malloc(sizeof(char) * ft_strlen(simple_cmd->str[1]));
-	// 		tools->envp[i] = simple_cmd->str[1];
-	// 		tools->envp[i + 1] = NULL;
-	// }
+	if (!simple_cmd->str[1])
+		mini_env(tools, simple_cmd);
+	else 
+	{
+		if (check_parameter(simple_cmd->str[1]) == 0)
+		{
+			if (variable_exist(tools, simple_cmd) == 0)
+			{
+				if (simple_cmd->str[1])
+				{
+						i = 0;
+						while(tools->envp[i])
+							i++;
+						tools->envp[i] = tools->envp[i - 1];
+						tools->envp[i - 1] = simple_cmd->str[1];
+						tools->envp[i + 1] = NULL;
+				}
+			}
+		}
+	}
 	return (EXIT_SUCCESS);
 }

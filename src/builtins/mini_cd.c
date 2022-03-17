@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/15 15:17:04 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/03/16 16:25:52 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/03/17 11:16:13 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,14 @@ int	mini_cd(t_tools *tools, t_simple_cmds *simple_cmd)
 		}
 	}
 	else
+	{
 		ret = chdir(simple_cmd->str[1]);
 		if (ret != 0)
 		{
 			ft_putendl_fd("Path do not exist", STDERR_FILENO);
 			return (EXIT_FAILURE);
 		}
+	}
 	change_path(tools);
 	return (EXIT_SUCCESS);
 }
