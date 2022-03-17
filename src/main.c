@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/14 12:04:02 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/03/16 10:28:20 by maiadegraaf   ########   odam.nl         */
+/*   Updated: 2022/03/16 16:15:32 by maiadegraaf   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,32 @@ int	implement_tools(t_tools *tools)
 	return (1);
 }
 
+int	reset_tools(t_tools *tools)
+{
+	ft_simple_cmdsclear(&tools->simple_cmds);
+	free(tools->args);
+	implement_tools(tools);
+	tools->pipes = 0;
+	system ("leaks minishell");
+	exit (EXIT_SUCCESS);
+	return (1);
+}
+
 int	minishell_loop(t_tools *tools)
 {
-	t_lexor	*lexor_list;
-
-	lexor_list = NULL;
+	tools->lexor_list = NULL;
 	tools->args = readline("minishell$ ");
 	add_history(tools->args);
-	lexor_list = token_reader(tools);
-	parser(lexor_list, tools);
+	if (!count_quotes(tools->args))
+		ft_error(2, tools);
+	if (!token_reader(tools))
+		ft_error(1, tools);
+	parser(tools);
+	// ft_lexorclear(&lexor_list);
 	// executor(&tools);
-	free(tools->args);
-	minishell_loop(tools);
-	return (0);
+	if (reset_tools(tools))
+		minishell_loop(tools);
+	return (1);
 }
 
 int	main(int argc, char **argv, char **envp)

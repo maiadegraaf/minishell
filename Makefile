@@ -10,6 +10,7 @@ PATHSL = src/lexor/
 PATHSP = src/parser/
 PATHSB = src/builtins/
 PATHSU = src/utils/
+PATHSE = src/error/
 PATHP = src/pipex/
 PATHEX = src/executor/
 
@@ -21,6 +22,7 @@ src	=	$(wildcard $(PATHS)*.c) \
 		$(wildcard $(PATHSP)*.c) \
 		$(wildcard $(PATHSB)*.c) \
 		$(wildcard $(PATHSU)*.c) \
+		$(wildcard $(PATHSE)*.c) \
 		$(wildcard $(PATHEX)*.c)
 
 OBJS	=	$(addprefix $(PATHO), $(notdir $(patsubst %.c, %.o, $(src))))
@@ -53,6 +55,10 @@ $(PATHO)%.o:: $(PATHSB)%.c $(HEADERS)
 
 $(PATHO)%.o:: $(PATHSU)%.c $(HEADERS)
 	@echo "Compiling ${notdir $<}			in	$(PATHSU)"
+	@$(CC) -c $(FLAGS) $(INCLUDES) $< -o $@
+
+$(PATHO)%.o:: $(PATHSE)%.c $(HEADERS)
+	@echo "Compiling ${notdir $<}			in	$(PATHSE)"
 	@$(CC) -c $(FLAGS) $(INCLUDES) $< -o $@
 
 $(PATHO)%.o:: $(PATHEX)%.c $(HEADERS)

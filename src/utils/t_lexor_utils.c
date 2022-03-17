@@ -98,6 +98,7 @@ void	ft_lexordelone(t_lexor **lst, int key)
 //     free(temp);
 // }
 
+
 void	ft_lexorclear(t_lexor **lst)
 {
 	t_lexor	*tmp;
@@ -106,18 +107,23 @@ void	ft_lexorclear(t_lexor **lst)
 		return ;
 	while (*lst)
 	{
+		printf("HOWDIE\n");
 		tmp = (*lst)->next;
+		if ((*lst)->str)
+		{
+			free((*lst)->str);
+		}
 		free(*lst);
 		*lst = tmp;
 	}
 	*lst = NULL;
 }
 
-t_lexor	*ft_lexorlast(t_lexor *lst)
-{
-	if (!lst)
-		return (NULL);
-	while (lst->next != NULL)
-		lst = lst->next;
-	return (lst);
-}
+// t_lexor	*ft_lexorlast(t_lexor *lst)
+// {
+// 	if (!lst)
+// 		return (NULL);
+// 	while (lst->next != NULL)
+// 		lst = lst->next;
+// 	return (lst);
+// }
