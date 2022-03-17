@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 15:28:22 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/03/17 12:07:22 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/03/17 15:28:08 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_simple_cmds	*initialize_cmd(t_parser_tools *parser_tools)
 		return (NULL);
 	while (parser_tools->arg_size > 0)
 	{
-		if (parser_tools->lexor_list->str)
+		if (parser_tools->lexor_list->str && parser_tools->lexor_list->i > 0)
 			str[i++] = ft_strdup(parser_tools->lexor_list->str);
 		// str[i++] = parser_tools->lexor_list->str;
 		parser_tools->lexor_list = parser_tools->lexor_list->next;

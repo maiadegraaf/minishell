@@ -48,6 +48,15 @@ void	ft_lexoradd_back(t_lexor **lst, t_lexor *new)
 	new->prev = tmp;
 }
 
+void	ft_lexorclear_one(t_lexor **lst)
+{
+	if ((*lst)->str)
+	{
+		free((*lst)->str);
+	}
+	free(*lst);
+}
+
 void	ft_lexordelone(t_lexor **lst, int key)
 {
 	t_lexor	*node;
@@ -59,7 +68,7 @@ void	ft_lexordelone(t_lexor **lst, int key)
 	if ((*lst)->i == key)
 	{
 		*lst = node->next;
-		free(node);
+		ft_lexorclear_one(&node);
 		return ;
 	}
 	while (node && node->i != key)
@@ -73,7 +82,7 @@ void	ft_lexordelone(t_lexor **lst, int key)
 		prev->next = NULL;
 	if (prev->next)
 		prev->next->prev = prev;
-	free(node);
+	ft_lexorclear_one(&node);
 	*lst = start;
 }
 
@@ -97,7 +106,6 @@ void	ft_lexordelone(t_lexor **lst, int key)
 //     prev->next = temp->next;
 //     free(temp);
 // }
-
 
 void	ft_lexorclear(t_lexor **lst)
 {

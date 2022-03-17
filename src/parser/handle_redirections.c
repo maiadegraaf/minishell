@@ -6,7 +6,7 @@
 /*   By: maiadegraaf <maiadegraaf@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/15 16:15:48 by maiadegraaf   #+#    #+#                 */
-/*   Updated: 2022/03/16 16:20:39 by maiadegraaf   ########   odam.nl         */
+/*   Updated: 2022/03/17 13:14:26 by maiadegraaf   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ int	add_new_redirection(t_lexor *tmp, t_parser_tools *parser_tools)
 	if (!node)
 		printf("EMERGENCY!!\n");
 	ft_lexoradd_back(&parser_tools->redirections, node);
-	ft_lexordelone(&parser_tools->lexor_list, tmp->i);
+	tmp->i = -1;
 	tmp = tmp->next;
-	ft_lexordelone(&parser_tools->lexor_list, tmp->i);
+	tmp->i = -1;
 	parser_tools->num_redirections++;
 	return (0);
 }
@@ -41,10 +41,10 @@ int	handle_heredoc(t_parser_tools *parser_tools, t_lexor *tmp)
 		if (!node)
 			printf("EMERGENCY!!\n");
 		ft_lexoradd_back(&parser_tools->redirections, node);
-		ft_lexordelone(&parser_tools->lexor_list, tmp->prev->i);
-		ft_lexordelone(&parser_tools->lexor_list, tmp->i);
+		tmp->prev->i = -1;
+		tmp->i = -1;
 		tmp = tmp->next;
-		ft_lexordelone(&parser_tools->lexor_list, tmp->i);
+		tmp->i = -1;
 		parser_tools->num_redirections++;
 	}
 	else
@@ -57,7 +57,7 @@ void	rm_redirections(t_parser_tools *parser_tools)
 	t_lexor	*tmp;
 
 	tmp = parser_tools->lexor_list;
-	while (tmp && tmp->token == 0)
+	while ((tmp && tmp->token == 0) || (tmp && tmp->token > 0 && tmp->i < 0))
 		tmp = tmp->next;
 	if (!tmp || tmp->token == PIPE)
 		return ;
