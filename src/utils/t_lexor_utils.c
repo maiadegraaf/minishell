@@ -107,7 +107,6 @@ void	ft_lexorclear(t_lexor **lst)
 		return ;
 	while (*lst)
 	{
-		printf("HOWDIE\n");
 		tmp = (*lst)->next;
 		if ((*lst)->str)
 		{
