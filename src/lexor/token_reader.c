@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 17:11:20 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/03/15 14:04:49 by maiadegraaf   ########   odam.nl         */
+/*   Updated: 2022/03/16 15:03:44 by maiadegraaf   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,7 @@ int	add_node(char *str, t_tokens token, t_lexor **lexor_list)
 
 	node = ft_lexornew(str, token);
 	if (!node)
-	{
-		printf("EMERGENCY!\n");
 		return (0);
-	}
 	ft_lexoradd_back(lexor_list, node);
 	return (1);
 }
@@ -51,30 +48,31 @@ int	read_words(int i, char *str, t_lexor **lexor_list)
 			j++;
 	}
 	if (!add_node(ft_substr(str, i, j), 0, lexor_list))
-		printf("EMERGENCY!\n");
+		return (-1);
 	return (j);
 }
 
-t_lexor	*token_reader(t_tools *tools)
+int	token_reader(t_tools *tools)
 {
 	int		i;
-	t_lexor	*lexor_list;
+	int		j;
 
 	i = 0;
-	lexor_list = NULL;
-	i += skip_spaces(tools->args, i);
 	while (tools->args[i])
 	{
+		j = 0;
 		i += skip_spaces(tools->args, i);
 		if (tools->args[i] == 34)
-			i += handle_quotes(i, tools->args, 34, &lexor_list);
+			j = handle_quotes(i, tools->args, 34, &tools->lexor_list);
 		else if (tools->args[i] == 39)
-			i += handle_quotes(i, tools->args, 39, &lexor_list);
+			j = handle_quotes(i, tools->args, 39, &tools->lexor_list);
 		else if (check_token(tools->args[i]))
-			i += handle_token(tools->args, i, &lexor_list);
+			j = handle_token(tools->args, i, &tools->lexor_list);
 		else
-			i += read_words(i, tools->args, &lexor_list);
-		i += skip_spaces(tools->args, i);
+			j = read_words(i, tools->args, &tools->lexor_list);
+		if (j < 0)
+			return (0);
+		i += j;
 	}
-	return (lexor_list);
+	return (1);
 }

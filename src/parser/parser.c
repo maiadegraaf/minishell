@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 15:28:22 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/03/16 14:13:47 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/03/17 11:24:59 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ t_simple_cmds	*initialize_cmd(t_parser_tools *parser_tools)
 	{
 		if (parser_tools->lexor_list->str)
 			str[i++] = ft_strdup(parser_tools->lexor_list->str);
+		// str[i++] = parser_tools->lexor_list->str;
 		parser_tools->lexor_list = parser_tools->lexor_list->next;
 		parser_tools->arg_size--;
 	}
@@ -41,26 +42,30 @@ t_simple_cmds	*initialize_cmd(t_parser_tools *parser_tools)
 //free lexor_list
 //handle malloc errors
 
-t_simple_cmds	*parser(t_lexor *lexor_list, t_tools *tools)
+t_simple_cmds	*parser(t_tools *tools)
 {
 	t_simple_cmds	*node;
 	t_parser_tools	parser_tools;
+	t_lexor			*start;
 
 	tools->simple_cmds = NULL;
-	count_pipes(lexor_list, tools);
-	while (lexor_list)
+	start = tools->lexor_list;
+	count_pipes(tools->lexor_list, tools);
+	while (tools->lexor_list)
 	{
-		if (lexor_list && lexor_list->token == PIPE)
-			lexor_list = lexor_list->next;
-		parser_tools = init_parser_tools(lexor_list);
+		if (tools->lexor_list && tools->lexor_list->token == PIPE)
+			tools->lexor_list = tools->lexor_list->next;
+		parser_tools = init_parser_tools(tools->lexor_list);
 		node = initialize_cmd(&parser_tools);
 		if (!tools->simple_cmds)
 			tools->simple_cmds = node;
 		else
 			ft_simple_cmdsadd_back(&tools->simple_cmds, node);
-		lexor_list = parser_tools.lexor_list;
+		tools->lexor_list = parser_tools.lexor_list;
 	}
-	// print_parser(tools->simple_cmds);
+	ft_lexorclear(&start);
+	reset_tools(tools);
+	print_parser(tools->simple_cmds);
 	return (node);
 }
 
