@@ -6,13 +6,16 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 15:36:23 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/03/15 13:36:34 by maiadegraaf   ########   odam.nl         */
+/*   Updated: 2022/03/16 20:25:00 by maiadegraaf   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef UTILS_H
 # define UTILS_H
 # include "minishell.h"
+
+// utils
+int				count_quotes(char *line);
 
 //t_simple_cmds_utils
 t_simple_cmds	*ft_simple_cmdsnew(char **str,
@@ -31,9 +34,10 @@ void			ft_lexorclear(t_lexor **lst);
 t_lexor			*ft_lexorlast(t_lexor *lst);
 
 //
-t_lexor			*token_reader(t_tools *tools);
+int				token_reader(t_tools *tools);
 int				add_node(char *str, t_tokens token, t_lexor **lexor_list);
 t_tokens		check_token(int c);
 int				handle_token(char *str, int i, t_lexor **lexor_list);
+
 
 #endif

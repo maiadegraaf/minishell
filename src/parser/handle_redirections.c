@@ -6,7 +6,7 @@
 /*   By: maiadegraaf <maiadegraaf@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/15 16:15:48 by maiadegraaf   #+#    #+#                 */
-/*   Updated: 2022/03/15 16:54:10 by maiadegraaf   ########   odam.nl         */
+/*   Updated: 2022/03/16 16:20:39 by maiadegraaf   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	add_new_redirection(t_lexor *tmp, t_parser_tools *parser_tools)
 {
 	t_lexor	*node;
 
+	// node = ft_lexornew(tmp->next->str, tmp->token);
 	node = ft_lexornew(ft_strdup(tmp->next->str), tmp->token);
 	if (!node)
 		printf("EMERGENCY!!\n");
@@ -33,6 +34,8 @@ int	handle_heredoc(t_parser_tools *parser_tools, t_lexor *tmp)
 
 	if (tmp->token == LESS_LESS && tmp->prev != NULL && tmp->prev->str)
 	{
+		// node = ft_lexornew(ft_strjoin(tmp->prev->str,
+		// 			ft_strjoin("|", tmp->next->str)), tmp->token);
 		node = ft_lexornew(ft_strjoin(ft_strdup(tmp->prev->str),
 					ft_strjoin("|", ft_strdup(tmp->next->str))), tmp->token);
 		if (!node)

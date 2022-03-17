@@ -6,7 +6,7 @@
 /*   By: maiadegraaf <maiadegraaf@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/15 14:04:32 by maiadegraaf   #+#    #+#                 */
-/*   Updated: 2022/03/15 16:56:35 by maiadegraaf   ########   odam.nl         */
+/*   Updated: 2022/03/16 11:48:52 by maiadegraaf   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	handle_quotes(int i, char *str, char del, t_lexor **lexor_list)
 		while (str[i + j] != del && str[i + j])
 			j++;
 		if (!add_node(ft_substr(str, i, j + 1), 0, lexor_list))
-			printf("EMERGENCY!\n");
+			return (-1);
 		j++;
 	}
 	return (j + 1);
