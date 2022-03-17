@@ -6,7 +6,7 @@
 /*   By: maiadegraaf <maiadegraaf@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/16 10:47:40 by maiadegraaf   #+#    #+#                 */
-/*   Updated: 2022/03/16 10:06:58 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/03/16 14:15:57 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,21 @@ void	print_lines(int i, char **str)
 
 int	mini_echo(t_tools *tools, t_simple_cmds *simple_cmd)
 {
-	(void) simple_cmd;
-	if (!ft_strncmp(&tools->args[1], "-n", ft_strlen(&tools->args[1])))
-		print_lines(2, &tools->args);
+	int	i;
+
+	i = 1;
+	(void) tools;
+	if (!simple_cmd->str[i])
+	{
+		ft_putchar_fd('\n', STDOUT_FILENO);
+		return (EXIT_SUCCESS);
+	}
+	if (!ft_strncmp(simple_cmd->str[1], "-n", ft_strlen(simple_cmd->str[1])))
+		print_lines(2, simple_cmd->str);
 	else
 	{
-		print_lines(1, &tools->args);
+		print_lines(1, simple_cmd->str);
 		ft_putchar_fd('\n', STDOUT_FILENO);
 	}
-	return (1);
+	return (EXIT_SUCCESS);
 }

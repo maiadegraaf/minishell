@@ -1,23 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   mini_exit.c                                        :+:    :+:            */
+/*   mini_continue.c                                    :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: maiadegraaf <maiadegraaf@student.codam.      +#+                     */
+/*   By: fpolycar <fpolycar@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/02/17 10:10:47 by maiadegraaf   #+#    #+#                 */
-/*   Updated: 2022/03/17 11:12:46 by fpolycar      ########   odam.nl         */
+/*   Created: 2022/03/16 13:43:06 by fpolycar      #+#    #+#                 */
+/*   Updated: 2022/03/16 13:56:08 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtins.h"
+#include "minishell.h"
 
-//probably have to add some frees in here.
-
-int	mini_exit(t_tools *tools, t_simple_cmds *simple_cmd)
+int	mini_continue(t_tools *tools, t_simple_cmds *simple_cmd)
 {
 	(void) simple_cmd;
-	free(tools->args);
-	exit(EXIT_SUCCESS);
+	(void) tools;
 	return (EXIT_SUCCESS);
 }

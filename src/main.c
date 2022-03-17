@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/14 12:04:02 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/03/16 16:15:32 by maiadegraaf   ########   odam.nl         */
+/*   Updated: 2022/03/17 11:50:05 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	reset_tools(t_tools *tools)
 	free(tools->args);
 	implement_tools(tools);
 	tools->pipes = 0;
-	system ("leaks minishell");
+	system("leaks minishell");
 	exit (EXIT_SUCCESS);
 	return (1);
 }

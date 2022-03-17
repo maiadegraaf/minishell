@@ -6,7 +6,7 @@
 /*   By: maiadegraaf <maiadegraaf@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/16 12:09:05 by maiadegraaf   #+#    #+#                 */
-/*   Updated: 2022/03/16 10:07:26 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/03/16 15:20:02 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	mini_env(t_tools *tools, t_simple_cmds *simple_cmd)
 			ft_putstr_fd("PWD=", STDOUT_FILENO);
 			ft_putendl_fd(tools->pwd, STDOUT_FILENO);
 		}
-		else if (!ft_strncmp(tools->envp[i], "OLDPWD=", 7))
+		else if (!ft_strncmp(tools->envp[i], "OLDPWD=", 7) && tools->old_pwd)
 		{
 			ft_putstr_fd("OLDPWD=", STDOUT_FILENO);
 			ft_putendl_fd(tools->old_pwd, STDOUT_FILENO);
@@ -34,5 +34,5 @@ int	mini_env(t_tools *tools, t_simple_cmds *simple_cmd)
 			ft_putendl_fd(tools->envp[i], STDOUT_FILENO);
 		i++;
 	}
-	return (1);
+	return (EXIT_SUCCESS);
 }
