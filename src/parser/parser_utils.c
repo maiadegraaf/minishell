@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/04 11:52:02 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/03/17 15:23:44 by maiadegraaf   ########   odam.nl         */
+/*   Updated: 2022/03/17 16:04:42 by maiadegraaf   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ int	count_args(t_lexor *lexor_list)
 	tmp = lexor_list;
 	while (tmp && tmp->token != PIPE)
 	{
-		i++;
+		if (tmp->i >= 0)
+			i++;
 		tmp = tmp->next;
 	}
 	return (i);

@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 15:28:22 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/03/17 15:28:51 by maiadegraaf   ########   odam.nl         */
+/*   Updated: 2022/03/17 16:07:38 by maiadegraaf   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_simple_cmds	*initialize_cmd(t_parser_tools *parser_tools)
 	i = 0;
 	rm_redirections(parser_tools);
 	arg_size = count_args(parser_tools->lexor_list);
-	str = malloc(sizeof(char **) * arg_size + 1);
+	str = ft_calloc(arg_size + 1, sizeof(char *));
 	if (!str)
 		return (NULL);
 	while (arg_size > 0)
@@ -33,7 +33,6 @@ t_simple_cmds	*initialize_cmd(t_parser_tools *parser_tools)
 		parser_tools->lexor_list = parser_tools->lexor_list->next;
 		arg_size--;
 	}
-	str[i] = NULL;
 	return (ft_simple_cmdsnew(str, builtin_arr(str[0]),
 			parser_tools->num_redirections, parser_tools->redirections));
 }
