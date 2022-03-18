@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/15 11:42:32 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/03/17 13:34:25 by maiadegraaf   ########   odam.nl         */
+/*   Updated: 2022/03/18 10:12:16 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	change_path(t_tools *tools)
 {
 	tools->old_pwd = tools->pwd;
 	tools->pwd = getcwd(NULL, sizeof(NULL));
-	
 }
 
 int	(*builtin_arr(char *str))(t_tools *tools, t_simple_cmds *simple_cmd)

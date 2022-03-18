@@ -6,15 +6,16 @@
 /*   By: fpolycar <fpolycar@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/28 11:12:08 by fpolycar      #+#    #+#                 */
-/*   Updated: 2022/03/16 10:15:44 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/03/18 13:25:17 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "unity.h"
 #include "lexor.h"
+#include "minishell.h"
 
-t_tools test_tools;
-t_lexor *test_lexor;
+
+t_tools *test_tools;
 
 void setUp(void) {
     // set stuff up here
@@ -26,15 +27,17 @@ void tearDown(void) {
 
 void init_test(char *line)
 {
-    test_tools.args = line;
-    test_lexor = token_reader(&test_tools);
+    if (!test_tools->args)
+        reset_tools(test_tools);
+    test_tools->args = line;
+    token_reader(test_tools);
 }
 
 void assert_token(int token, char *expected)
 {
-    TEST_ASSERT_EQUAL_STRING(expected, test_lexor->str);
-    TEST_ASSERT_EQUAL_INT(token, test_lexor->token);
-    test_lexor = test_lexor->next;
+    TEST_ASSERT_EQUAL_STRING(expected, test_tools->lexor_list->str);
+    TEST_ASSERT_EQUAL_INT(token, test_tools->lexor_list->token);
+    test_tools->lexor_list = test_tools->lexor_list->next;
 }
 
 void test_lexer_1(void)

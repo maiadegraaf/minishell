@@ -19,8 +19,8 @@ void tearDown(void)
 void init_test(char *line)
 {
     test_tools.args = line;
-    test_lexor = token_reader(&test_tools);
-	test_simple_cmds = parser(test_lexor, &test_tools);
+    token_reader(&test_tools);
+	// test_simple_cmds = parser(test_lexor, &test_tools);
 }
 
 void assert_parser(char **expected, char *builtin, int num_directions, t_lexor *expected_redirection)
