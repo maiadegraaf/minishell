@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 17:59:38 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/03/17 15:23:51 by maiadegraaf   ########   odam.nl         */
+/*   Updated: 2022/03/18 09:46:52 by maiadegraaf   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ t_simple_cmds	*parser(t_tools *tools);
 t_parser_tools	init_parser_tools(t_lexor *lexor_list, t_tools *tools);
 void			count_pipes(t_lexor *lexor_list, t_tools *tools);
 int				count_args(t_lexor *lexor_list);
+t_lexor			*find_next_cmd(t_lexor *lexor_lst);
 
 //handle_redirections
 int				add_new_redirection(t_lexor *tmp, t_parser_tools *parser_tools);

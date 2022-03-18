@@ -27,7 +27,8 @@ src	=	$(wildcard $(PATHS)*.c) \
 
 OBJS	=	$(addprefix $(PATHO), $(notdir $(patsubst %.c, %.o, $(src))))
 
-FLAGS	=	-Wall -Werror -Wextra -g -fsanitize=address
+FLAGS	=	-Wall -Werror -Wextra -g 
+#-fsanitize=address
 
 LIBFT	=	./libraries/libft/libft.a
 
