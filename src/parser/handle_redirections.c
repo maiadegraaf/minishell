@@ -6,7 +6,7 @@
 /*   By: maiadegraaf <maiadegraaf@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/15 16:15:48 by maiadegraaf   #+#    #+#                 */
-/*   Updated: 2022/03/17 13:14:26 by maiadegraaf   ########   odam.nl         */
+/*   Updated: 2022/03/17 15:33:22 by maiadegraaf   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,25 @@ int	add_new_redirection(t_lexor *tmp, t_parser_tools *parser_tools)
 	return (0);
 }
 
+char	*join_heredoc(char *str1, char *str2)
+{
+	char	*tmp_str;
+	char	*ret;
+
+	tmp_str = ft_strjoin("|", str2);
+	ret = ft_strjoin(str1, tmp_str);
+	free(tmp_str);
+	return (ret);
+}
+
 int	handle_heredoc(t_parser_tools *parser_tools, t_lexor *tmp)
 {
 	t_lexor	*node;
 
 	if (tmp->token == LESS_LESS && tmp->prev != NULL && tmp->prev->str)
 	{
-		// node = ft_lexornew(ft_strjoin(tmp->prev->str,
-		// 			ft_strjoin("|", tmp->next->str)), tmp->token);
-		node = ft_lexornew(ft_strjoin(ft_strdup(tmp->prev->str),
-					ft_strjoin("|", ft_strdup(tmp->next->str))), tmp->token);
+		node = ft_lexornew(join_heredoc(tmp->prev->str, tmp->next->str),
+				tmp->token);
 		if (!node)
 			printf("EMERGENCY!!\n");
 		ft_lexoradd_back(&parser_tools->redirections, node);
@@ -61,6 +70,8 @@ void	rm_redirections(t_parser_tools *parser_tools)
 		tmp = tmp->next;
 	if (!tmp || tmp->token == PIPE)
 		return ;
+	if (tmp->token && !tmp->next)
+		lexor_error(0, parser_tools->tools);
 	if (tmp->token == LESS_LESS)
 		handle_heredoc(parser_tools, tmp);
 	else if ((tmp->token >= GREAT

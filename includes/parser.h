@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 17:59:38 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/03/16 15:03:05 by maiadegraaf   ########   odam.nl         */
+/*   Updated: 2022/03/17 15:23:51 by maiadegraaf   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,10 @@ typedef struct s_lexor
 
 typedef struct s_parser_tools
 {
-	t_lexor	*lexor_list;
-	t_lexor	*redirections;
-	int		arg_size;
-	int		num_redirections;
+	t_lexor			*lexor_list;
+	t_lexor			*redirections;
+	int				num_redirections;
+	struct s_tools	*tools;
 }	t_parser_tools;
 
 typedef struct s_tools
@@ -69,7 +69,7 @@ int				find_pwd(t_tools *tools);
 t_simple_cmds	*parser(t_tools *tools);
 
 //parser_utils
-t_parser_tools	init_parser_tools(t_lexor *lexor_list);
+t_parser_tools	init_parser_tools(t_lexor *lexor_list, t_tools *tools);
 void			count_pipes(t_lexor *lexor_list, t_tools *tools);
 int				count_args(t_lexor *lexor_list);
 
