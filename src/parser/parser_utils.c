@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/04 11:52:02 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/03/17 16:04:42 by maiadegraaf   ########   odam.nl         */
+/*   Updated: 2022/03/18 09:47:34 by maiadegraaf   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,11 @@ int	count_args(t_lexor *lexor_list)
 		tmp = tmp->next;
 	}
 	return (i);
+}
+
+t_lexor	*find_next_cmd(t_lexor *lexor_lst)
+{
+	while (lexor_lst && lexor_lst->token != PIPE)
+		lexor_lst = lexor_lst->next;
+	return (lexor_lst);
 }
