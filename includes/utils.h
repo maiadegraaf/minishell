@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 15:36:23 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/03/18 13:18:01 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/03/21 15:23:52 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,5 @@ t_tokens		check_token(int c);
 int				handle_token(char *str, int i, t_lexor **lexor_list);
 int				implement_tools(t_tools *tools);
 int				minishell_loop(t_tools *tools);
-
 
 #endif

@@ -55,6 +55,7 @@ void	ft_lexorclear_one(t_lexor **lst)
 		free((*lst)->str);
 	}
 	free(*lst);
+	*lst = NULL;
 }
 
 void	ft_lexordelone(t_lexor **lst, int key)
@@ -117,9 +118,7 @@ void	ft_lexorclear(t_lexor **lst)
 	{
 		tmp = (*lst)->next;
 		if ((*lst)->str)
-		{
 			free((*lst)->str);
-		}
 		free(*lst);
 		*lst = tmp;
 	}

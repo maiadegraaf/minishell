@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 17:59:38 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/03/18 11:13:40 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/03/21 15:23:48 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,10 @@ typedef struct s_simple_cmds
 
 int				parse_envp(t_tools *tools);
 int				find_pwd(t_tools *tools);
-t_simple_cmds	*parser(t_tools *tools);
+int				*parser(t_tools *tools);
 
 //parser_utils
-t_parser_tools	init_parser_tools(t_lexor *lexor_list, t_tools *tools);
+t_parser_tools	init_parser_tools(t_lexor *lexor_list);
 void			count_pipes(t_lexor *lexor_list, t_tools *tools);
 int				count_args(t_lexor *lexor_list);
 t_lexor			*find_next_cmd(t_lexor *lexor_lst);
