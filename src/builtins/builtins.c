@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/15 11:42:32 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/03/21 12:00:40 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/03/21 15:26:36 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,6 @@ int	(*builtin_arr(char *str))(t_tools *tools, t_simple_cmds *simple_cmd)
 		}
 		i++;
 	}
-	printf("tedfdgst\n");
+	printf("return null from builtin\n");
 	return (NULL);
 }
