@@ -6,7 +6,7 @@
 /*   By: maiadegraaf <maiadegraaf@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/15 16:15:48 by maiadegraaf   #+#    #+#                 */
-/*   Updated: 2022/03/21 14:30:01 by maiadegraaf   ########   odam.nl         */
+/*   Updated: 2022/03/22 15:08:11 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,17 @@ char	*join_heredoc(char *str1, char *str2)
 int	add_new_redirection(t_lexor *tmp, t_parser_tools *parser_tools)
 {
 	t_lexor	*node;
+	int		index_1;
+	int		index_2;
 
 	node = ft_lexornew(ft_strdup(tmp->next->str), tmp->token);
 	if (!node)
 		printf("EMERGENCY!!\n");
 	ft_lexoradd_back(&parser_tools->redirections, node);
-	ft_lexordelone(&parser_tools->lexor_list, tmp->i);
-	tmp = tmp->next;
-	ft_lexordelone(&parser_tools->lexor_list, tmp->i);
+	index_1 = tmp->i;
+	index_2 = tmp->next->i;
+	ft_lexordelone(&parser_tools->lexor_list, index_1);
+	ft_lexordelone(&parser_tools->lexor_list, index_2);
 	parser_tools->num_redirections++;
 	return (0);
 }
@@ -57,6 +60,8 @@ int	add_new_redirection(t_lexor *tmp, t_parser_tools *parser_tools)
 int	handle_heredoc(t_parser_tools *parser_tools, t_lexor *tmp)
 {
 	t_lexor	*node;
+	int		index_1;
+	int		index_2;
 
 	if (tmp->token == LESS_LESS && tmp->prev != NULL && tmp->prev->str)
 	{
@@ -66,9 +71,10 @@ int	handle_heredoc(t_parser_tools *parser_tools, t_lexor *tmp)
 			printf("EMERGENCY!!\n");
 		ft_lexoradd_back(&parser_tools->redirections, node);
 		ft_lexordelone(&parser_tools->lexor_list, tmp->prev->i);
-		ft_lexordelone(&parser_tools->lexor_list, tmp->i);
-		tmp = tmp->next;
-		ft_lexordelone(&parser_tools->lexor_list, tmp->i);
+		index_1 = tmp->i;
+		index_2 = tmp->next->i;
+		ft_lexordelone(&parser_tools->lexor_list, index_1);
+		ft_lexordelone(&parser_tools->lexor_list, index_2);
 		parser_tools->num_redirections++;
 	}
 	else

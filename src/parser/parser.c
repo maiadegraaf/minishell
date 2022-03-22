@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 15:28:22 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/03/21 15:18:34 by maiadegraaf   ########   odam.nl         */
+/*   Updated: 2022/03/22 11:56:40 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ t_simple_cmds	*initialize_cmd(t_parser_tools *parser_tools)
 		{
 			str[i++] = ft_strdup(tmp->str);
 			ft_lexordelone(&parser_tools->lexor_list, tmp->i);
+			tmp = parser_tools->lexor_list;
 		}
-		tmp = tmp->next;
 		arg_size--;
 	}
 	str[i] = NULL;
@@ -88,7 +88,7 @@ int	*parser(t_tools *tools)
 			tools->simple_cmds = node;
 		else
 			ft_simple_cmdsadd_back(&tools->simple_cmds, node);
-		tmp = find_next_cmd(tmp);
+		tmp = parser_tools.lexor_list;
 	}
 	// ft_lexorclear(&tools->lexor_list);
 	// print_parser(tools->simple_cmds);
