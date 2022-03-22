@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 15:31:53 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/03/21 15:03:54 by maiadegraaf   ########   odam.nl         */
+/*   Updated: 2022/03/22 16:33:40 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,10 @@ void	ft_simple_cmdsclear(t_simple_cmds **lst)
 		redirections_tmp = (*lst)->redirections;
 		ft_lexorclear(&redirections_tmp);
 		if ((*lst)->str)
+		{
 			free_arr((*lst)->str);
+			// free(*(*lst)->str);
+		}
 		free(*lst);
 		*lst = tmp;
 	}

@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/14 12:04:02 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/03/21 15:33:16 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/03/22 16:15:42 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int	implement_tools(t_tools *tools)
 int	reset_tools(t_tools *tools)
 {
 	ft_simple_cmdsclear(&tools->simple_cmds);
+	ft_lexorclear(&tools->lexor_list);
 	free(tools->args);
 	implement_tools(tools);
 	tools->pipes = 0;
