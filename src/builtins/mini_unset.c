@@ -6,7 +6,7 @@
 /*   By: maiadegraaf <maiadegraaf@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 10:13:32 by maiadegraaf   #+#    #+#                 */
-/*   Updated: 2022/03/17 11:14:21 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/03/23 12:45:43 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int variable_exist_del(t_tools *tools, t_simple_cmds *simple_cmd)
 				tools->envp[i + j] = tools->envp[i + j + 1];
 				j++;
 			}
+			tools->envp[i + j] = NULL;
 			return (1);
 		}
 		i++;

@@ -14,12 +14,15 @@ int	implement_tools(t_tools *tools)
 
 int	reset_tools(t_tools *tools)
 {
+	builtin_arr(tools->simple_cmds->str[0])(tools, tools->simple_cmds);
 	ft_simple_cmdsclear(&tools->simple_cmds);
 	free(tools->args);
+	free_arr(tools->envp);
 	implement_tools(tools);
 	tools->pipes = 0;
 	system("leaks minishell");
 	minishell_loop(tools);
+
 	// exit (EXIT_SUCCESS);
 	return (1);
 }
