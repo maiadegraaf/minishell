@@ -6,7 +6,7 @@
 /*   By: fpolycar <fpolycar@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/28 11:12:08 by fpolycar      #+#    #+#                 */
-/*   Updated: 2022/03/16 10:15:44 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/03/22 18:53:44 by maiadegraaf   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include "lexor.h"
 
 t_tools test_tools;
-t_lexor *test_lexor;
 
 void setUp(void) {
     // set stuff up here
@@ -27,14 +26,14 @@ void tearDown(void) {
 void init_test(char *line)
 {
     test_tools.args = line;
-    test_lexor = token_reader(&test_tools);
+    token_reader(&test_tools);
 }
 
 void assert_token(int token, char *expected)
 {
-    TEST_ASSERT_EQUAL_STRING(expected, test_lexor->str);
-    TEST_ASSERT_EQUAL_INT(token, test_lexor->token);
-    test_lexor = test_lexor->next;
+    TEST_ASSERT_EQUAL_STRING(expected, test_tools.lexor_list->str);
+    TEST_ASSERT_EQUAL_INT(token, test_tools.lexor_list->token);
+    test_tools.lexor_list = test_tools.lexor_list->next;
 }
 
 void test_lexer_1(void)
@@ -130,14 +129,24 @@ int main(void)
 {
     UNITY_BEGIN();
     RUN_TEST(test_lexer_1);
+    ft_lexorclear(&test_tools.lexor_list);
     RUN_TEST(test_lexer_2);
+    ft_lexorclear(&test_tools.lexor_list);
     RUN_TEST(test_lexer_3);
+    ft_lexorclear(&test_tools.lexor_list);
     RUN_TEST(test_lexer_4);
+    ft_lexorclear(&test_tools.lexor_list);
     RUN_TEST(test_lexer_5);
+    ft_lexorclear(&test_tools.lexor_list);
     RUN_TEST(test_lexer_6);
+    ft_lexorclear(&test_tools.lexor_list);
     RUN_TEST(test_lexer_7);
+    ft_lexorclear(&test_tools.lexor_list);
     RUN_TEST(test_lexer_8);
+    ft_lexorclear(&test_tools.lexor_list);
     RUN_TEST(test_lexer_9);
+    ft_lexorclear(&test_tools.lexor_list);
     RUN_TEST(test_lexer_10);
+    ft_lexorclear(&test_tools.lexor_list);
     return UNITY_END();
 }

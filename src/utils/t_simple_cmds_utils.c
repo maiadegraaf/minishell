@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 15:31:53 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/03/21 15:03:54 by maiadegraaf   ########   odam.nl         */
+/*   Updated: 2022/03/22 17:11:04 by maiadegraaf   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ void	ft_simple_cmdsclear(t_simple_cmds **lst)
 		return ;
 	while (*lst)
 	{
-		printf("HELLO\n");
 		tmp = (*lst)->next;
 		redirections_tmp = (*lst)->redirections;
 		ft_lexorclear(&redirections_tmp);

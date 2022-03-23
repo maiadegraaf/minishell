@@ -6,23 +6,17 @@
 /*   By: maiadegraaf <maiadegraaf@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/16 09:57:33 by maiadegraaf   #+#    #+#                 */
-/*   Updated: 2022/03/17 15:18:24 by maiadegraaf   ########   odam.nl         */
+/*   Updated: 2022/03/22 18:33:08 by maiadegraaf   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "error.h"
 
-/* 
-TO DO
-
--> Incorrect input handleing
-	-> Parser
-		-> No str after token
--> Malloc error handeling
-	-> Lexor
-	-> Parser
-		-> Redirections
-*/
+void	parser_error(int error, t_tools *tools, t_lexor *lexor_list)
+{
+	ft_lexorclear(&lexor_list);
+	ft_error(error, tools);
+}
 
 void	lexor_error(int error, t_tools *tools)
 {
