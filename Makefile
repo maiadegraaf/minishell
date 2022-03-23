@@ -1,4 +1,6 @@
 NAME = minishell
+MKDIR = mkdir
+
 
 CC = gcc
 
@@ -14,8 +16,7 @@ PATHSE = src/error/
 PATHP = src/pipex/
 PATHEX = src/executor/
 
-
-BUILD_PATHS = $(PATHB) $(PATHO) $(PATHR) $(PATHEX)
+BUILD_PATHS = $(PATHB) $(PATHO)
 
 src	=	$(wildcard $(PATHS)*.c) \
 		$(wildcard $(PATHSL)*.c) \

@@ -18,7 +18,7 @@ int	reset_tools(t_tools *tools)
 	free(tools->args);
 	implement_tools(tools);
 	tools->pipes = 0;
-	// system("leaks minishell");
+	system("leaks minishell");
 	minishell_loop(tools);
 	// exit (EXIT_SUCCESS);
 	return (1);
