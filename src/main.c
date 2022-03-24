@@ -6,14 +6,14 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/14 12:04:02 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/03/23 15:17:36 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/03/24 15:44:21 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	minishell_loop(t_tools *tools);
-int	implement_tools(t_tools *tools);
+int		minishell_loop(t_tools *tools);
+int		implement_tools(t_tools *tools);
 char	**ft_arrdup(char **arr);
 
 int	main(int argc, char **argv, char **envp)
@@ -28,7 +28,6 @@ int	main(int argc, char **argv, char **envp)
 		exit(0);
 	}
 	tools.envp = ft_arrdup(envp);
-	// printf("%s\n\n", tools.envp[0])
 	parse_envp(&tools);
 	implement_tools(&tools);
 	minishell_loop(&tools);

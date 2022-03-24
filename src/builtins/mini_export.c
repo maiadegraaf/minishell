@@ -3,37 +3,24 @@
 /*                                                        ::::::::            */
 /*   mini_export.c                                      :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: maiadegraaf <maiadegraaf@student.codam.      +#+                     */
+/*   By: fpolycar <fpolycar@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/02/17 10:11:56 by maiadegraaf   #+#    #+#                 */
-/*   Updated: 2022/03/23 16:15:26 by fpolycar      ########   odam.nl         */
+/*   Created: 2022/03/24 16:07:21 by fpolycar      #+#    #+#                 */
+/*   Updated: 2022/03/24 16:07:25 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
-int	equal_sign(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '=')
-			return (i);
-		i++;
-	}
-	return (0);
-}
-
-int variable_exist(t_tools *tools, t_simple_cmds *simple_cmd)
+int	variable_exist(t_tools *tools, t_simple_cmds *simple_cmd)
 {
 	int	i;
 
 	i = 0;
 	while (tools->envp[i])
 	{
-		if (ft_strncmp(tools->envp[i], simple_cmd->str[1], equal_sign(tools->envp[i])) == 0)
+		if (ft_strncmp(tools->envp[i],
+				simple_cmd->str[1], equal_sign(tools->envp[i])) == 0)
 		{
 			free(tools->envp[i]);
 			tools->envp[i] = ft_strdup(simple_cmd->str[1]);
@@ -44,9 +31,9 @@ int variable_exist(t_tools *tools, t_simple_cmds *simple_cmd)
 	return (0);
 }
 
-int check_parameter(char *str)
+int	check_parameter(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (ft_isdigit(str[0]))
@@ -62,6 +49,30 @@ int check_parameter(char *str)
 	return (0);
 }
 
+char	**whileloop_add_var(char **arr, char **rtn, char *str)
+{
+	int	i;
+
+	i = 0;
+	while (arr[i] != NULL)
+	{
+		if (arr[i + 1] == NULL)
+		{
+			rtn[i] = ft_strdup(str);
+			rtn[i + 1] = ft_strdup(arr[i]);
+		}
+		else
+			rtn[i] = ft_strdup(arr[i]);
+		if (rtn[i] == NULL)
+		{
+			free_arr(rtn);
+			return (rtn);
+		}
+		i++;
+	}
+	return (rtn);
+}
+
 char	**add_var(char **arr, char *str)
 {
 	char	**rtn;
@@ -74,17 +85,7 @@ char	**add_var(char **arr, char *str)
 	if (!rtn)
 		return (NULL);
 	i = 0;
-	while (arr[i + 1] != NULL)
-	{
-		rtn[i] = ft_strdup(arr[i]);
-		if (rtn[i] == NULL)
-		{
-			free_arr(rtn);
-			return (rtn);
-		}
-		i++;
-	}
-	rtn[i] = ft_strdup(str);
+	whileloop_add_var(arr, rtn, str);
 	return (rtn);
 }
 
@@ -94,7 +95,7 @@ int	mini_export(t_tools *tools, t_simple_cmds *simple_cmd)
 
 	if (!simple_cmd->str[1])
 		mini_env(tools, simple_cmd);
-	else 
+	else
 	{
 		if (check_parameter(simple_cmd->str[1]) == 0)
 		{
