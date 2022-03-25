@@ -6,13 +6,13 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 15:28:22 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/03/22 17:51:13 by maiadegraaf   ########   odam.nl         */
+/*   Updated: 2022/03/25 10:38:09 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	print_parser(t_simple_cmds *simple_cmds);
+void	print_parser(t_simple_cmds simple_cmds);
 
 t_simple_cmds	*initialize_cmd(t_parser_tools *parser_tools)
 {
@@ -63,40 +63,42 @@ int	*parser(t_tools *tools)
 			ft_simple_cmdsadd_back(&tools->simple_cmds, node);
 		tools->lexor_list = parser_tools.lexor_list;
 	}
+	print_parser(*tools->simple_cmds);
 	return (0);
 }
 
-// void	print_parser(t_simple_cmds *simple_cmds)
-// {
-// 	int	i = 0;
-// 	t_simple_cmds *tmp = simple_cmds;
-// 	while (tmp)
-// 	{
-// 		printf("\n>>>%i<<<\n", i++);
-// 		if (*tmp->str)
-// 		{
-// 			while (*tmp->str)
-// 			{
-// 				printf("%s\n", *tmp->str++);
-// 			}
-// 		}
-// 		if (tmp->redirections)
-// 			printf("\nredirections:\n");
-// 		while (tmp->redirections)
-// 		{
-// 			printf("%s\t", tmp->redirections->str);
-// 			if (tmp->redirections->token == GREAT)
-// 				printf("GREAT\n");
-// 			else if (tmp->redirections->token == GREAT_GREAT)
-// 				printf("GREAT_GREAT\n");
-// 			else if (tmp->redirections->token == LESS)
-// 				printf("LESS\n");
-// 			else if (tmp->redirections->token == LESS_LESS)
-// 				printf("LESS_LESS\n");
-// 			tmp->redirections = tmp->redirections->next;
-// 		}
-// 		if (tmp->builtin)
-// 			printf("BUILTIN :)\n");
-// 		tmp = tmp->next;
-// 	}
-// }
+void	print_parser(t_simple_cmds simple_cmds)
+{
+	int	i = 0;
+
+	t_simple_cmds *tmp = &simple_cmds;
+	while (tmp)
+	{
+		printf("\n>>>%i<<<\n", i++);
+		if (*tmp->str)
+		{
+			while (*tmp->str)
+			{
+				printf("%s\n", *tmp->str++);
+			}
+		}
+		if (tmp->redirections)
+			printf("\nredirections:\n");
+		while (tmp->redirections)
+		{
+			printf("%s\t", tmp->redirections->str);
+			if (tmp->redirections->token == GREAT)
+				printf("GREAT\n");
+			else if (tmp->redirections->token == GREAT_GREAT)
+				printf("GREAT_GREAT\n");
+			else if (tmp->redirections->token == LESS)
+				printf("LESS\n");
+			else if (tmp->redirections->token == LESS_LESS)
+				printf("LESS_LESS\n");
+			tmp->redirections = tmp->redirections->next;
+		}
+		if (tmp->builtin)
+			printf("BUILTIN :)\n");
+		tmp = tmp->next;
+	}
+}
