@@ -6,7 +6,7 @@
 /*   By: fpolycar <fpolycar@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/28 11:12:08 by fpolycar      #+#    #+#                 */
-/*   Updated: 2022/03/22 18:53:44 by maiadegraaf   ########   odam.nl         */
+/*   Updated: 2022/03/28 12:55:35 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,16 @@ void test_lexer_10(void)
     assert_token(0, "bla=\"t est\"");
 }
 
+void test_lexer_11(void)
+{
+    init_test("test\n\ntest\ftest\rtest\ttest");
+    assert_token(0, "test");
+    assert_token(0, "test");
+    assert_token(0, "test");
+    assert_token(0, "test");
+    assert_token(0, "test");
+}
+
 int main(void)
 {
     UNITY_BEGIN();
@@ -147,6 +157,8 @@ int main(void)
     RUN_TEST(test_lexer_9);
     ft_lexorclear(&test_tools.lexor_list);
     RUN_TEST(test_lexer_10);
+    ft_lexorclear(&test_tools.lexor_list);
+    RUN_TEST(test_lexer_11);
     ft_lexorclear(&test_tools.lexor_list);
     return UNITY_END();
 }

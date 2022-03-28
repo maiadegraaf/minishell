@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 17:11:20 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/03/28 11:47:14 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/03/28 12:57:33 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	read_words(int i, char *str, t_lexor **lexor_list)
 	{
 		j += handle_quotes_inside_word(i + j, str, 34);
 		j += handle_quotes_inside_word(i + j, str, 39);
-		if (str[i + j] == ' ')
+		if (is_whitespace(str[i + j]))
 			break ;
 		else
 			j++;

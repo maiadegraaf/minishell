@@ -6,7 +6,7 @@
 /*   By: fpolycar <fpolycar@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/15 13:35:26 by fpolycar      #+#    #+#                 */
-/*   Updated: 2022/03/25 15:57:37 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/03/28 15:35:09 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	expander_loop(t_tools *tools, t_simple_cmds *tmp, int i)
 	int		j;
 	int		k;
 	char	*arr_tmp;
-	char 	*before;
+	char	*before;
 	char	*after;
 
 	j = 0;

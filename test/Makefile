@@ -1,8 +1,11 @@
 CLEANUP=rm -f
 MKDIR=mkdir -p
 TARGET_EXTENSION=out
+UNITY_CONFIG_DEFINES = 	-D UNITY_OUTPUT_COLOR \
+						-D UNITY_FIXTURE_NO_EXTRAS
 
 .PHONY: clean
+.PHONY: re
 .PHONY: test
 
 PATHLIBFT = ../libraries/libft
@@ -67,28 +70,28 @@ $(PATHO)Test%.$(TARGET_EXTENSION): $(LIBFT) $(OBJS) $(PATHO)Test%.o $(PATHO)%.o 
 	$(LINK) -lreadline -o  $@ $^
 
 $(PATHO)%.o:: $(PATHT)%.c $(HEADERS)
-	$(COMPILE) $(CFLAGS) $< -o $@
+	$(COMPILE) $(CFLAGS) $(UNITY_CONFIG_DEFINES) $< -o $@
 
 # $(PATHO)%.o:: $(PATHS)%.c $(HEADERS)
-# 	$(COMPILE) $(CFLAGS) $< -o $@
+# 	$(COMPILE) $(CFLAGS) $(UNITY_CONFIG_DEFINES) $< -o $@
 
 $(PATHO)%.o:: $(PATHSL)%.c $(HEADERS)
-	$(COMPILE) $(CFLAGS) $< -o $@
+	$(COMPILE) $(CFLAGS) $(UNITY_CONFIG_DEFINES) $< -o $@
 
 $(PATHO)%.o:: $(PATHSP)%.c $(HEADERS)
-	$(COMPILE) $(CFLAGS) $< -o $@
+	$(COMPILE) $(CFLAGS) $(UNITY_CONFIG_DEFINES) $< -o $@
 
 $(PATHO)%.o:: $(PATHSU)%.c $(HEADERS)
-	$(COMPILE) $(CFLAGS) $< -o $@
+	$(COMPILE) $(CFLAGS) $(UNITY_CONFIG_DEFINES) $< -o $@
 
 $(PATHO)%.o:: $(PATHSB)%.c $(HEADERS)
-	$(COMPILE) $(CFLAGS) $< -o $@
+	$(COMPILE) $(CFLAGS) $(UNITY_CONFIG_DEFINES) $< -o $@
 
 $(PATHO)%.o:: $(PATHSE)%.c $(HEADERS)
-	$(COMPILE) $(CFLAGS) $< -o $@
+	$(COMPILE) $(CFLAGS) $(UNITY_CONFIG_DEFINES) $< -o $@
 
 $(PATHO)%.o:: $(PATHU)%.c $(PATHU)%.h
-	$(COMPILE) $(CFLAGS) $< -o $@
+	$(COMPILE) $(CFLAGS) $(UNITY_CONFIG_DEFINES) $< -o $@
 
 $(PATHB):
 	$(MKDIR) $(PATHB)
