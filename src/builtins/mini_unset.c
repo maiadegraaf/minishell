@@ -6,44 +6,68 @@
 /*   By: maiadegraaf <maiadegraaf@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 10:13:32 by maiadegraaf   #+#    #+#                 */
-/*   Updated: 2022/03/17 11:14:21 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/03/24 15:58:06 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
-int variable_exist_del(t_tools *tools, t_simple_cmds *simple_cmd)
+char	**whileloop_del_var(char **arr, char **rtn, char *str)
 {
 	int	i;
-	int j;
+	int	j;
 
 	i = 0;
-	while (tools->envp[i])
+	j = 0;
+	while (arr[i] != NULL)
 	{
-		if (ft_strncmp(tools->envp[i], simple_cmd->str[1], equal_sign(tools->envp[i])) == 0)
+		if (!(ft_strncmp(arr[i], str, equal_sign(arr[i]) - 1) == 0
+				&& str[equal_sign(arr[i])] == '\0'
+				&& arr[i][ft_strlen(str)] == '='))
 		{
-			j = 0;
-			while (tools->envp[i + j])
+			rtn[j] = ft_strdup(arr[i]);
+			if (rtn[j] == NULL)
 			{
-				tools->envp[i + j] = tools->envp[i + j + 1];
-				j++;
+				free_arr(rtn);
+				return (rtn);
 			}
-			return (1);
-		}
+			j++;
+		}	
 		i++;
 	}
-	return (0);
+	return (rtn);
+}
+
+char	**del_var(char **arr, char *str)
+{
+	char	**rtn;
+	size_t	i;
+	size_t	j;
+
+	i = 0;
+	j = 0;
+	while (arr[i] != NULL)
+		i++;
+	rtn = ft_calloc(sizeof(char *), i + 1);
+	if (!rtn)
+		return (NULL);
+	rtn = whileloop_del_var(arr, rtn, str);
+	return (rtn);
 }
 
 int	mini_unset(t_tools *tools, t_simple_cmds *simple_cmd)
 {
-	int exist;
+	char	**tmp;
 
 	if (!simple_cmd->str[1])
 		ft_putendl_fd("unset: not enough arguments", STDERR_FILENO);
 	if (equal_sign(simple_cmd->str[1]) != 0)
 		ft_putendl_fd("unset: invalid parameter name", STDERR_FILENO);
 	else
-		exist = variable_exist_del(tools, simple_cmd);
+	{
+		tmp = del_var(tools->envp, simple_cmd->str[1]);
+		free_arr(tools->envp);
+		tools->envp = tmp;
+	}
 	return (EXIT_SUCCESS);
 }

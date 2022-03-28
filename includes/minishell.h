@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/14 13:46:41 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/03/16 15:25:04 by maiadegraaf   ########   odam.nl         */
+/*   Updated: 2022/03/25 11:41:03 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 int		parse_envp(t_tools *tools);
 int		find_pwd(t_tools *tools);
 int		reset_tools(t_tools *tools);
+void	expander(t_tools *tools, t_simple_cmds *simple_cmds);
 
 //builtins
 int		(*builtin_arr(char *str))(t_tools *tools, t_simple_cmds *simple_cmd);

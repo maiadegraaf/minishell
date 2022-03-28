@@ -1,4 +1,6 @@
 NAME = minishell
+MKDIR = mkdir
+
 
 CC = gcc
 
@@ -9,13 +11,13 @@ PATHS = src/
 PATHSL = src/lexor/
 PATHSP = src/parser/
 PATHSB = src/builtins/
+PATHSEX = src/expander/
 PATHSU = src/utils/
 PATHSE = src/error/
 PATHP = src/pipex/
 PATHEX = src/executor/
 
-
-BUILD_PATHS = $(PATHB) $(PATHO) $(PATHR) $(PATHEX)
+BUILD_PATHS = $(PATHB) $(PATHO)
 
 src	=	$(wildcard $(PATHS)*.c) \
 		$(wildcard $(PATHSL)*.c) \
@@ -23,11 +25,13 @@ src	=	$(wildcard $(PATHS)*.c) \
 		$(wildcard $(PATHSB)*.c) \
 		$(wildcard $(PATHSU)*.c) \
 		$(wildcard $(PATHSE)*.c) \
-		$(wildcard $(PATHEX)*.c)
+		$(wildcard $(PATHEX)*.c) \
+		$(wildcard $(PATHSEX)*.c)
 
 OBJS	=	$(addprefix $(PATHO), $(notdir $(patsubst %.c, %.o, $(src))))
 
-FLAGS	=	-Wall -Werror -Wextra -g
+FLAGS	=	#-Wall -Werror -Wextra -g 
+#-fsanitize=address
 
 LIBFT	=	./libraries/libft/libft.a
 
@@ -51,6 +55,10 @@ $(PATHO)%.o:: $(PATHSP)%.c $(HEADERS)
 
 $(PATHO)%.o:: $(PATHSB)%.c $(HEADERS)
 	@echo "Compiling ${notdir $<}			in	$(PATHSB)"
+	@$(CC) -c $(FLAGS) $(INCLUDES) $< -o $@
+
+$(PATHO)%.o:: $(PATHSEX)%.c $(HEADERS)
+	@echo "Compiling ${notdir $<}			in	$(PATHSEX)"
 	@$(CC) -c $(FLAGS) $(INCLUDES) $< -o $@
 
 $(PATHO)%.o:: $(PATHSU)%.c $(HEADERS)

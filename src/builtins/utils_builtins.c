@@ -1,21 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   error.h                                            :+:    :+:            */
+/*   utils.c                                            :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: maiadegraaf <maiadegraaf@student.codam.      +#+                     */
+/*   By: fpolycar <fpolycar@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/03/16 10:20:00 by maiadegraaf   #+#    #+#                 */
-/*   Updated: 2022/03/22 17:02:46 by maiadegraaf   ########   odam.nl         */
+/*   Created: 2022/03/24 16:04:47 by fpolycar      #+#    #+#                 */
+/*   Updated: 2022/03/24 16:06:09 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ERROR_H
-# define ERROR_H
-# include "minishell.h"
+#include "builtins.h"
 
-void	parser_error(int error, t_tools *tools, t_lexor *lexor_list);
-void	lexor_error(int error, t_tools *tools);
-void	ft_error(int error, t_tools *tools);
+size_t	equal_sign(char *str)
+{
+	size_t	i;
 
-#endif
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '=')
+			return (i + 1);
+		i++;
+	}
+	return (0);
+}

@@ -6,7 +6,7 @@
 /*   By: maiadegraaf <maiadegraaf@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/16 12:09:05 by maiadegraaf   #+#    #+#                 */
-/*   Updated: 2022/03/16 15:20:02 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/03/24 14:30:46 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 int	mini_env(t_tools *tools, t_simple_cmds *simple_cmd)
 {
-	int	i;
+	int		i;
+	char	*tmp;
 	(void) simple_cmd;
 
 	i = 0;
@@ -22,16 +23,17 @@ int	mini_env(t_tools *tools, t_simple_cmds *simple_cmd)
 	{
 		if (!ft_strncmp(tools->envp[i], "PWD=", 4))
 		{
-			ft_putstr_fd("PWD=", STDOUT_FILENO);
-			ft_putendl_fd(tools->pwd, STDOUT_FILENO);
+			tmp = ft_strjoin("PWD=", tools->pwd);
+			free(tools->envp[i]);
+			tools->envp[i] = tmp;
 		}
 		else if (!ft_strncmp(tools->envp[i], "OLDPWD=", 7) && tools->old_pwd)
 		{
-			ft_putstr_fd("OLDPWD=", STDOUT_FILENO);
-			ft_putendl_fd(tools->old_pwd, STDOUT_FILENO);
+			tmp = ft_strjoin("OLDPWD=", tools->old_pwd);
+			free(tools->envp[i]);
+			tools->envp[i] = tmp;
 		}
-		else
-			ft_putendl_fd(tools->envp[i], STDOUT_FILENO);
+		ft_putendl_fd(tools->envp[i], STDOUT_FILENO);
 		i++;
 	}
 	return (EXIT_SUCCESS);

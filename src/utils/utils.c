@@ -6,7 +6,7 @@
 /*   By: fpolycar <fpolycar@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/21 11:17:26 by fpolycar      #+#    #+#                 */
-/*   Updated: 2022/03/16 15:07:23 by maiadegraaf   ########   odam.nl         */
+/*   Updated: 2022/03/24 16:08:31 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,29 @@ int	count_quotes(char *line)
 	if ((d > 0 && d % 2 != 0) || (s > 0 && s % 2 != 0))
 		return (0);
 	return (1);
+}
+
+char	**ft_arrdup(char **arr)
+{
+	char	**rtn;
+	size_t	i;
+
+	i = 0;
+	while (arr[i] != NULL)
+		i++;
+	rtn = ft_calloc(sizeof(char *), i + 1);
+	if (!rtn)
+		return (NULL);
+	i = 0;
+	while (arr[i] != NULL)
+	{
+		rtn[i] = ft_strdup(arr[i]);
+		if (rtn[i] == NULL)
+		{
+			free_arr(rtn);
+			return (rtn);
+		}
+		i++;
+	}
+	return (rtn);
 }
