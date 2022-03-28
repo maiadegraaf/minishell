@@ -6,18 +6,23 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 17:11:20 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/03/16 15:03:44 by maiadegraaf   ########   odam.nl         */
+/*   Updated: 2022/03/28 11:47:14 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexor.h"
+
+int	is_whitespace(char c)
+{
+	return (c == ' ' || (c > 8 && c < 14));
+}
 
 int	skip_spaces(char *str, int i)
 {
 	int	j;
 
 	j = 0;
-	while (str[i + j] == ' ')
+	while (is_whitespace(str[i + j]))
 		j++;
 	return (j);
 }
