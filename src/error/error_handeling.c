@@ -6,7 +6,7 @@
 /*   By: maiadegraaf <maiadegraaf@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/16 09:57:33 by maiadegraaf   #+#    #+#                 */
-/*   Updated: 2022/03/22 18:33:08 by maiadegraaf   ########   odam.nl         */
+/*   Updated: 2022/03/25 10:26:44 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,7 @@ void	ft_error(int error, t_tools *tools)
 		printf("memory error: unable to assign memory\n");
 	else if (error == 2)
 		printf("syntax error: unable to locate closing quotation\n");
+	else if (error == 3)
+		printf("Parser problem\n");
 	reset_tools(tools);
 }
