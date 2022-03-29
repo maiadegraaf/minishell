@@ -6,7 +6,7 @@
 /*   By: fpolycar <fpolycar@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/24 16:06:58 by fpolycar      #+#    #+#                 */
-/*   Updated: 2022/03/28 12:56:13 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/03/29 15:34:16 by alfred        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ int	minishell_loop(t_tools *tools)
 	if (!token_reader(tools))
 		ft_error(1, tools);
 	parser(tools);
-	// expander(tools, tools->simple_cmds);
-	// printf("%s\n", *tools->simple_cmds->str);
+	expander(tools, tools->simple_cmds);
+	printf("%s\n", *tools->simple_cmds->str);
 	// executor(&tools);
 	reset_tools(tools);
 	return (1);
