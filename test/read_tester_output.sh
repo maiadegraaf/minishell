@@ -1,22 +1,31 @@
 GREEN='\033[0;32m'
 RED='\033[0;31m'
 NC='\033[0m'
-FILE='../build/results/Testparser.txt'
+FILE=$1
 
 I=0
-cat $FILE | while read line 
+echo "$FILE\n" | awk -F '/results/' '{ print $2 }'
+while read line 
 do
-	if [ $I -le 0 ]
+	if [ $I -eq 1 ]
 	then
-		awk -F 'INFO:' '{ print $2 }'
-	 	I=1
-	else 
-		if [`grep -s PASS ../build/results/*.txt`]
-		then
-			printf "${GREEN}[OK]${NC}"
-		else
-			printf "${RED}[KO]${NC}"
-		fi
-	 	I=0
+		INFO_INFO=$(echo $line | awk -F 'INFO:' '{ print $2 }')
+		printf "%s >>" "$INFO_INFO"
+		printf "${RED}%s${NC}\n" "$FAIL_INFO"
+		I=0;
 	fi
-done
+	if [[ "$line" == *"PASS"* ]]
+	then
+		printf "${GREEN}[OK]${NC}"
+	elif [[ "$line" == *"FAIL"* ]]
+	then
+		printf "\n${RED}[KO]${NC}"
+		FAIL_INFO=$(echo $line | awk -F 'FAIL:' '{ print $2 }')
+		I=1;
+	fi
+	if [[ "$line" == *"Tests"*"Failures"* ]]
+	then
+		echo "\n\n~~~~~~~~Final Results:~~~~~~~~\n$line"
+		break
+	fi
+done < "$FILE"
