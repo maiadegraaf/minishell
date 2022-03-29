@@ -54,7 +54,7 @@ $(PATHR)%.txt: $(PATHO)%.$(TARGET_EXTENSION)
 	-./$< > $@ 2>&1
 
 $(PATHO)Test%.$(TARGET_EXTENSION): $(LIBFT) $(OBJS) $(PATHO)Test%.o $(PATHO)%.o $(PATHU)unity.o 
-	$(LINK) -lreadline -o  $@ $^
+	@$(LINK) -lreadline -o  $@ $^
 
 # $(PATHO)%.o:: $(PATHT)%.c $(PATHSL)%.c $(PATHSP)%.c $(PATHSU)%.c $(PATHSB)%.c $(PATHSE)%.c $(HEADERS)
 # 	$(COMPILE) $(CFLAGS) $(UNITY_CONFIG_DEFINES) $< -o $@
@@ -84,20 +84,20 @@ $(PATHO)%.o:: $(PATHSE)%.c $(HEADERS)
 $(PATHO)%.o:: $(PATHU)%.c $(PATHU)%.h
 	@$(COMPILE) $(CFLAGS) $< -o $@
 
-$(PATHO)%.o:: $(PATHU)%.c $(PATHU)%.h
-	@$(COMPILE) $(CFLAGS) $(UNITY_CONFIG_DEFINES) $< -o $@
+# $(PATHO)%.o:: $(PATHU)%.c $(PATHU)%.h
+# 	@$(COMPILE) $(CFLAGS) $(UNITY_CONFIG_DEFINES) $< -o $@
 
 $(PATHB):
-	$(MKDIR) $(PATHB)
+	@$(MKDIR) $(PATHB)
 
 $(PATHO):
-	$(MKDIR) $(PATHO)
+	@$(MKDIR) $(PATHO)
 
 $(PATHR):
-	$(MKDIR) $(PATHR)
+	@$(MKDIR) $(PATHR)
 
 $(LIBFT):
-	$(MAKE) -C $(PATHLIBFT)
+	@$(MAKE) -C $(PATHLIBFT)
 
 clean:
 	$(CLEANUP) $(PATHO)*.o
