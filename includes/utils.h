@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 15:36:23 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/03/21 12:15:28 by maiadegraaf   ########   odam.nl         */
+/*   Updated: 2022/03/29 15:09:02 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,10 @@
 
 // utils
 int				count_quotes(char *line);
+int				implement_tools(t_tools *tools);
+char			**ft_arrdup(char **arr);
+
+int				minishell_loop(t_tools *tools);
 
 //t_simple_cmds_utils
 t_simple_cmds	*ft_simple_cmdsnew(char **str,

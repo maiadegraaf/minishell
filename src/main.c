@@ -6,15 +6,11 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/14 12:04:02 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/03/24 15:44:21 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/03/29 15:08:50 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int		minishell_loop(t_tools *tools);
-int		implement_tools(t_tools *tools);
-char	**ft_arrdup(char **arr);
 
 int	main(int argc, char **argv, char **envp)
 {
