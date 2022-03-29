@@ -25,7 +25,7 @@ do
 	fi
 	if [[ "$line" == *"Tests"*"Failures"* ]]
 	then
-		echo "\n\n~~~~~~~~Final Results:~~~~~~~~\n$line"
+		echo "\n\n~~~~~~~~~~~Results:~~~~~~~~~~~\n$line\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
 		break
 	fi
 done < "$FILE"

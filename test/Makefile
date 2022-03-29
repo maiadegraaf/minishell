@@ -47,21 +47,8 @@ RESULTS = $(patsubst $(PATHT)Test%.c,$(PATHR)Test%.txt, $(SRCT))
 
 OBJS = $(addprefix $(PATHO), $(notdir $(patsubst %.c, %.o, $(src))))
 
-PASSED = `grep -s PASS $(PATHR)*.txt`
-
-FAIL = `grep -s FAIL $(PATHR)*.txt`
-
-IGNORE = `grep -s IGNORE $(PATHR)*.txt`
-
 test: $(BUILD_PATHS) $(RESULTS)
-	@echo $(PATHO)
-	@echo "-----------------------\nIGNORES:\n-----------------------"
-	@echo "$(IGNORE)"
-	@echo "-----------------------\nFAILURES:\n-----------------------"
-	@echo "$(FAIL)"
-	@echo "-----------------------\nPASSED:\n-----------------------"
-	@echo "$(PASSED)"
-	@echo "\nDONE"
+	@./call_read_tester.sh
 
 $(PATHR)%.txt: $(PATHO)%.$(TARGET_EXTENSION)
 	-./$< > $@ 2>&1
@@ -69,25 +56,7 @@ $(PATHR)%.txt: $(PATHO)%.$(TARGET_EXTENSION)
 $(PATHO)Test%.$(TARGET_EXTENSION): $(LIBFT) $(OBJS) $(PATHO)Test%.o $(PATHO)%.o $(PATHU)unity.o 
 	$(LINK) -lreadline -o  $@ $^
 
-$(PATHO)%.o:: $(PATHT)%.c $(HEADERS)
-	$(COMPILE) $(CFLAGS) $(UNITY_CONFIG_DEFINES) $< -o $@
-
-# $(PATHO)%.o:: $(PATHS)%.c $(HEADERS)
-# 	$(COMPILE) $(CFLAGS) $(UNITY_CONFIG_DEFINES) $< -o $@
-
-$(PATHO)%.o:: $(PATHSL)%.c $(HEADERS)
-	$(COMPILE) $(CFLAGS) $(UNITY_CONFIG_DEFINES) $< -o $@
-
-$(PATHO)%.o:: $(PATHSP)%.c $(HEADERS)
-	$(COMPILE) $(CFLAGS) $(UNITY_CONFIG_DEFINES) $< -o $@
-
-$(PATHO)%.o:: $(PATHSU)%.c $(HEADERS)
-	$(COMPILE) $(CFLAGS) $(UNITY_CONFIG_DEFINES) $< -o $@
-
-$(PATHO)%.o:: $(PATHSB)%.c $(HEADERS)
-	$(COMPILE) $(CFLAGS) $(UNITY_CONFIG_DEFINES) $< -o $@
-
-$(PATHO)%.o:: $(PATHSE)%.c $(HEADERS)
+$(PATHO)%.o:: $(PATHT)%.c $(PATHSL)%.c $(PATHSP)%.c $(PATHSU)%.c $(PATHSB)%.c $(PATHSE)%.c $(HEADERS)
 	$(COMPILE) $(CFLAGS) $(UNITY_CONFIG_DEFINES) $< -o $@
 
 $(PATHO)%.o:: $(PATHU)%.c $(PATHU)%.h

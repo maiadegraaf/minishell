@@ -38,30 +38,17 @@ void	assert_parser(char **expected, char *builtin, int num_directions, t_lexor *
 		TEST_ASSERT_NOT_NULL_MESSAGE(test_tools.simple_cmds->builtin, "Incorrect: BUILTIN");
 	else
 		TEST_ASSERT_NULL(test_tools.simple_cmds->builtin);
-	// printf("num redirections = >%d<\t|\t", num_directions);
-	// printf(">%d<\n", test_tools.simple_cmds->num_redirections);
 	TEST_ASSERT_EQUAL_INT_MESSAGE(num_directions, test_tools.simple_cmds->num_redirections, "Incorrect: NUM REDIRECTIONS");
 	if (expected_redirection)
 	{
 		t_lexor *start = expected_redirection;
 		while (expected_redirection)
 		{
-			// printf("%s\t", expected_redirection->str);
-			// if (expected_redirection->token == GREAT)
-			// 	printf("GREAT\n");
-			// else if (expected_redirection->token == GREAT_GREAT)
-			// 	printf("GREAT_GREAT\n");
-			// else if (expected_redirection->token == LESS)
-			// 	printf("LESS\n");
-			// else if (expected_redirection->token == LESS_LESS)
-			// 	printf("LESS_LESS\n");
 			TEST_ASSERT_EQUAL_STRING(expected_redirection->str, test_tools.simple_cmds->redirections->str);
 			TEST_ASSERT_EQUAL_INT(expected_redirection->token, test_tools.simple_cmds->redirections->token);
 			test_tools.simple_cmds->redirections = test_tools.simple_cmds->redirections->next;
 			expected_redirection = expected_redirection->next;
 		}
-		// printf("%s\n", start->str);
-		// ft_lexorclear(&start);
 	}
 	test_tools.simple_cmds = test_tools.simple_cmds->next;
 }
