@@ -43,7 +43,7 @@ LINK=gcc
 
 CFLAGS= -I. -I$(PATHU) -I$(PATHLIBFT) -I$(PATHS) -I$(PATHP) -I$(PATHI)
 
-RESULTS = $(patsubst $(PATHT)Test%.c,$(PATHR)Test%.txt, $(SRCT))
+RESULTS = $(patsubst $(PATHT)test_%.c,$(PATHR)test_%.txt, $(SRCT))
 
 OBJS = $(addprefix $(PATHO), $(notdir $(patsubst %.c, %.o, $(src))))
 
@@ -53,7 +53,7 @@ test: $(BUILD_PATHS) $(RESULTS)
 $(PATHR)%.txt: $(PATHO)%.$(TARGET_EXTENSION)
 	-./$< > $@ 2>&1
 
-$(PATHO)Test%.$(TARGET_EXTENSION): $(LIBFT) $(OBJS) $(PATHO)Test%.o $(PATHO)%.o $(PATHU)unity.o 
+$(PATHO)test_%.$(TARGET_EXTENSION): $(LIBFT) $(OBJS) $(PATHO)test_%.o $(PATHO)%.o $(PATHU)unity.o 
 	$(LINK) -lreadline -o  $@ $^
 
 $(PATHO)%.o:: $(PATHT)%.c $(PATHSL)%.c $(PATHSP)%.c $(PATHSU)%.c $(PATHSB)%.c $(PATHSE)%.c $(HEADERS)
@@ -83,7 +83,7 @@ clean:
 
 re: clean test
 
-.PRECIOUS: $(PATHB)Test%.$(TARGET_EXTENSION)
+.PRECIOUS: $(PATHB)test_%.$(TARGET_EXTENSION)
 .PRECIOUS: $(PATHD)%.d
 .PRECIOUS: $(PATHO)%.o
 .PRECIOUS: $(PATHR)%.txt
