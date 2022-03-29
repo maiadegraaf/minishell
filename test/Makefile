@@ -56,11 +56,36 @@ $(PATHR)%.txt: $(PATHO)%.$(TARGET_EXTENSION)
 $(PATHO)Test%.$(TARGET_EXTENSION): $(LIBFT) $(OBJS) $(PATHO)Test%.o $(PATHO)%.o $(PATHU)unity.o 
 	$(LINK) -lreadline -o  $@ $^
 
-$(PATHO)%.o:: $(PATHT)%.c $(PATHSL)%.c $(PATHSP)%.c $(PATHSU)%.c $(PATHSB)%.c $(PATHSE)%.c $(HEADERS)
-	$(COMPILE) $(CFLAGS) $(UNITY_CONFIG_DEFINES) $< -o $@
+# $(PATHO)%.o:: $(PATHT)%.c $(PATHSL)%.c $(PATHSP)%.c $(PATHSU)%.c $(PATHSB)%.c $(PATHSE)%.c $(HEADERS)
+# 	$(COMPILE) $(CFLAGS) $(UNITY_CONFIG_DEFINES) $< -o $@
+
+
+$(PATHO)%.o:: $(PATHT)%.c $(HEADERS)
+	@$(COMPILE) $(CFLAGS) $< -o $@
+
+# $(PATHO)%.o:: $(PATHS)%.c $(HEADERS)
+# 	$(COMPILE) $(CFLAGS) $< -o $@
+
+$(PATHO)%.o:: $(PATHSL)%.c $(HEADERS)
+	@$(COMPILE) $(CFLAGS) $< -o $@
+
+$(PATHO)%.o:: $(PATHSP)%.c $(HEADERS)
+	@$(COMPILE) $(CFLAGS) $< -o $@
+
+$(PATHO)%.o:: $(PATHSU)%.c $(HEADERS)
+	@$(COMPILE) $(CFLAGS) $< -o $@
+
+$(PATHO)%.o:: $(PATHSB)%.c $(HEADERS)
+	@$(COMPILE) $(CFLAGS) $< -o $@
+
+$(PATHO)%.o:: $(PATHSE)%.c $(HEADERS)
+	@$(COMPILE) $(CFLAGS) $< -o $@
 
 $(PATHO)%.o:: $(PATHU)%.c $(PATHU)%.h
-	$(COMPILE) $(CFLAGS) $(UNITY_CONFIG_DEFINES) $< -o $@
+	@$(COMPILE) $(CFLAGS) $< -o $@
+
+$(PATHO)%.o:: $(PATHU)%.c $(PATHU)%.h
+	@$(COMPILE) $(CFLAGS) $(UNITY_CONFIG_DEFINES) $< -o $@
 
 $(PATHB):
 	$(MKDIR) $(PATHB)
