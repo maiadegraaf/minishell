@@ -1,4 +1,4 @@
-for f in ../build/results/test_*.txt
+for f in ../build/results/Test*.txt
 	do
 		./read_tester_output.sh $f
 	done
