@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 17:59:38 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/03/22 17:06:19 by maiadegraaf   ########   odam.nl         */
+/*   Updated: 2022/03/30 14:59:35 by maiadegraaf   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ typedef struct s_simple_cmds
 	int						num_redirections;
 	t_lexor					*redirections;
 	struct s_simple_cmds	*next;
+	struct s_simple_cmds	*prev;
 }	t_simple_cmds;
 
 int				parse_envp(t_tools *tools);

@@ -18,6 +18,8 @@ PATHP = ../src/pipex/
 PATHSU = ../src/utils/
 PATHSB = ../src/builtins/
 PATHSE = ../src/error/
+PATHSEXP = ../src/expander/
+PATHSEXC = ../src/executor/
 PATHT = ../test/
 PATHB = ../build/
 PATHO = ../build/objs/
@@ -59,7 +61,6 @@ $(PATHO)Test%.$(TARGET_EXTENSION): $(LIBFT) $(OBJS) $(PATHO)Test%.o $(PATHO)%.o 
 # $(PATHO)%.o:: $(PATHT)%.c $(PATHSL)%.c $(PATHSP)%.c $(PATHSU)%.c $(PATHSB)%.c $(PATHSE)%.c $(HEADERS)
 # 	$(COMPILE) $(CFLAGS) $(UNITY_CONFIG_DEFINES) $< -o $@
 
-
 $(PATHO)%.o:: $(PATHT)%.c $(HEADERS)
 	@$(COMPILE) $(CFLAGS) $< -o $@
 
@@ -79,6 +80,12 @@ $(PATHO)%.o:: $(PATHSB)%.c $(HEADERS)
 	@$(COMPILE) $(CFLAGS) $< -o $@
 
 $(PATHO)%.o:: $(PATHSE)%.c $(HEADERS)
+	@$(COMPILE) $(CFLAGS) $< -o $@
+
+$(PATHO)%.o:: $(PATHSEXP)%.c $(HEADERS)
+	@$(COMPILE) $(CFLAGS) $< -o $@
+
+$(PATHO)%.o:: $(PATHSEXC)%.c $(HEADERS)
 	@$(COMPILE) $(CFLAGS) $< -o $@
 
 $(PATHO)%.o:: $(PATHU)%.c $(PATHU)%.h

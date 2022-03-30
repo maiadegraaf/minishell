@@ -10,13 +10,10 @@ FILE_NAME=$(echo "$FILE\n" | awk -F '/results/' '{ print $2 }' | awk -F 'Test' '
 center() {
   termwidth="$(tput cols)"
   padding="$(printf '%0.1s' ={1..500})"
-  printf "\n\n%*.*s${BOLDBLUE}%s${NC}%*.*s\n\n" 0 "$(((termwidth-2-${#1})/2))" "$padding" "$1" 0 "$(((termwidth-1-${#1})/2))" "$padding"
+  printf "\n%*.*s${BOLDBLUE}%s${NC}%*.*s\n" 0 "$(((termwidth-2-${#1})/2))" "$padding" "$1" 0 "$(((termwidth-1-${#1})/2))" "$padding"
 }
-# printf "${BOLDBLUE}"
 center " $FILE_NAME "
-# printf "${NC}\n"
-
-# printf "\n${BOLDBLUE}* %s *\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\n${NC}" "$FILE_NAME"
+echo ''
 while read line 
 do
 	if [ $I -eq 1 ]
@@ -37,18 +34,20 @@ do
 	fi
 	if [[ "$line" == *"Tests"*"Failures"* ]]
 	then
-		FAILURES=$(echo $line | awk -F 'Tests' '{ print $2 }' | awk -F 'Failures' '{ print $1 }')
+		FAILURES=$(echo $line | awk -F 'Tests ' '{ print $2 }' | awk -F ' Failures' '{ print $1 }')
+		TESTS=$(echo $line | awk -F 'Tests' '{ print $1 }')
+		PASSED=$(expr $TESTS - $FAILURES)
+		printf "\n\n$PASSED/$TESTS\n\n"
 		if [ $FAILURES -gt 0 ]
 		then
-			printf "\n\n${RED}Failures: $FAILURES\nyeah no......${NC}"
+			printf "${RED}yeah no......${NC}"
 		else
-			printf "\n\n🎉🥳${GREEN}you never cease to amaze me${NC}👏🎉"
+			printf "🎉🥳${GREEN}you never cease to amaze me${NC}👏🎉"
 		fi
 		break
 	fi
 done < "$FILE"
 
-# printf "\n\n${BOLDBLUE}"
+echo ''
 center ""
-# printf "${NC}\n\n"
-# printf "${BOLDBLUE}~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~${NC}\n\n"
+echo '\n'
