@@ -6,8 +6,17 @@ NC='\033[0m'
 FILE=$1
 
 I=0
-FILE_NAME=$(echo "$FILE\n" | awk -F '/results/' '{ print $2 }')
-printf "${BOLDBLUE}%s\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\n${NC}" "$FILE_NAME"
+FILE_NAME=$(echo "$FILE\n" | awk -F '/results/' '{ print $2 }' | awk -F 'Test' '{ print $2 }' | awk -F '.txt' '{ print $1 }' | tr 'a-z' 'A-Z')
+center() {
+  termwidth="$(tput cols)"
+  padding="$(printf '%0.1s' ={1..500})"
+  printf "\n\n%*.*s${BOLDBLUE}%s${NC}%*.*s\n\n" 0 "$(((termwidth-2-${#1})/2))" "$padding" "$1" 0 "$(((termwidth-1-${#1})/2))" "$padding"
+}
+# printf "${BOLDBLUE}"
+center " $FILE_NAME "
+# printf "${NC}\n"
+
+# printf "\n${BOLDBLUE}* %s *\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\n${NC}" "$FILE_NAME"
 while read line 
 do
 	if [ $I -eq 1 ]
@@ -28,8 +37,18 @@ do
 	fi
 	if [[ "$line" == *"Tests"*"Failures"* ]]
 	then
-		echo "\n\n-----------Results:-----------\n$line\n------------------------------"
+		FAILURES=$(echo $line | awk -F 'Tests' '{ print $2 }' | awk -F 'Failures' '{ print $1 }')
+		if [ $FAILURES -gt 0 ]
+		then
+			printf "\n\n${RED}Failures: $FAILURES\nyeah no......${NC}"
+		else
+			printf "\n\n🎉🥳${GREEN}you never cease to amaze me${NC}👏🎉"
+		fi
 		break
 	fi
 done < "$FILE"
-printf "${BOLDBLUE}~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~${NC}\n\n\n"
+
+# printf "\n\n${BOLDBLUE}"
+center ""
+# printf "${NC}\n\n"
+# printf "${BOLDBLUE}~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~${NC}\n\n"
