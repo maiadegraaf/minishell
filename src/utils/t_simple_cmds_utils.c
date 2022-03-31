@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 15:31:53 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/03/25 10:10:24 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/03/31 16:14:40 by maiadegraaf   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,22 +26,28 @@ t_simple_cmds	*ft_simple_cmdsnew(char **str,
 	new_element->num_redirections = num_redirections;
 	new_element->redirections = redirections;
 	new_element->next = NULL;
+	new_element->prev = NULL;
 	return (new_element);
 }
 
 void	ft_simple_cmdsadd_back(t_simple_cmds **lst, t_simple_cmds *new)
 {
 	t_simple_cmds	*tmp;
+	t_simple_cmds	*prev;
 
 	tmp = *lst;
-	if (!(*lst))
+	if (*lst == NULL)
 	{
 		*lst = new;
 		return ;
 	}
 	while (tmp->next != NULL)
+	{
+		prev = tmp;
 		tmp = tmp->next;
+	}
 	tmp->next = new;
+	new->prev = tmp;
 }
 
 void	ft_simple_cmds_rm_first(t_simple_cmds **lst)
@@ -76,16 +82,16 @@ void	ft_simple_cmdsclear(t_simple_cmds **lst)
 	*lst = NULL;
 }
 
-t_simple_cmds	*ft_simple_cmdslast(t_simple_cmds *map)
+t_simple_cmds	*ft_simple_cmdsfirst(t_simple_cmds *map)
 {
 	int	i;
 
 	i = 0;
 	if (!map)
 		return (NULL);
-	while (map->next != NULL)
+	while (map->prev != NULL)
 	{
-		map = map->next;
+		map = map->prev;
 		i++;
 	}
 	return (map);

@@ -6,7 +6,7 @@
 /*   By: maiadegraaf <maiadegraaf@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/16 09:57:33 by maiadegraaf   #+#    #+#                 */
-/*   Updated: 2022/03/29 13:00:54 by maiadegraaf   ########   odam.nl         */
+/*   Updated: 2022/03/31 13:35:08 by maiadegraaf   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,5 +42,9 @@ void	ft_error(int error, t_tools *tools)
 		ft_putstr_fd("syntax error: unable to locate closing quotation\n", STDERR_FILENO);
 	else if (error == 3)
 		ft_putstr_fd("Parser problem\n", STDERR_FILENO);
+	else if (error == 4)
+		ft_putstr_fd("Failed to create pipe\n", STDERR_FILENO);
+	else if (error == 5)
+		ft_putstr_fd("Failed to fork\n", STDERR_FILENO);
 	reset_tools(tools);
 }

@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/25 11:39:57 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/02/25 12:10:51 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/03/31 13:26:49 by maiadegraaf   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	check_outfile(t_tools *tools)
 			= tools->simple_cmds->redirections->next;
 	}
 	if (i == 0)
-		tools->out = dup(1);
+		tools->out = dup(STDOUT_FILENO);
 	tools->simple_cmds->redirections = start;
 	return (tools->out);
 }

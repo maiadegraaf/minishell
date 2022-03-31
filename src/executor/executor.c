@@ -6,71 +6,65 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/24 15:09:50 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/03/15 10:05:42 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/03/31 16:43:13 by maiadegraaf   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
-int	find_cmd(char **args, char **paths, char **envp)
+int	find_cmd(t_simple_cmds *cmd, t_tools *tools, int end[2], int fd_in)
 {
 	int		i;
 	char	*mycmd;
 
+	if (cmd->prev && dup2(fd_in, STDIN_FILENO) < 0)
+		ft_error(4, tools);
+	if (cmd->next && dup2(end[1], STDOUT_FILENO) < 0)
+		ft_error(4, tools);
+	close(end[0]);
+	close(end[1]);
+	if (cmd->prev)
+		close(fd_in);
 	i = 0;
-	fprintf(stderr, "in find_cmd\n");
-	while (paths[i])
+	while (tools->paths[i])
 	{
-		mycmd = ft_strjoin(paths[i], args[0]);
-		fprintf(stderr, "%i\n", i);
+		mycmd = ft_strjoin(tools->paths[i], cmd->str[0]);
 		if (!access(mycmd, F_OK))
-			execve(mycmd, args, envp);
+			execve(mycmd, cmd->str, tools->envp);
 		free(mycmd);
 		i++;
 	}
-	printf("HELO\n");
+	exit(EXIT_FAILURE);
 	return (1);
 }
 
 int	executor(t_tools *tools)
 {
-	int		i;
 	int		end[2];
 	pid_t	ret;
 	int		status;
+	int		fd_in;
 
-	i = 0;
-	while (i < tools->pipes + 1)
+	fd_in = STDIN_FILENO;
+	while (tools->simple_cmds)
 	{
-		check_infile(tools);
-		dup2(tools->in, 0);
-		close(tools->in);
-		if (i == tools->pipes)
-			check_outfile(tools);
-		else
-		{
+		if (tools->simple_cmds->next)
 			pipe(end);
-			tools->out = end[1];
-			tools->in = end[0];
-		}
-		fprintf(stderr, "\nb4 dup out: in = %d out = %d\nend[0] = %d, end[1] = %d\n", tools->in, tools->out, end[0], end[1]);
-		dup2(tools->out, 1);
-		close(tools->out);
 		ret = fork();
 		if (ret < 0)
-		{
-			perror("Fork: ");
-			exit(0);
-		}
+			ft_error(5, tools);
 		if (ret == 0)
-		{
-			fprintf(stderr, "\nb4 find_cmd: %s\nin = %d out = %d\n", tools->simple_cmds->str[0], tools->in, tools->out);
-			find_cmd(tools->simple_cmds->str, tools->paths, tools->envp);
-		}
-		i++;
-		fprintf(stderr, "\nguess who's back\n");
-		ft_simple_cmds_rm_first(&tools->simple_cmds);
+			find_cmd(tools->simple_cmds, tools, end, fd_in);
+		close(end[1]);
+		if (tools->simple_cmds->prev)
+			close(fd_in);
+		fd_in = end[0];
+		if (tools->simple_cmds->next)
+			tools->simple_cmds = tools->simple_cmds->next;
+		else
+			break ;
 	}
 	waitpid(ret, &status, 0);
+	tools->simple_cmds = ft_simple_cmdsfirst(tools->simple_cmds);
 	return (0);
 }
