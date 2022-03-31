@@ -42,9 +42,9 @@ int	minishell_loop(t_tools *tools)
 	if (!token_reader(tools))
 		ft_error(1, tools);
 	parser(tools);
-	// expander(tools, tools->simple_cmds);
-	// printf("%s\n", *tools->simple_cmds->str);
-	executor(tools);
+	expander(tools);
+	builtin_arr(tools->simple_cmds->str[0])(tools, tools->simple_cmds);
+	// executor(&tools);
 	reset_tools(tools);
 	return (1);
 }
