@@ -6,7 +6,7 @@
 /*   By: fpolycar <fpolycar@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/24 16:07:21 by fpolycar      #+#    #+#                 */
-/*   Updated: 2022/03/24 16:07:25 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/03/30 14:53:22 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,9 @@ char	**whileloop_add_var(char **arr, char **rtn, char *str)
 	i = 0;
 	while (arr[i] != NULL)
 	{
+		if (str[0] == '\'' && str[ft_strlen(str)] == '\''
+			&& str[0] == '\"' && str[ft_strlen(str)] == '\"')
+			ft_strtrim(str, "\'\"");
 		if (arr[i + 1] == NULL)
 		{
 			rtn[i] = ft_strdup(str);

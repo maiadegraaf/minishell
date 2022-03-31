@@ -6,88 +6,84 @@
 /*   By: fpolycar <fpolycar@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/15 13:35:26 by fpolycar      #+#    #+#                 */
-/*   Updated: 2022/03/25 15:57:37 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/03/31 16:22:13 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "builtins.h"
 
-size_t	dollar_sign(char *str)
+int	loop_if_dollar_sign(t_tools *tools, char *arr_tmp, int j, int i)
 {
-	size_t	i;
+	int		k;
+	int		ret;
+	char	*tmp;
+	char	*tmp2;
 
-	i = 0;
-	while (str[i])
+	k = 0;
+	ret = 0;
+	while (tools->envp[k])
 	{
-		if (str[i] == '$')
-			return (i + 1);
-		i++;
+		if (ft_strncmp(arr_tmp + j + 1,
+				tools->envp[k], equal_sign(tools->envp[k]) - 1) == 0
+			&& after_dollar_lenght(arr_tmp, j) - j
+			== equal_sign(tools->envp[k]))
+		{
+			tmp2 = ft_strdup(tools->envp[k] + equal_sign(tools->envp[k]));
+			tmp = ft_strjoin(tools->simple_cmds->str[i], tmp2);
+			free_things(tmp2, tools, i);
+			tools->simple_cmds->str[i] = tmp;
+			ret = equal_sign(tools->envp[k]);
+		}
+		k++;
 	}
-	return (0);
+	if (ret == 0)
+		ret = after_dollar_lenght(arr_tmp, j) - j;
+	return (ret);
 }
 
-void	expander_loop(t_tools *tools, t_simple_cmds *tmp, int i)
+char	*detect_dollar_sign(t_tools *tools, char *str, int i)
 {
 	int		j;
-	int		k;
 	char	*arr_tmp;
-	char 	*before;
-	char	*after;
+	char	*tmp;
+	char	*tmp2;
 
 	j = 0;
-	k = 0;
-	arr_tmp = tmp->str[i];
+	arr_tmp = ft_strdup(str);
 	while (arr_tmp[j])
 	{
+		init_stri(i, j, tools);
 		if (arr_tmp[j] == '$')
+			j += loop_if_dollar_sign(tools, arr_tmp, j, i);
+		else
 		{
-			while (tools->envp[k])
-			{
-				if (ft_strncmp(arr_tmp + j + 1,
-						tools->envp[k], equal_sign(tools->envp[k]) - 1) == 0
-					&& (arr_tmp[equal_sign(tools->envp[k])] == '\0'
-						|| arr_tmp[equal_sign(tools->envp[k])] == '$'))
-				{
-					
-					// if (j == 0)
-					// {
-					// 	free(tmp->str[i]);
-					// 	tmp->str[i] = ft_substr(tools->envp[k],
-					// 			equal_sign(tools->envp[k]),
-					// 			ft_strlen(tools->envp[k]));
-					// }
-					// // // printf("test\n");
-					// // // before = ft_substr(arr_tmp, 0, dollar_sign(arr_tmp));
-					// else
-					// {
-					// 	before = tmp->str[i];
-					// 	free(tmp->str[i]);
-					// 	tmp->str[i] = ft_strjoin(before, ft_substr(tools->envp[j],
-					// 			equal_sign(tools->envp[j]),
-					// 			ft_strlen(tools->envp[j])));
-					// }
-					printf("%s\n\n", arr_tmp);
-				}
-				k++;
-			}
+			tmp2 = char_to_str(arr_tmp[j]);
+			tmp = ft_strjoin(tools->simple_cmds->str[i], tmp2);
+			free_things(tmp2, tools, i);
+			tools->simple_cmds->str[i] = tmp;
+			str = tmp;
+			j++;
 		}
-		j++;
 	}
+	free(arr_tmp);
+	return (tools->simple_cmds->str[i]);
 }
 
-void	expander(t_tools *tools, t_simple_cmds *simple_cmds)
+void	expander(t_tools *tools)
 {
 	t_simple_cmds	*tmp;
 	int				i;
 
 	i = 0;
-	tmp = simple_cmds;
+	tmp = tools->simple_cmds;
 	while (tmp)
 	{
 		while (tmp->str[i])
 		{
-			expander_loop(tools, tmp, i);
+			if (tmp->str[i][0] != '\''
+				&& tmp->str[i][ft_strlen(tmp->str[i])] != '\'')
+				detect_dollar_sign(tools, tmp->str[i], i);
 			i++;
 		}
 		tmp = tmp->next;

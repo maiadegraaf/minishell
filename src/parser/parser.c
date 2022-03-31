@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 15:28:22 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/03/25 10:38:09 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/03/29 15:31:00 by alfred        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	*parser(t_tools *tools)
 			ft_simple_cmdsadd_back(&tools->simple_cmds, node);
 		tools->lexor_list = parser_tools.lexor_list;
 	}
-	print_parser(*tools->simple_cmds);
+	// print_parser(*tools->simple_cmds);
 	return (0);
 }
 
@@ -82,6 +82,7 @@ void	print_parser(t_simple_cmds simple_cmds)
 				printf("%s\n", *tmp->str++);
 			}
 		}
+		printf("num redirections = %d\n", simple_cmds.num_redirections);
 		if (tmp->redirections)
 			printf("\nredirections:\n");
 		while (tmp->redirections)

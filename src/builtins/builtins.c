@@ -6,22 +6,11 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/15 11:42:32 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/03/24 16:09:37 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/03/29 14:25:04 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
-
-void	change_path(t_tools *tools)
-{
-	char	*tmp;
-
-	tmp = ft_strdup(tools->pwd);
-	free(tools->old_pwd);
-	tools->old_pwd = tmp;
-	free(tools->pwd);
-	tools->pwd = getcwd(NULL, sizeof(NULL));
-}
 
 int	(*builtin_arr(char *str))(t_tools *tools, t_simple_cmds *simple_cmd)
 {

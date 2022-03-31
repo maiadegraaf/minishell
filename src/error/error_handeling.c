@@ -6,7 +6,7 @@
 /*   By: maiadegraaf <maiadegraaf@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/16 09:57:33 by maiadegraaf   #+#    #+#                 */
-/*   Updated: 2022/03/25 10:26:44 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/03/29 13:00:54 by maiadegraaf   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,12 @@ void	lexor_error(int error, t_tools *tools)
 void	ft_error(int error, t_tools *tools)
 {
 	if (error == 0)
-		printf("syntax error: unexpected 'newline'\n");
+		ft_putstr_fd("syntax error: unexpected 'newline'\n", STDERR_FILENO);
 	else if (error == 1)
-		printf("memory error: unable to assign memory\n");
+		ft_putstr_fd("memory error: unable to assign memory\n", STDERR_FILENO);
 	else if (error == 2)
-		printf("syntax error: unable to locate closing quotation\n");
+		ft_putstr_fd("syntax error: unable to locate closing quotation\n", STDERR_FILENO);
 	else if (error == 3)
-		printf("Parser problem\n");
+		ft_putstr_fd("Parser problem\n", STDERR_FILENO);
 	reset_tools(tools);
 }

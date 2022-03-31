@@ -1,8 +1,11 @@
 CLEANUP=rm -f
 MKDIR=mkdir -p
 TARGET_EXTENSION=out
+UNITY_CONFIG_DEFINES = 	-D UNITY_OUTPUT_COLOR \
+						-D UNITY_FIXTURE_NO_EXTRAS
 
 .PHONY: clean
+.PHONY: re
 .PHONY: test
 
 PATHLIBFT = ../libraries/libft
@@ -44,21 +47,8 @@ RESULTS = $(patsubst $(PATHT)Test%.c,$(PATHR)Test%.txt, $(SRCT))
 
 OBJS = $(addprefix $(PATHO), $(notdir $(patsubst %.c, %.o, $(src))))
 
-PASSED = `grep -s PASS $(PATHR)*.txt`
-
-FAIL = `grep -s FAIL $(PATHR)*.txt`
-
-IGNORE = `grep -s IGNORE $(PATHR)*.txt`
-
 test: $(BUILD_PATHS) $(RESULTS)
-	@echo $(PATHO)
-	@echo "-----------------------\nIGNORES:\n-----------------------"
-	@echo "$(IGNORE)"
-	@echo "-----------------------\nFAILURES:\n-----------------------"
-	@echo "$(FAIL)"
-	@echo "-----------------------\nPASSED:\n-----------------------"
-	@echo "$(PASSED)"
-	@echo "\nDONE"
+	@./call_read_tester.sh
 
 $(PATHR)%.txt: $(PATHO)%.$(TARGET_EXTENSION)
 	-./$< > $@ 2>&1
@@ -66,29 +56,36 @@ $(PATHR)%.txt: $(PATHO)%.$(TARGET_EXTENSION)
 $(PATHO)Test%.$(TARGET_EXTENSION): $(LIBFT) $(OBJS) $(PATHO)Test%.o $(PATHO)%.o $(PATHU)unity.o 
 	$(LINK) -lreadline -o  $@ $^
 
+# $(PATHO)%.o:: $(PATHT)%.c $(PATHSL)%.c $(PATHSP)%.c $(PATHSU)%.c $(PATHSB)%.c $(PATHSE)%.c $(HEADERS)
+# 	$(COMPILE) $(CFLAGS) $(UNITY_CONFIG_DEFINES) $< -o $@
+
+
 $(PATHO)%.o:: $(PATHT)%.c $(HEADERS)
-	$(COMPILE) $(CFLAGS) $< -o $@
+	@$(COMPILE) $(CFLAGS) $< -o $@
 
 # $(PATHO)%.o:: $(PATHS)%.c $(HEADERS)
 # 	$(COMPILE) $(CFLAGS) $< -o $@
 
 $(PATHO)%.o:: $(PATHSL)%.c $(HEADERS)
-	$(COMPILE) $(CFLAGS) $< -o $@
+	@$(COMPILE) $(CFLAGS) $< -o $@
 
 $(PATHO)%.o:: $(PATHSP)%.c $(HEADERS)
-	$(COMPILE) $(CFLAGS) $< -o $@
+	@$(COMPILE) $(CFLAGS) $< -o $@
 
 $(PATHO)%.o:: $(PATHSU)%.c $(HEADERS)
-	$(COMPILE) $(CFLAGS) $< -o $@
+	@$(COMPILE) $(CFLAGS) $< -o $@
 
 $(PATHO)%.o:: $(PATHSB)%.c $(HEADERS)
-	$(COMPILE) $(CFLAGS) $< -o $@
+	@$(COMPILE) $(CFLAGS) $< -o $@
 
 $(PATHO)%.o:: $(PATHSE)%.c $(HEADERS)
-	$(COMPILE) $(CFLAGS) $< -o $@
+	@$(COMPILE) $(CFLAGS) $< -o $@
 
 $(PATHO)%.o:: $(PATHU)%.c $(PATHU)%.h
-	$(COMPILE) $(CFLAGS) $< -o $@
+	@$(COMPILE) $(CFLAGS) $< -o $@
+
+$(PATHO)%.o:: $(PATHU)%.c $(PATHU)%.h
+	@$(COMPILE) $(CFLAGS) $(UNITY_CONFIG_DEFINES) $< -o $@
 
 $(PATHB):
 	$(MKDIR) $(PATHB)
