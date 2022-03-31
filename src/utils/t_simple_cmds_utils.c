@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 15:31:53 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/03/30 15:00:17 by maiadegraaf   ########   odam.nl         */
+/*   Updated: 2022/03/31 16:14:40 by maiadegraaf   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,16 +82,16 @@ void	ft_simple_cmdsclear(t_simple_cmds **lst)
 	*lst = NULL;
 }
 
-t_simple_cmds	*ft_simple_cmdslast(t_simple_cmds *map)
+t_simple_cmds	*ft_simple_cmdsfirst(t_simple_cmds *map)
 {
 	int	i;
 
 	i = 0;
 	if (!map)
 		return (NULL);
-	while (map->next != NULL)
+	while (map->prev != NULL)
 	{
-		map = map->next;
+		map = map->prev;
 		i++;
 	}
 	return (map);

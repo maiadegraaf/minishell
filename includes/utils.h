@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 15:36:23 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/03/29 15:09:02 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/03/31 16:15:49 by maiadegraaf   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_simple_cmds	*ft_simple_cmdsnew(char **str,
 void			ft_simple_cmdsadd_back(t_simple_cmds **lst, t_simple_cmds *new);
 void			ft_simple_cmds_rm_first(t_simple_cmds **lst);
 void			ft_simple_cmdsclear(t_simple_cmds **lst);
-t_simple_cmds	*ft_simple_cmdslast(t_simple_cmds *map);
+t_simple_cmds	*ft_simple_cmdsfirst(t_simple_cmds *map);
 
 //t_lexor_utils
 t_lexor			*ft_lexornew(char *str, int token);

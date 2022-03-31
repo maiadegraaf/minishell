@@ -6,7 +6,7 @@
 /*   By: fpolycar <fpolycar@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/24 16:06:58 by fpolycar      #+#    #+#                 */
-/*   Updated: 2022/03/28 12:56:13 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/03/31 16:43:58 by maiadegraaf   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,6 @@ int	minishell_loop(t_tools *tools);
 
 int	implement_tools(t_tools *tools)
 {
-	tools->in = dup(0);
-	tools->out = dup(1);
-	tools->err = dup(2);
 	tools->simple_cmds = NULL;
 	tools->lexor_list = NULL;
 	return (1);
@@ -47,7 +44,7 @@ int	minishell_loop(t_tools *tools)
 	parser(tools);
 	// expander(tools, tools->simple_cmds);
 	// printf("%s\n", *tools->simple_cmds->str);
-	// executor(&tools);
+	executor(tools);
 	reset_tools(tools);
 	return (1);
 }
