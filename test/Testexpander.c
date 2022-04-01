@@ -21,7 +21,7 @@ void	init_test(char *line)
 	test_tools.args = line;
 	token_reader(&test_tools);
 	parser(&test_tools);
-	expander(&test_tools, test_tools.simple_cmds);
+	expander(&test_tools);
 }
 
 void	assert_expander(char **expected)

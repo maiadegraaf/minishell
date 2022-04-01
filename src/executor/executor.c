@@ -6,25 +6,17 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/24 15:09:50 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/03/31 16:43:13 by maiadegraaf   ########   odam.nl         */
+/*   Updated: 2022/03/31 17:45:44 by maiadegraaf   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
-int	find_cmd(t_simple_cmds *cmd, t_tools *tools, int end[2], int fd_in)
+int	find_cmd(t_simple_cmds *cmd, t_tools *tools)
 {
 	int		i;
 	char	*mycmd;
 
-	if (cmd->prev && dup2(fd_in, STDIN_FILENO) < 0)
-		ft_error(4, tools);
-	if (cmd->next && dup2(end[1], STDOUT_FILENO) < 0)
-		ft_error(4, tools);
-	close(end[0]);
-	close(end[1]);
-	if (cmd->prev)
-		close(fd_in);
 	i = 0;
 	while (tools->paths[i])
 	{
@@ -36,6 +28,27 @@ int	find_cmd(t_simple_cmds *cmd, t_tools *tools, int end[2], int fd_in)
 	}
 	exit(EXIT_FAILURE);
 	return (1);
+}
+
+void	fork_cmd(t_simple_cmds *cmd, t_tools *tools, int end[2], int fd_in)
+{
+	if (cmd->prev && dup2(fd_in, STDIN_FILENO) < 0)
+		ft_error(4, tools);
+	if (cmd->next && dup2(end[1], STDOUT_FILENO) < 0)
+		ft_error(4, tools);
+	close(end[0]);
+	close(end[1]);
+	if (cmd->prev)
+		close(fd_in);
+	if (cmd->redirections)
+		handle_redirections(cmd, tools);
+	if (cmd->builtin)
+	{
+		cmd->builtin(tools, cmd);
+		exit(EXIT_SUCCESS);
+	}
+	else
+		find_cmd(cmd, tools);
 }
 
 int	executor(t_tools *tools)
@@ -54,7 +67,7 @@ int	executor(t_tools *tools)
 		if (ret < 0)
 			ft_error(5, tools);
 		if (ret == 0)
-			find_cmd(tools->simple_cmds, tools, end, fd_in);
+			fork_cmd(tools->simple_cmds, tools, end, fd_in);
 		close(end[1]);
 		if (tools->simple_cmds->prev)
 			close(fd_in);
