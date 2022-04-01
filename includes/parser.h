@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 17:59:38 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/03/22 17:06:19 by maiadegraaf   ########   odam.nl         */
+/*   Updated: 2022/04/01 16:07:58 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ typedef struct s_tools
 	char					*pwd;
 	char					*old_pwd;
 	int						pipes;
+	bool					end;
+	int						end_pid;
 }	t_tools;
 
 typedef struct s_simple_cmds

@@ -6,7 +6,7 @@
 /*   By: fpolycar <fpolycar@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/15 13:35:26 by fpolycar      #+#    #+#                 */
-/*   Updated: 2022/03/31 16:22:13 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/04/01 10:28:49 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	loop_if_dollar_sign(t_tools *tools, char *arr_tmp, int j, int i)
 		if (ft_strncmp(arr_tmp + j + 1,
 				tools->envp[k], equal_sign(tools->envp[k]) - 1) == 0
 			&& after_dollar_lenght(arr_tmp, j) - j
-			== equal_sign(tools->envp[k]))
+			== (int) equal_sign(tools->envp[k]))
 		{
 			tmp2 = ft_strdup(tools->envp[k] + equal_sign(tools->envp[k]));
 			tmp = ft_strjoin(tools->simple_cmds->str[i], tmp2);

@@ -6,7 +6,7 @@
 /*   By: fpolycar <fpolycar@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/24 16:04:47 by fpolycar      #+#    #+#                 */
-/*   Updated: 2022/03/29 14:25:16 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/04/01 16:01:46 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,20 @@ size_t	equal_sign(char *str)
 		i++;
 	}
 	return (0);
+}
+
+char	*delete_quotes_value(char *str)
+{
+	char	**split_quotes;
+
+	split_quotes = ft_split(str, '"');
+	if (!split_quotes[1])
+	{
+		free_arr(split_quotes);
+		split_quotes = ft_split(str, '\'');
+	}
+	free(str);
+	str = ft_strjoin(split_quotes[0], split_quotes[1]);
+	free_arr(split_quotes);
+	return (str);
 }

@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/24 15:09:50 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/03/15 10:05:42 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/04/01 16:08:27 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,28 @@ int	find_cmd(char **args, char **paths, char **envp)
 	}
 	printf("HELO\n");
 	return (1);
+}
+
+void	fork_cmd(t_simple_cmds *cmd, t_tools *tools, int end[2], int fd_in)
+{
+	if (cmd->prev && dup2(fd_in, STDIN_FILENO) < 0)
+		ft_error(4, tools);
+	if (cmd->next && dup2(end[1], STDOUT_FILENO) < 0)
+		ft_error(4, tools);
+	close(end[0]);
+	close(end[1]);
+	if (cmd->prev)
+		close(fd_in);
+	if (cmd->redirections)
+		handle_redirections(cmd, tools);
+	if (cmd->builtin)
+	{
+		printf("BUILTIN\n");
+		cmd->builtin(tools, cmd);
+		exit(EXIT_SUCCESS);
+	}
+	else
+		find_cmd(cmd, tools);
 }
 
 int	executor(t_tools *tools)
@@ -71,6 +93,7 @@ int	executor(t_tools *tools)
 		fprintf(stderr, "\nguess who's back\n");
 		ft_simple_cmds_rm_first(&tools->simple_cmds);
 	}
+	tools->end_pid = ret;
 	waitpid(ret, &status, 0);
 	return (0);
 }

@@ -6,24 +6,26 @@
 /*   By: fpolycar <fpolycar@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/24 16:07:21 by fpolycar      #+#    #+#                 */
-/*   Updated: 2022/03/30 14:53:22 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/04/01 16:01:31 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
-int	variable_exist(t_tools *tools, t_simple_cmds *simple_cmd)
+int	variable_exist(t_tools *tools, char *str)
 {
 	int	i;
 
 	i = 0;
+	if (str[equal_sign(str)] == '"' || str[equal_sign(str)] == '\'')
+		delete_quotes_value(str);
 	while (tools->envp[i])
 	{
 		if (ft_strncmp(tools->envp[i],
-				simple_cmd->str[1], equal_sign(tools->envp[i])) == 0)
+				str, equal_sign(tools->envp[i])) == 0)
 		{
 			free(tools->envp[i]);
-			tools->envp[i] = ft_strdup(simple_cmd->str[1]);
+			tools->envp[i] = ft_strdup(str);
 			return (1);
 		}
 		i++;
@@ -56,9 +58,6 @@ char	**whileloop_add_var(char **arr, char **rtn, char *str)
 	i = 0;
 	while (arr[i] != NULL)
 	{
-		if (str[0] == '\'' && str[ft_strlen(str)] == '\''
-			&& str[0] == '\"' && str[ft_strlen(str)] == '\"')
-			ft_strtrim(str, "\'\"");
 		if (arr[i + 1] == NULL)
 		{
 			rtn[i] = ft_strdup(str);
@@ -82,6 +81,8 @@ char	**add_var(char **arr, char *str)
 	size_t	i;
 
 	i = 0;
+	if (str[equal_sign(str)] == '"' || str[equal_sign(str)] == '\'')
+		delete_quotes_value(str);
 	while (arr[i] != NULL)
 		i++;
 	rtn = ft_calloc(sizeof(char *), i + 2);
@@ -102,7 +103,7 @@ int	mini_export(t_tools *tools, t_simple_cmds *simple_cmd)
 	{
 		if (check_parameter(simple_cmd->str[1]) == 0)
 		{
-			if (variable_exist(tools, simple_cmd) == 0)
+			if (variable_exist(tools, simple_cmd->str[1]) == 0)
 			{
 				if (simple_cmd->str[1])
 				{

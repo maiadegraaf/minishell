@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/14 13:46:41 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/03/31 16:19:25 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/04/01 16:07:47 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ size_t	dollar_sign(char *str);
 char	*char_to_str(char c);
 int		after_dollar_lenght(char *str, int j);
 void	free_things(char *tmp2, t_tools *tools, int i);
+void	print_parser(t_simple_cmds simple_cmds);
+char	*delete_quotes_value(char *str);
 
 //builtins
 int		(*builtin_arr(char *str))(t_tools *tools, t_simple_cmds *simple_cmd);
