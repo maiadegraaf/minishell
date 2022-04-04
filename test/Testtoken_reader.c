@@ -6,7 +6,7 @@
 /*   By: fpolycar <fpolycar@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/28 11:12:08 by fpolycar      #+#    #+#                 */
-/*   Updated: 2022/03/28 12:55:35 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/03/31 12:22:21 by maiadegraaf   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,20 @@ void test_lexer_11(void)
     assert_token(0, "test");
 }
 
+void test_lexer_12(void)
+{
+    init_test("test|test|test>test<test");
+    assert_token(0, "test");
+    assert_token(PIPE, NULL);
+    assert_token(0, "test");
+    assert_token(PIPE, NULL);
+    assert_token(0, "test");
+    assert_token(GREAT, NULL);
+    assert_token(0, "test");
+    assert_token(LESS, NULL);
+    assert_token(0, "test");
+}
+
 int main(void)
 {
     UNITY_BEGIN();
@@ -159,6 +173,8 @@ int main(void)
     RUN_TEST(test_lexer_10);
     ft_lexorclear(&test_tools.lexor_list);
     RUN_TEST(test_lexer_11);
+    ft_lexorclear(&test_tools.lexor_list);
+     RUN_TEST(test_lexer_12);
     ft_lexorclear(&test_tools.lexor_list);
     return UNITY_END();
 }

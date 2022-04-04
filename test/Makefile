@@ -18,6 +18,8 @@ PATHP = ../src/pipex/
 PATHSU = ../src/utils/
 PATHSB = ../src/builtins/
 PATHSE = ../src/error/
+PATHSEXP = ../src/expander/
+PATHSEXC = ../src/executor/
 PATHT = ../test/
 PATHB = ../build/
 PATHO = ../build/objs/
@@ -54,11 +56,10 @@ $(PATHR)%.txt: $(PATHO)%.$(TARGET_EXTENSION)
 	-./$< > $@ 2>&1
 
 $(PATHO)Test%.$(TARGET_EXTENSION): $(LIBFT) $(OBJS) $(PATHO)Test%.o $(PATHO)%.o $(PATHU)unity.o 
-	$(LINK) -lreadline -o  $@ $^
+	@$(LINK) -lreadline -o  $@ $^
 
 # $(PATHO)%.o:: $(PATHT)%.c $(PATHSL)%.c $(PATHSP)%.c $(PATHSU)%.c $(PATHSB)%.c $(PATHSE)%.c $(HEADERS)
 # 	$(COMPILE) $(CFLAGS) $(UNITY_CONFIG_DEFINES) $< -o $@
-
 
 $(PATHO)%.o:: $(PATHT)%.c $(HEADERS)
 	@$(COMPILE) $(CFLAGS) $< -o $@
@@ -81,23 +82,29 @@ $(PATHO)%.o:: $(PATHSB)%.c $(HEADERS)
 $(PATHO)%.o:: $(PATHSE)%.c $(HEADERS)
 	@$(COMPILE) $(CFLAGS) $< -o $@
 
-$(PATHO)%.o:: $(PATHU)%.c $(PATHU)%.h
+$(PATHO)%.o:: $(PATHSEXP)%.c $(HEADERS)
+	@$(COMPILE) $(CFLAGS) $< -o $@
+
+$(PATHO)%.o:: $(PATHSEXC)%.c $(HEADERS)
 	@$(COMPILE) $(CFLAGS) $< -o $@
 
 $(PATHO)%.o:: $(PATHU)%.c $(PATHU)%.h
-	@$(COMPILE) $(CFLAGS) $(UNITY_CONFIG_DEFINES) $< -o $@
+	@$(COMPILE) $(CFLAGS) $< -o $@
+
+# $(PATHO)%.o:: $(PATHU)%.c $(PATHU)%.h
+# 	@$(COMPILE) $(CFLAGS) $(UNITY_CONFIG_DEFINES) $< -o $@
 
 $(PATHB):
-	$(MKDIR) $(PATHB)
+	@$(MKDIR) $(PATHB)
 
 $(PATHO):
-	$(MKDIR) $(PATHO)
+	@$(MKDIR) $(PATHO)
 
 $(PATHR):
-	$(MKDIR) $(PATHR)
+	@$(MKDIR) $(PATHR)
 
 $(LIBFT):
-	$(MAKE) -C $(PATHLIBFT)
+	@$(MAKE) -C $(PATHLIBFT)
 
 clean:
 	$(CLEANUP) $(PATHO)*.o

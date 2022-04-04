@@ -6,7 +6,11 @@
 /*   By: fpolycar <fpolycar@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/24 16:06:58 by fpolycar      #+#    #+#                 */
+<<<<<<< HEAD
 /*   Updated: 2022/04/01 16:08:32 by fpolycar      ########   odam.nl         */
+=======
+/*   Updated: 2022/03/31 17:24:49 by maiadegraaf   ########   odam.nl         */
+>>>>>>> maia_2
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +20,9 @@ int	minishell_loop(t_tools *tools);
 
 int	implement_tools(t_tools *tools)
 {
-	tools->in = dup(0);
-	tools->out = dup(1);
-	tools->err = dup(2);
 	tools->simple_cmds = NULL;
 	tools->lexor_list = NULL;
+	tools->end = false;
 	return (1);
 }
 
@@ -31,8 +33,9 @@ int	reset_tools(t_tools *tools)
 	implement_tools(tools);
 	tools->pipes = 0;
 	// system("leaks minishell");
+	if (tools->end == true)
+		exit (EXIT_SUCCESS);
 	minishell_loop(tools);
-	// exit (EXIT_SUCCESS);
 	return (1);
 }
 
