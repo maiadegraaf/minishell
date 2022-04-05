@@ -6,7 +6,7 @@
 /*   By: fpolycar <fpolycar@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/15 13:35:26 by fpolycar      #+#    #+#                 */
-/*   Updated: 2022/04/01 10:28:49 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/04/05 17:12:35 by alfred        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	loop_if_dollar_sign(t_tools *tools, char *arr_tmp, int j, int i)
 	return (ret);
 }
 
-char	*detect_dollar_sign(t_tools *tools, char *str, int i)
+char	*detect_dollar_sign(t_tools *tools, int i)
 {
 	int		j;
 	char	*arr_tmp;
@@ -50,7 +50,7 @@ char	*detect_dollar_sign(t_tools *tools, char *str, int i)
 	char	*tmp2;
 
 	j = 0;
-	arr_tmp = ft_strdup(str);
+	arr_tmp = ft_strdup(tools->simple_cmds->str[i]);
 	while (arr_tmp[j])
 	{
 		init_stri(i, j, tools);
@@ -62,7 +62,6 @@ char	*detect_dollar_sign(t_tools *tools, char *str, int i)
 			tmp = ft_strjoin(tools->simple_cmds->str[i], tmp2);
 			free_things(tmp2, tools, i);
 			tools->simple_cmds->str[i] = tmp;
-			str = tmp;
 			j++;
 		}
 	}
@@ -72,20 +71,23 @@ char	*detect_dollar_sign(t_tools *tools, char *str, int i)
 
 void	expander(t_tools *tools)
 {
-	t_simple_cmds	*tmp;
 	int				i;
 
 	i = 0;
-	tmp = tools->simple_cmds;
-	while (tmp)
+	while (tools->simple_cmds->next)
 	{
-		while (tmp->str[i])
+		while (tools->simple_cmds->str[i])
 		{
-			if (tmp->str[i][0] != '\''
-				&& tmp->str[i][ft_strlen(tmp->str[i])] != '\'')
-				detect_dollar_sign(tools, tmp->str[i], i);
+			if (tools->simple_cmds->str[i][0] != '\''
+				&& tools->simple_cmds->str[i][ft_strlen(tools->simple_cmds->str[i])] != '\'')
+				detect_dollar_sign(tools, i);
 			i++;
 		}
-		tmp = tmp->next;
+		if (tools->simple_cmds->next)
+			tools->simple_cmds = tools->simple_cmds->next;
 	}
+	while (i-- > 0)
+		tools->simple_cmds = tools->simple_cmds->prev;
+	// printf("%s\n", tools->simple_cmds->str[0]);
+	// tools->simple_cmds = ft_simple_cmdsfirst(tools->simple_cmds);
 }

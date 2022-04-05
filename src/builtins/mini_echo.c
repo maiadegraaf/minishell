@@ -6,7 +6,7 @@
 /*   By: maiadegraaf <maiadegraaf@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/16 10:47:40 by maiadegraaf   #+#    #+#                 */
-/*   Updated: 2022/04/04 16:10:54 by alfred        ########   odam.nl         */
+/*   Updated: 2022/04/04 17:10:53 by alfred        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	mini_echo(t_tools *tools, t_simple_cmds *simple_cmd)
 	(void) tools;
 	if (!simple_cmd->str[i])
 	{
-		ft_putchar_fd('\n', tools->out);
+		ft_putchar_fd('\n', STDOUT_FILENO);
 		return (EXIT_SUCCESS);
 	}
 	if (!ft_strncmp(simple_cmd->str[1], "-n", ft_strlen(simple_cmd->str[1])))
