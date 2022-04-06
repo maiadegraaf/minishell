@@ -6,7 +6,7 @@
 /*   By: fpolycar <fpolycar@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/15 13:35:26 by fpolycar      #+#    #+#                 */
-/*   Updated: 2022/04/06 09:55:27 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/04/06 10:01:47 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,17 +75,15 @@ void	expander(t_tools *tools)
 	t_simple_cmds	*tmp;
 
 	tmp = tools->simple_cmds;
-	while (tmp->next)
+	while (tmp != NULL)
 	{
 		i = 0;
 		while (tmp->str[i])
 		{
 			if (tmp->str[i][ft_strlen(tmp->str[i])] != '\'')
 				detect_dollar_sign(tools, i);
-			printf("%s\n", tmp->str[i]);
 			i++;
 		}
-		if (tmp->next)
-			tmp = tmp->next;
+		tmp = tmp->next;
 	}
 }
