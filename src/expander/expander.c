@@ -6,7 +6,7 @@
 /*   By: fpolycar <fpolycar@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/15 13:35:26 by fpolycar      #+#    #+#                 */
-/*   Updated: 2022/04/05 17:12:35 by alfred        ########   odam.nl         */
+/*   Updated: 2022/04/06 09:55:27 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,22 +72,20 @@ char	*detect_dollar_sign(t_tools *tools, int i)
 void	expander(t_tools *tools)
 {
 	int				i;
+	t_simple_cmds	*tmp;
 
-	i = 0;
-	while (tools->simple_cmds->next)
+	tmp = tools->simple_cmds;
+	while (tmp->next)
 	{
-		while (tools->simple_cmds->str[i])
+		i = 0;
+		while (tmp->str[i])
 		{
-			if (tools->simple_cmds->str[i][0] != '\''
-				&& tools->simple_cmds->str[i][ft_strlen(tools->simple_cmds->str[i])] != '\'')
+			if (tmp->str[i][ft_strlen(tmp->str[i])] != '\'')
 				detect_dollar_sign(tools, i);
+			printf("%s\n", tmp->str[i]);
 			i++;
 		}
-		if (tools->simple_cmds->next)
-			tools->simple_cmds = tools->simple_cmds->next;
+		if (tmp->next)
+			tmp = tmp->next;
 	}
-	while (i-- > 0)
-		tools->simple_cmds = tools->simple_cmds->prev;
-	// printf("%s\n", tools->simple_cmds->str[0]);
-	// tools->simple_cmds = ft_simple_cmdsfirst(tools->simple_cmds);
 }
