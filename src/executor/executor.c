@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/24 15:09:50 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/04/07 13:26:06 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/04/07 13:56:57 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,6 @@ int	find_cmd(t_simple_cmds *cmd, t_tools *tools)
 	char	*mycmd;
 
 	i = 0;
-	cmd->str = expander(tools, cmd->str);
-	if (cmd->builtin)
-	{
-		cmd->builtin(tools, cmd);
-		exit(EXIT_SUCCESS);
-	}
 	while (tools->paths[i])
 	{
 		mycmd = ft_strjoin(tools->paths[i], cmd->str[0]);
@@ -48,11 +42,11 @@ void	fork_cmd(t_simple_cmds *cmd, t_tools *tools, int end[2], int fd_in)
 		close(fd_in);
 	if (cmd->redirections)
 		handle_redirections(cmd, tools);
-	// if (cmd->builtin)
-	// {
-	// 	cmd->builtin(tools, cmd);
-	// 	exit(EXIT_SUCCESS);
-	// }
+	if (cmd->builtin)
+	{
+		cmd->builtin(tools, cmd);
+		exit(EXIT_SUCCESS);
+	}
 	else
 		find_cmd(cmd, tools);
 }
@@ -67,6 +61,7 @@ int	executor(t_tools *tools)
 	fd_in = STDIN_FILENO;
 	while (tools->simple_cmds)
 	{
+		tools->simple_cmds->str = expander(tools, tools->simple_cmds->str);
 		if (tools->simple_cmds->next)
 			pipe(end);
 		ret = fork();
@@ -83,7 +78,6 @@ int	executor(t_tools *tools)
 		else
 			break ;
 	}
-	tools->end_pid = ret;
 	waitpid(ret, &status, 0);
 	tools->simple_cmds = ft_simple_cmdsfirst(tools->simple_cmds);
 	return (0);
