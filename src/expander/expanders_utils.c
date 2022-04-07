@@ -6,7 +6,7 @@
 /*   By: fpolycar <fpolycar@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/31 16:08:47 by fpolycar      #+#    #+#                 */
-/*   Updated: 2022/03/31 16:22:46 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/04/07 11:40:57 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,6 @@ void	init_stri(int i, int j, t_tools *tools)
 		free(tools->simple_cmds->str[i]);
 		tools->simple_cmds->str[i] = ft_strdup("\0");
 	}
-}
-
-void	free_things(char *tmp2, t_tools *tools, int i)
-{
-	free(tmp2);
-	free(tools->simple_cmds->str[i]);
 }
 
 size_t	dollar_sign(char *str)
