@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/24 15:09:50 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/04/07 13:56:57 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/04/07 15:46:28 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ int	executor(t_tools *tools)
 	while (tools->simple_cmds)
 	{
 		tools->simple_cmds->str = expander(tools, tools->simple_cmds->str);
+		if (tools->simple_cmds->redirections->str)
+			tools->simple_cmds->redirections->str = expander_str(tools, tools->simple_cmds->redirections->str);
 		if (tools->simple_cmds->next)
 			pipe(end);
 		ret = fork();
