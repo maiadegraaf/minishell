@@ -6,21 +6,12 @@
 /*   By: fpolycar <fpolycar@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/31 16:08:47 by fpolycar      #+#    #+#                 */
-/*   Updated: 2022/04/07 11:40:57 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/04/07 17:03:21 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "builtins.h"
-
-void	init_stri(int i, int j, t_tools *tools)
-{
-	if (j == 0)
-	{
-		free(tools->simple_cmds->str[i]);
-		tools->simple_cmds->str[i] = ft_strdup("\0");
-	}
-}
 
 size_t	dollar_sign(char *str)
 {
@@ -45,7 +36,7 @@ char	*char_to_str(char c)
 	return (str);
 }
 
-int	after_dollar_lenght(char *str, int j)
+int	after_dol_lenght(char *str, int j)
 {
 	int	i;
 
