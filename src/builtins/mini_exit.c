@@ -6,7 +6,7 @@
 /*   By: maiadegraaf <maiadegraaf@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 10:10:47 by maiadegraaf   #+#    #+#                 */
-/*   Updated: 2022/04/06 10:33:43 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/04/08 17:02:22 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,14 @@
 
 int	mini_exit(t_tools *tools, t_simple_cmds *simple_cmd)
 {
-	(void) simple_cmd;
-	printf("%d\n", tools->end_pid);
-	ft_putstr_fd("exit", STDERR_FILENO);
-	
-	tools->end = true;
-	kill(0, SIGINT);
-	// exit (EXIT_SUCCESS);
+	int		status;
+
+	status = tools->end_pid;
+	ft_putendl_fd("exit", STDERR_FILENO);
+	if (simple_cmd->str[1] != NULL)
+		status = ft_atoi(simple_cmd->str[1]);
+	free_arr(simple_cmd->str);
+	free_arr(tools->envp);
+	exit(status);
 	return (EXIT_SUCCESS);
 }

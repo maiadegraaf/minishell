@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/24 15:09:50 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/04/07 15:51:50 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/04/08 17:10:46 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ int	executor(t_tools *tools)
 		else
 			break ;
 	}
+	tools->end_pid = ret;
 	waitpid(ret, &status, 0);
 	tools->simple_cmds = ft_simple_cmdsfirst(tools->simple_cmds);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: fpolycar <fpolycar@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/24 16:06:58 by fpolycar      #+#    #+#                 */
-/*   Updated: 2022/04/07 16:30:30 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/04/08 17:32:43 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	reset_tools(t_tools *tools)
 	free(tools->args);
 	implement_tools(tools);
 	tools->pipes = 0;
-	system("leaks minishell");
+	// system("leaks minishell");
 	if (tools->end == true)
 		exit (EXIT_SUCCESS);
 	minishell_loop(tools);
@@ -37,9 +37,8 @@ int	reset_tools(t_tools *tools)
 
 int	minishell_loop(t_tools *tools)
 {
-	int i;
-
-	i =0;
+	
+	// signal(SIGQUIT, sigint_handler);
 	tools->args = readline("minishell$ ");
 	add_history(tools->args);
 	if (!count_quotes(tools->args))

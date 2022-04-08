@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 15:28:22 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/03/29 15:31:00 by alfred        ########   odam.nl         */
+/*   Updated: 2022/04/08 10:57:24 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ int	*parser(t_tools *tools)
 			ft_simple_cmdsadd_back(&tools->simple_cmds, node);
 		tools->lexor_list = parser_tools.lexor_list;
 	}
-	// print_parser(*tools->simple_cmds);
 	return (0);
 }
 
