@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 17:11:20 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/03/28 12:57:33 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/04/08 10:45:54 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ int	read_words(int i, char *str, t_lexor **lexor_list)
 	j = 0;
 	while (str[i + j] && !(check_token(str[i + j])))
 	{
-		j += handle_quotes_inside_word(i + j, str, 34);
-		j += handle_quotes_inside_word(i + j, str, 39);
+		j += handle_quotes(i + j, str, 34);
+		j += handle_quotes(i + j, str, 39);
 		if (is_whitespace(str[i + j]))
 			break ;
 		else
@@ -67,11 +67,7 @@ int	token_reader(t_tools *tools)
 	{
 		j = 0;
 		i += skip_spaces(tools->args, i);
-		if (tools->args[i] == 34)
-			j = handle_quotes(i, tools->args, 34, &tools->lexor_list);
-		else if (tools->args[i] == 39)
-			j = handle_quotes(i, tools->args, 39, &tools->lexor_list);
-		else if (check_token(tools->args[i]))
+		if (check_token(tools->args[i]))
 			j = handle_token(tools->args, i, &tools->lexor_list);
 		else
 			j = read_words(i, tools->args, &tools->lexor_list);

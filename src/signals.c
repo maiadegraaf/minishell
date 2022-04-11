@@ -1,48 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   expanders_utils.c                                  :+:    :+:            */
+/*   signals.c                                          :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: fpolycar <fpolycar@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/03/31 16:08:47 by fpolycar      #+#    #+#                 */
-/*   Updated: 2022/04/07 17:03:21 by fpolycar      ########   odam.nl         */
+/*   Created: 2022/04/08 14:35:54 by fpolycar      #+#    #+#                 */
+/*   Updated: 2022/04/08 17:46:30 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "builtins.h"
 
-size_t	dollar_sign(char *str)
+void	sigint_handler(int sig)
 {
-	size_t	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '$')
-			return (i + 1);
-		i++;
-	}
-	return (0);
+	ft_putstr_fd("minishell$   \n", STDOUT_FILENO);
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
+	(void) sig;
 }
 
-char	*char_to_str(char c)
+void	sigquit_handler(int sig)
 {
-	char	*str;
-
-	str = ft_calloc(sizeof(char), 2);
-	str[0] = c;
-	return (str);
+	ft_putstr_fd("Quit: ", 2);
+	ft_putnbr_fd(sig, 2);
+	ft_putchar_fd('\n', 2);
 }
 
-int	after_dol_lenght(char *str, int j)
+void	init_signals(void)
 {
-	int	i;
-
-	i = j + 1;
-	while (str[i] != '\0' && str[i] != '$' && str[i] != ' '
-		&& str[i] != '\"')
-		i++;
-	return (i);
+	signal(SIGINT, sigint_handler);
+	signal(SIGQUIT, SIG_IGN);
 }

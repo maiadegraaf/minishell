@@ -37,6 +37,8 @@ src	=	$(wildcard $(PATHSL)*.c) \
 		$(wildcard $(PATHSP)*.c) \
 		$(wildcard $(PATHSU)*.c) \
 		$(wildcard $(PATHSB)*.c) \
+		$(wildcard $(PATHSEXC)*.c) \
+		$(wildcard $(PATHSEXP)*.c) \
 		$(wildcard $(PATHSE)*.c)
 
 COMPILE=gcc -c

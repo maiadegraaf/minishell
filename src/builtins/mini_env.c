@@ -6,7 +6,7 @@
 /*   By: maiadegraaf <maiadegraaf@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/16 12:09:05 by maiadegraaf   #+#    #+#                 */
-/*   Updated: 2022/03/29 17:00:17 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/04/06 14:15:37 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	mini_env(t_tools *tools, t_simple_cmds *simple_cmd)
 			free(tools->envp[i]);
 			tools->envp[i] = tmp;
 		}
-		ft_putendl_fd(tools->envp[i], tools->out);
+		ft_putendl_fd(tools->envp[i], STDOUT_FILENO);
 		i++;
 	}
 	return (EXIT_SUCCESS);

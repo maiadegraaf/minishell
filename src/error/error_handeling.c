@@ -6,7 +6,7 @@
 /*   By: maiadegraaf <maiadegraaf@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/16 09:57:33 by maiadegraaf   #+#    #+#                 */
-/*   Updated: 2022/03/31 13:35:08 by maiadegraaf   ########   odam.nl         */
+/*   Updated: 2022/04/06 10:43:16 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,11 @@ void	ft_error(int error, t_tools *tools)
 		ft_putstr_fd("Failed to create pipe\n", STDERR_FILENO);
 	else if (error == 5)
 		ft_putstr_fd("Failed to fork\n", STDERR_FILENO);
+	else if (error == 6)
+		ft_putstr_fd("outfile: Error\n", STDERR_FILENO);
+	else if (error == 7)
+		ft_putstr_fd("infile: No such file or directory\n", STDERR_FILENO);
+	else if (error == 8)
+		ft_putendl_fd("Path do not exist", STDERR_FILENO);
 	reset_tools(tools);
 }
