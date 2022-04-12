@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/15 15:17:04 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/04/06 10:44:11 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/04/12 15:55:28 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	mini_cd(t_tools *tools, t_simple_cmds *simple_cmd)
 	{
 		ret = chdir(simple_cmd->str[1]);
 		if (ret != 0)
-			ft_putendl_fd("Path do not exist", STDERR_FILENO);
+			ft_putendl_fd("Path does not exist", STDERR_FILENO);
 	}
 	if (ret != 0)
 		return (EXIT_FAILURE);
