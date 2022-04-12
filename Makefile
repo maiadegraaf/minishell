@@ -36,7 +36,7 @@ LIBFT	=	./libraries/libft/libft.a
 
 HEADER	=	$(wildcard ./includes/*.h) 
 
-READLINE_DIR = #/Users/fpolycar/.brew/opt/readline
+READLINE_DIR = /Users/fpolycar/.brew/opt/readline
 	
 INCLUDES =-Iincludes -I$(PATHP) -I$(LIBFTP) -I$(READLINE_DIR)/include 
 
@@ -75,10 +75,9 @@ $(PATHO)%.o:: $(PATHEX)%.c $(HEADERS)
 	@$(CC) -c $(FLAGS) $(INCLUDES) $< -o $@
 
 $(NAME): $(LIBFT) $(OBJS) $(HEADERS)
-	@$(CC) $(FLAGS) $(LIBFT) $(OBJS) -lreadline -o $(NAME)
+	@$(CC) $(FLAGS) $(LIBFT) $(OBJS) -lreadline -L$(READLINE_DIR)/lib -o $(NAME)
 	@echo "Success"
 	
-#-I$(READLINE_DIR)/include -L$(READLINE_DIR)/lib 
 
 $(LIBFT):
 	@$(MAKE) -C ./libraries/libft
