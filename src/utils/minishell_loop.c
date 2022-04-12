@@ -6,7 +6,7 @@
 /*   By: fpolycar <fpolycar@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/24 16:06:58 by fpolycar      #+#    #+#                 */
-/*   Updated: 2022/04/12 11:02:07 by maiadegraaf   ########   odam.nl         */
+/*   Updated: 2022/04/12 14:13:42 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	implement_tools(t_tools *tools)
 	tools->lexor_list = NULL;
 	tools->end = false;
 	tools->reset = false;
+	tools->pid = NULL;
 	return (1);
 }
 
@@ -29,7 +30,11 @@ int	reset_tools(t_tools *tools)
 	free(tools->args);
 	implement_tools(tools);
 	tools->reset = true;
-	free(tools->pid);
+	if (tools->pid)
+	{
+		free(tools->pid);
+		tools->pid = NULL;
+	}
 	// system("leaks minishell");
 	if (tools->end == true)
 		exit (EXIT_SUCCESS);

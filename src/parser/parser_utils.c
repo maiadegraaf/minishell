@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/04 11:52:02 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/04/11 16:42:32 by maiadegraaf   ########   odam.nl         */
+/*   Updated: 2022/04/12 13:54:16 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ t_parser_tools	init_parser_tools(t_lexor *lexor_list, t_tools *tools)
 	t_parser_tools	parser_tools;
 
 	parser_tools.lexor_list = lexor_list;
+	parser_tools.heredoc = NULL;
 	parser_tools.redirections = NULL;
 	parser_tools.num_redirections = 0;
 	parser_tools.tools = tools;

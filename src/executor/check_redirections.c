@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/25 11:39:57 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/04/11 18:03:04 by maiadegraaf   ########   odam.nl         */
+/*   Updated: 2022/04/12 14:10:31 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,23 +67,6 @@ int	check_infile(t_lexor *redirections)
 	redirections = start;
 	return (fd);
 }
-
-// int	check_heredoc(t_lexor *redirections)
-// {
-// 	t_lexor *start;
-
-// 	start = redirections;
-// 	while (redirections)
-// 	{
-// 		if (redirections->token == LESS_LESS)
-// 		{
-			
-// 		}
-// 		redirections = redirections->next;
-// 	}
-// 	redirections = start;
-// 	return (fd);
-// }
 
 int	handle_redirections(t_simple_cmds *cmd, t_tools *tools)
 {
