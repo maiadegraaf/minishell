@@ -6,7 +6,7 @@
 /*   By: fpolycar <fpolycar@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/24 16:06:58 by fpolycar      #+#    #+#                 */
-/*   Updated: 2022/04/12 15:27:55 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/04/12 15:38:10 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	minishell_loop(t_tools *tools)
 	tools->args = readline("minishell$ ");
 	if (!tools->args)
 	{
-		ft_putstr_fd("exit", STDOUT_FILENO);
+		ft_putendl_fd("exit", STDOUT_FILENO);
 		exit(EXIT_SUCCESS);
 	}
 	add_history(tools->args);
