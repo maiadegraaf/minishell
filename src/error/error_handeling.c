@@ -6,7 +6,7 @@
 /*   By: maiadegraaf <maiadegraaf@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/16 09:57:33 by maiadegraaf   #+#    #+#                 */
-/*   Updated: 2022/04/06 10:43:16 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/04/11 16:12:29 by maiadegraaf   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	lexor_error(int error, t_tools *tools)
  */
 void	ft_error(int error, t_tools *tools)
 {
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
 	if (error == 0)
 		ft_putstr_fd("syntax error: unexpected 'newline'\n", STDERR_FILENO);
 	else if (error == 1)
@@ -51,6 +52,6 @@ void	ft_error(int error, t_tools *tools)
 	else if (error == 7)
 		ft_putstr_fd("infile: No such file or directory\n", STDERR_FILENO);
 	else if (error == 8)
-		ft_putendl_fd("Path do not exist", STDERR_FILENO);
+		ft_putendl_fd("Path does not exist", STDERR_FILENO);
 	reset_tools(tools);
 }

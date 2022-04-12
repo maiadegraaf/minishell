@@ -3,6 +3,7 @@
 	"files.associations": {
 		"stdio.h": "c",
 		"readline.h": "c",
-		"libft.h": "c"
+		"libft.h": "c",
+		"executor.h": "c"
 	}
 }

@@ -6,71 +6,73 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/24 15:09:50 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/04/08 17:10:46 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/04/12 14:10:39 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
-int	find_cmd(t_simple_cmds *cmd, t_tools *tools)
+t_simple_cmds	*call_expander(t_tools *tools, t_simple_cmds *cmd)
 {
-	int		i;
-	char	*mycmd;
+	t_lexor	*start;
 
-	i = 0;
-	while (tools->paths[i])
+	cmd->str = expander(tools, cmd->str);
+	start = cmd->redirections;
+	while (cmd->redirections)
 	{
-		mycmd = ft_strjoin(tools->paths[i], cmd->str[0]);
-		if (!access(mycmd, F_OK))
-			execve(mycmd, cmd->str, tools->envp);
-		free(mycmd);
-		i++;
+		cmd->redirections->str
+			= expander_str(tools, cmd->redirections->str);
+		cmd->redirections = cmd->redirections->next;
 	}
-	exit(EXIT_FAILURE);
-	return (1);
+	cmd->redirections = start;
+	return (cmd);
 }
 
-void	fork_cmd(t_simple_cmds *cmd, t_tools *tools, int end[2], int fd_in)
+int	pipe_wait(t_tools *tools)
 {
-	if (cmd->prev && dup2(fd_in, STDIN_FILENO) < 0)
-		ft_error(4, tools);
-	if (cmd->next && dup2(end[1], STDOUT_FILENO) < 0)
-		ft_error(4, tools);
-	close(end[0]);
-	close(end[1]);
-	if (cmd->prev)
-		close(fd_in);
-	if (cmd->redirections)
-		handle_redirections(cmd, tools);
-	if (cmd->builtin)
+	int	i;
+	int	status;
+
+	i = 0;
+	while (i < tools->pipes)
 	{
-		cmd->builtin(tools, cmd);
-		exit(EXIT_SUCCESS);
+		waitpid(tools->pid[i], &status, 0);
+		i++;
 	}
-	else
-		find_cmd(cmd, tools);
+	waitpid(tools->pid[i], &status, 0);
+	return (EXIT_SUCCESS);
+}
+
+int	ft_fork(t_tools *tools, int end[2], int fd_in, t_simple_cmds *cmd)
+{
+	static int	i = 0;
+
+	if (tools->reset == true)
+	{
+		i = 0;
+		tools->reset = false;
+	}
+	tools->pid[i] = fork();
+	if (tools->pid[i] < 0)
+		ft_error(5, tools);
+	if (tools->pid[i] == 0)
+		fork_cmd(cmd, tools, end, fd_in);
+	i++;
+	return (EXIT_SUCCESS);
 }
 
 int	executor(t_tools *tools)
 {
 	int		end[2];
-	pid_t	ret;
-	int		status;
 	int		fd_in;
 
 	fd_in = STDIN_FILENO;
 	while (tools->simple_cmds)
 	{
-		tools->simple_cmds->str = expander(tools, tools->simple_cmds->str);
-		if (tools->simple_cmds->redirections)
-			tools->simple_cmds->redirections->str = expander_str(tools, tools->simple_cmds->redirections->str);
+		tools->simple_cmds = call_expander(tools, tools->simple_cmds);
 		if (tools->simple_cmds->next)
 			pipe(end);
-		ret = fork();
-		if (ret < 0)
-			ft_error(5, tools);
-		if (ret == 0)
-			fork_cmd(tools->simple_cmds, tools, end, fd_in);
+		ft_fork(tools, end, fd_in, tools->simple_cmds);
 		close(end[1]);
 		if (tools->simple_cmds->prev)
 			close(fd_in);
@@ -80,8 +82,7 @@ int	executor(t_tools *tools)
 		else
 			break ;
 	}
-	tools->end_pid = ret;
-	waitpid(ret, &status, 0);
+	pipe_wait(tools);
 	tools->simple_cmds = ft_simple_cmdsfirst(tools->simple_cmds);
 	return (0);
 }

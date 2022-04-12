@@ -30,13 +30,13 @@ src	=	$(wildcard $(PATHS)*.c) \
 
 OBJS	=	$(addprefix $(PATHO), $(notdir $(patsubst %.c, %.o, $(src))))
 
-FLAGS	=	-Wall -Werror -Wextra #-g3 -fsanitize=address
+FLAGS	=	-Wall -Werror -Wextra -g #-fsanitize=thread
 
 LIBFT	=	./libraries/libft/libft.a
 
 HEADER	=	$(wildcard ./includes/*.h) 
 
-READLINE_DIR = /Users/fpolycar/.brew/opt/readline
+READLINE_DIR = #/Users/fpolycar/.brew/opt/readline
 	
 INCLUDES =-Iincludes -I$(PATHP) -I$(LIBFTP) -I$(READLINE_DIR)/include 
 
@@ -75,8 +75,10 @@ $(PATHO)%.o:: $(PATHEX)%.c $(HEADERS)
 	@$(CC) -c $(FLAGS) $(INCLUDES) $< -o $@
 
 $(NAME): $(LIBFT) $(OBJS) $(HEADERS)
-	@$(CC) $(FLAGS) $(LIBFT) $(OBJS) -lreadline -I$(READLINE_DIR)/include -L$(READLINE_DIR)/lib -o $(NAME)
+	@$(CC) $(FLAGS) $(LIBFT) $(OBJS) -lreadline -o $(NAME)
 	@echo "Success"
+	
+#-I$(READLINE_DIR)/include -L$(READLINE_DIR)/lib 
 
 $(LIBFT):
 	@$(MAKE) -C ./libraries/libft
