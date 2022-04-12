@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/24 15:09:50 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/04/12 14:10:39 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/04/12 15:06:51 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	ft_fork(t_tools *tools, int end[2], int fd_in, t_simple_cmds *cmd)
 	if (tools->pid[i] < 0)
 		ft_error(5, tools);
 	if (tools->pid[i] == 0)
-		fork_cmd(cmd, tools, end, fd_in);
+		dup_cmd(cmd, tools, end, fd_in);
 	i++;
 	return (EXIT_SUCCESS);
 }

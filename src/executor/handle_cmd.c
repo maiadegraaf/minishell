@@ -6,7 +6,7 @@
 /*   By: maiadegraaf <maiadegraaf@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/11 17:24:04 by maiadegraaf   #+#    #+#                 */
-/*   Updated: 2022/04/12 10:58:21 by maiadegraaf   ########   odam.nl         */
+/*   Updated: 2022/04/12 17:32:24 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ int	find_cmd(t_simple_cmds *cmd, t_tools *tools)
 
 void	handle_cmd(t_simple_cmds *cmd, t_tools *tools)
 {
+	if (cmd->heredoc)
+		send_heredoc(tools, cmd);
 	if (cmd->redirections)
 		handle_redirections(cmd, tools);
 	if (cmd->builtin)
@@ -43,7 +45,7 @@ void	handle_cmd(t_simple_cmds *cmd, t_tools *tools)
 		find_cmd(cmd, tools);
 }
 
-void	fork_cmd(t_simple_cmds *cmd, t_tools *tools, int end[2], int fd_in)
+void	dup_cmd(t_simple_cmds *cmd, t_tools *tools, int end[2], int fd_in)
 {
 	if (cmd->prev && dup2(fd_in, STDIN_FILENO) < 0)
 		ft_error(4, tools);
