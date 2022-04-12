@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 15:36:23 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/03/31 16:15:49 by maiadegraaf   ########   odam.nl         */
+/*   Updated: 2022/04/12 13:36:48 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,7 @@ char			**ft_arrdup(char **arr);
 int				minishell_loop(t_tools *tools);
 
 //t_simple_cmds_utils
-t_simple_cmds	*ft_simple_cmdsnew(char **str,
-					int (*builtin)(t_tools *, t_simple_cmds *),
+t_simple_cmds	*ft_simple_cmdsnew(char **str, t_heredoc *heredoc,
 					int num_redirections, t_lexor *redirections);
 void			ft_simple_cmdsadd_back(t_simple_cmds **lst, t_simple_cmds *new);
 void			ft_simple_cmds_rm_first(t_simple_cmds **lst);
@@ -36,6 +35,13 @@ void			ft_lexoradd_back(t_lexor **lst, t_lexor *new);
 void			ft_lexordelone(t_lexor **lst, int i);
 void			ft_lexorclear(t_lexor **lst);
 t_lexor			*ft_lexorlast(t_lexor *lst);
+
+//t_heredoc_utils
+t_heredoc		*ft_heredocnew(char *cmd, char *del);
+void			ft_heredocadd_back(t_heredoc **lst, t_heredoc *new);
+void			ft_heredoc_rm_first(t_heredoc **lst);
+void			ft_heredocclear(t_heredoc **lst);
+t_heredoc		*ft_heredocfirst(t_heredoc *map);
 
 //
 int				token_reader(t_tools *tools);

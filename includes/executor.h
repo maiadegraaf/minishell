@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/24 15:17:39 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/04/11 17:27:42 by maiadegraaf   ########   odam.nl         */
+/*   Updated: 2022/04/12 17:32:42 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,13 @@ t_simple_cmds	*call_expander(t_tools *tools, t_simple_cmds *cmd);
 // handle_cmd
 int				find_cmd(t_simple_cmds *cmd, t_tools *tools);
 void			handle_cmd(t_simple_cmds *cmd, t_tools *tools);
-void			fork_cmd(t_simple_cmds *cmd, t_tools *tools, int end[2], int fd_in);
+void			dup_cmd(t_simple_cmds *cmd, t_tools *tools, int end[2], int fd_in);
 void			single_cmd(t_simple_cmds *cmd, t_tools *tools);
+
+// heredoc
+int				ft_heredoc(t_tools *tools, t_heredoc *heredoc);
+int				read_heredoc(t_heredoc *heredoc, t_tools *tools);
+int				create_heredoc(t_heredoc *heredoc, bool quotes, t_tools *tools);
+int				send_heredoc(t_tools *tools, t_simple_cmds *cmd);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 17:59:38 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/04/12 11:28:24 by maiadegraaf   ########   odam.nl         */
+/*   Updated: 2022/04/12 11:35:25 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef struct s_parser_tools
 	t_lexor			*lexor_list;
 	t_lexor			*redirections;
 	int				num_redirections;
+	t_heredoc		*heredoc;
 	struct s_tools	*tools;
 }	t_parser_tools;
 

@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/24 15:09:50 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/04/12 10:53:43 by maiadegraaf   ########   odam.nl         */
+/*   Updated: 2022/04/12 15:06:51 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,8 @@ t_simple_cmds	*call_expander(t_tools *tools, t_simple_cmds *cmd)
 	start = cmd->redirections;
 	while (cmd->redirections)
 	{
-		if (cmd->redirections->token != LESS_LESS)
-			cmd->redirections->str
-				= expander_str(tools, cmd->redirections->str);
+		cmd->redirections->str
+			= expander_str(tools, cmd->redirections->str);
 		cmd->redirections = cmd->redirections->next;
 	}
 	cmd->redirections = start;
@@ -57,7 +56,7 @@ int	ft_fork(t_tools *tools, int end[2], int fd_in, t_simple_cmds *cmd)
 	if (tools->pid[i] < 0)
 		ft_error(5, tools);
 	if (tools->pid[i] == 0)
-		fork_cmd(cmd, tools, end, fd_in);
+		dup_cmd(cmd, tools, end, fd_in);
 	i++;
 	return (EXIT_SUCCESS);
 }
