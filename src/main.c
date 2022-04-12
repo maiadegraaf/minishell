@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/14 12:04:02 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/04/08 17:32:46 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/04/11 13:53:52 by maiadegraaf   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	main(int argc, char **argv, char **envp)
 		printf("This program does not accept arguments\n");
 		exit(0);
 	}
-	init_signals();
+	// init_signals();
 	tools.envp = ft_arrdup(envp);
 	parse_envp(&tools);
 	implement_tools(&tools);

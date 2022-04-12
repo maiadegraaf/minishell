@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 17:59:38 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/04/04 16:10:41 by alfred        ########   odam.nl         */
+/*   Updated: 2022/04/12 11:35:25 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,14 @@ typedef enum s_tokens
 	LESS_LESS,
 }	t_tokens;
 
+typedef struct s_heredoc
+{
+	char				*cmd;
+	char				*del;
+	struct s_heredoc	*next;
+	struct s_heredoc	*prev;
+}	t_heredoc;
+
 typedef struct s_lexor
 {
 	char			*str;
@@ -37,6 +45,7 @@ typedef struct s_parser_tools
 	t_lexor			*lexor_list;
 	t_lexor			*redirections;
 	int				num_redirections;
+	t_heredoc		*heredoc;
 	struct s_tools	*tools;
 }	t_parser_tools;
 
@@ -51,7 +60,8 @@ typedef struct s_tools
 	char					*old_pwd;
 	int						pipes;
 	bool					end;
-	int						end_pid;
+	int						*pid;
+	bool					reset;
 }	t_tools;
 
 typedef struct s_simple_cmds
@@ -59,6 +69,7 @@ typedef struct s_simple_cmds
 	char					**str;
 	int						(*builtin)(t_tools *, struct s_simple_cmds *);
 	int						num_redirections;
+	t_heredoc				*heredoc;
 	t_lexor					*redirections;
 	struct s_simple_cmds	*next;
 	struct s_simple_cmds	*prev;
