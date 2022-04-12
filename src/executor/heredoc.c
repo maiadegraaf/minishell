@@ -6,7 +6,7 @@
 /*   By: maiadegraaf <maiadegraaf@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/11 17:42:39 by maiadegraaf   #+#    #+#                 */
-/*   Updated: 2022/04/12 10:20:29 by maiadegraaf   ########   odam.nl         */
+/*   Updated: 2022/04/12 11:23:36 by maiadegraaf   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ char	*find_del(char *heredoc_cmd)
 	return (del);
 }
 
+char	*find_cmd()
+
 int	ft_heredoc(t_tools *tools, t_simple_cmds *cmd, char *heredoc_cmd)
 {
 	int		fd;
@@ -31,17 +33,17 @@ int	ft_heredoc(t_tools *tools, t_simple_cmds *cmd, char *heredoc_cmd)
 	(void) tools;
 	(void) cmd;
 	del = find_del(heredoc_cmd);
-	printf("%s\n", del);
 	del_len = ft_strlen(del);
 	fd = open("build/tmp_heredoc_file.txt", O_CREAT | O_RDWR | O_TRUNC, 0644);
+	ft_putstr_fd("heredoc>  ", STDOUT_FILENO);
 	line = get_next_line(STDIN_FILENO);
-	write(fd, line, ft_strlen(line));
 	while (ft_strncmp(del, line, del_len))
 	{
+		write(fd, line, ft_strlen(line));
 		free(line);
+		ft_putstr_fd("heredoc>  ", STDOUT_FILENO);
 		line = get_next_line(STDIN_FILENO);
 		// line = expander(tools, line);
-		write(fd, line, ft_strlen(line));
 	}
 	close(fd);
 	return (EXIT_SUCCESS);

@@ -6,7 +6,7 @@
 /*   By: maiadegraaf <maiadegraaf@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/11 17:24:04 by maiadegraaf   #+#    #+#                 */
-/*   Updated: 2022/04/11 18:00:41 by maiadegraaf   ########   odam.nl         */
+/*   Updated: 2022/04/12 10:58:21 by maiadegraaf   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ void	handle_cmd(t_simple_cmds *cmd, t_tools *tools)
 {
 	if (cmd->redirections)
 		handle_redirections(cmd, tools);
-
 	if (cmd->builtin)
 	{
 		cmd->builtin(tools, cmd);
