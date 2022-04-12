@@ -6,7 +6,7 @@
 /*   By: maiadegraaf <maiadegraaf@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/15 16:15:48 by maiadegraaf   #+#    #+#                 */
-/*   Updated: 2022/04/12 14:07:42 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/04/12 15:29:51 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,17 +57,14 @@ int	handle_heredoc(t_parser_tools *parser_tools, t_lexor *tmp)
 		cmd = join_heredoc(tmp->prev->str, cmd);
 		ft_lexordelone(&parser_tools->lexor_list, tmp->prev->i);
 	}
-	if (cmd)
-	{
-		node = ft_heredocnew(cmd, ft_strdup(tmp->next->str));
-		if (!node)
-			parser_error(1, parser_tools->tools, parser_tools->lexor_list);
-		ft_heredocadd_back(&parser_tools->heredoc, node);
-		index_1 = tmp->i;
-		index_2 = tmp->next->i;
-		ft_lexordelone(&parser_tools->lexor_list, index_1);
-		ft_lexordelone(&parser_tools->lexor_list, index_2);
-	}
+	node = ft_heredocnew(cmd, ft_strdup(tmp->next->str));
+	if (!node)
+		parser_error(1, parser_tools->tools, parser_tools->lexor_list);
+	ft_heredocadd_back(&parser_tools->heredoc, node);
+	index_1 = tmp->i;
+	index_2 = tmp->next->i;
+	ft_lexordelone(&parser_tools->lexor_list, index_1);
+	ft_lexordelone(&parser_tools->lexor_list, index_2);
 	return (1);
 }
 

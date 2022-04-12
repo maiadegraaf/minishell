@@ -53,6 +53,7 @@ void	ft_lexorclear_one(t_lexor **lst)
 	if ((*lst)->str)
 	{
 		free((*lst)->str);
+		(*lst)->str = NULL;
 	}
 	free(*lst);
 	*lst = NULL;
