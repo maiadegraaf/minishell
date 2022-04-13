@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 15:36:23 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/04/12 13:36:48 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/04/13 11:09:28 by maiadegraaf   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ t_lexor			*ft_lexornew(char *str, int token);
 void			ft_lexoradd_back(t_lexor **lst, t_lexor *new);
 void			ft_lexordelone(t_lexor **lst, int i);
 void			ft_lexorclear(t_lexor **lst);
-t_lexor			*ft_lexorlast(t_lexor *lst);
 
 //t_heredoc_utils
 t_heredoc		*ft_heredocnew(char *cmd, char *del);
