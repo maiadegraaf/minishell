@@ -6,9 +6,10 @@
 /*   By: fpolycar <fpolycar@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/24 16:06:58 by fpolycar      #+#    #+#                 */
-/*   Updated: 2022/04/12 16:24:22 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/04/13 11:17:37 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "minishell.h"
 
@@ -35,7 +36,7 @@ int	reset_tools(t_tools *tools)
 		free(tools->pid);
 		tools->pid = NULL;
 	}
-	// system("leaks minishell");
+	system("leaks minishell");
 	if (tools->end == true)
 		exit (EXIT_SUCCESS);
 	minishell_loop(tools);
@@ -44,8 +45,12 @@ int	reset_tools(t_tools *tools)
 
 int	minishell_loop(t_tools *tools)
 {
-	// signal(SIGQUIT, sigint_handler);
 	tools->args = readline("minishell$ ");
+	if (!tools->args)
+	{
+		ft_putendl_fd("exit", STDOUT_FILENO);
+		exit(EXIT_SUCCESS);
+	}
 	add_history(tools->args);
 	if (!count_quotes(tools->args))
 		ft_error(2, tools);

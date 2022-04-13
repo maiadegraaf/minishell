@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/14 13:46:41 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/04/08 16:14:53 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/04/13 11:04:53 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ char	*delete_quotes_value(char *str);
 void	sigint_handler(int sig);
 void	sigquit_handler(int sig);
 void	init_signals(void);
+char	*delete_quotes(char *str, char c);
 
 //builtins
 int		(*builtin_arr(char *str))(t_tools *tools, t_simple_cmds *simple_cmd);

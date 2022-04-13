@@ -6,13 +6,11 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/14 12:04:02 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/04/11 13:53:52 by maiadegraaf   ########   odam.nl         */
+/*   Updated: 2022/04/12 14:52:11 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void     INThandler(int);
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -25,8 +23,8 @@ int	main(int argc, char **argv, char **envp)
 		printf("This program does not accept arguments\n");
 		exit(0);
 	}
-	// init_signals();
 	tools.envp = ft_arrdup(envp);
+	init_signals();
 	parse_envp(&tools);
 	implement_tools(&tools);
 	minishell_loop(&tools);

@@ -78,9 +78,9 @@ $(PATHO)%.o:: $(PATHEX)%.c $(HEADERS)
 
 $(NAME): $(LIBFT) $(OBJS) $(HEADERS)
 	@$(CC) $(FLAGS) $(LIBFT) $(OBJS) $(READLINE_LIB) -o $(NAME)
+
 	@echo "Success"
 	
-#-I$(READLINE_DIR)/include -L$(READLINE_DIR)/lib 
 
 $(LIBFT):
 	@$(MAKE) -C ./libraries/libft
