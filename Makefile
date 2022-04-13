@@ -38,7 +38,7 @@ HEADER	=	$(wildcard ./includes/*.h)
 
 READLINE_DIR = $(shell brew --prefix readline)
 
-READLINE_LIB = -lreadline -lhistory - L $(READLINE_DIR)/lib
+READLINE_LIB = -lreadline -lhistory -L $(READLINE_DIR)/lib
 	
 INCLUDES =-Iincludes -I$(PATHP) -I$(LIBFTP) -I$(READLINE_DIR)/include 
 
@@ -77,7 +77,7 @@ $(PATHO)%.o:: $(PATHEX)%.c $(HEADERS)
 	@$(CC) -c $(FLAGS) $(INCLUDES) $< -o $@
 
 $(NAME): $(LIBFT) $(OBJS) $(HEADERS)
-	@$(CC) $(FLAGS) $(LIBFT) $(OBJS)  -o $(NAME)
+	@$(CC) $(FLAGS) $(LIBFT) $(OBJS) $(READLINE_LIB) -o $(NAME)
 	@echo "Success"
 	
 #-I$(READLINE_DIR)/include -L$(READLINE_DIR)/lib 
