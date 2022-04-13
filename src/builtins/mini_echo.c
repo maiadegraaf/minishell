@@ -6,7 +6,7 @@
 /*   By: maiadegraaf <maiadegraaf@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/16 10:47:40 by maiadegraaf   #+#    #+#                 */
-/*   Updated: 2022/04/12 17:08:26 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/04/13 09:52:25 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,33 +28,22 @@ int	mini_echo(t_tools *tools, t_simple_cmds *simple_cmd)
 	int		j;
 	bool	n_option;
 
-
 	i = 1;
 	n_option = false;
 	(void) tools;
-	if (!simple_cmd->str[i])
-	{
-		ft_putchar_fd('\n', STDOUT_FILENO);
-		return (EXIT_SUCCESS);
-	}
-	while (simple_cmd->str[i][0] == '-')
+	while (simple_cmd->str[i] && simple_cmd->str[i][0] == '-')
 	{
 		j = 1;
 		while (simple_cmd->str[i][j] == 'n')
 			j++;
-		printf("%d\n", j);
 		if (simple_cmd->str[i][j] == '\0')
 			n_option = true;
 		else
 			break ;
 		i++;
 	}
-	if (n_option == true)
-		print_lines(i, simple_cmd->str, STDOUT_FILENO);
-	else
-	{
-		print_lines(1, simple_cmd->str, STDOUT_FILENO);
+	print_lines(i, simple_cmd->str, STDOUT_FILENO);
+	if (n_option == false)
 		ft_putchar_fd('\n', STDOUT_FILENO);
-	}
 	return (EXIT_SUCCESS);
 }
