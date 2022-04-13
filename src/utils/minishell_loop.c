@@ -6,7 +6,7 @@
 /*   By: fpolycar <fpolycar@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/24 16:06:58 by fpolycar      #+#    #+#                 */
-/*   Updated: 2022/04/13 11:17:37 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/04/13 12:51:10 by maiadegraaf   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	reset_tools(t_tools *tools)
 		free(tools->pid);
 		tools->pid = NULL;
 	}
-	system("leaks minishell");
+	// system("leaks minishell");
 	if (tools->end == true)
 		exit (EXIT_SUCCESS);
 	minishell_loop(tools);
@@ -45,17 +45,15 @@ int	reset_tools(t_tools *tools)
 
 int	minishell_loop(t_tools *tools)
 {
-	tools->args = readline("minishell$ ");
-	if (!tools->args)
-	{
-		ft_putendl_fd("exit", STDOUT_FILENO);
-		exit(EXIT_SUCCESS);
-	}
+	printf("%sminishell%s$%s", CYAN_BOLD, BLUE, RESET_COLOR);
+	tools->args = readline(" ");
+	if (tools->args[0] == '\0')
+		return (reset_tools(tools));
 	add_history(tools->args);
 	if (!count_quotes(tools->args))
-		ft_error(2, tools);
+		return (ft_error(2, tools));
 	if (!token_reader(tools))
-		ft_error(1, tools);
+		return (ft_error(1, tools));
 	parser(tools);
 	if (tools->pipes == 0)
 		single_cmd(tools->simple_cmds, tools);
@@ -63,7 +61,7 @@ int	minishell_loop(t_tools *tools)
 	{
 		tools->pid = ft_calloc(sizeof(int), tools->pipes + 2);
 		if (!tools->pid)
-			ft_error(1, tools);
+			return (ft_error(1, tools));
 		executor(tools);
 	}
 	reset_tools(tools);

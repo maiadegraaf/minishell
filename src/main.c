@@ -6,11 +6,34 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/14 12:04:02 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/04/12 14:52:11 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/04/13 12:12:35 by maiadegraaf   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	print_welcome(void)
+{
+	ft_printf(
+		"\n\n%s\t   █▀█ █▀▀ █▀▀   █▀█ █▀█ █▀▀ █▀ █▀▀ █▄░█ ▀█▀ █▀ \n",
+		LIGHT_MAGENTA);
+	ft_printf(
+		"\t   █▀▀ █▀░ █▄▄   █▀▀ █▀▄ ██▄ ▄█ ██▄ █░▀█ ░█░ ▄█ \n\n");
+	ft_printf(
+		"%s███╗░░░███╗██╗███╗░░██╗██╗░██████╗██╗░░██╗███████╗██╗░░░░░██╗░░░░░\n",
+		MAGENTA);
+	ft_printf(
+		"████╗░████║██║████╗░██║██║██╔════╝██║░░██║██╔════╝██║░░░░░██║░░░░░\n");
+	ft_printf(
+		"██╔████╔██║██║██╔██╗██║██║╚█████╗░███████║█████╗░░██║░░░░░██║░░░░░\n");
+	ft_printf(
+		"██║╚██╔╝██║██║██║╚████║██║░╚═══██╗██╔══██║██╔══╝░░██║░░░░░██║░░░░░\n");
+	ft_printf(
+		"██║░╚═╝░██║██║██║░╚███║██║██████╔╝██║░░██║███████╗███████╗███████╗\n");
+	ft_printf(
+		"╚═╝░░░░░╚═╝╚═╝╚═╝░░╚══╝╚═╝╚═════╝░╚═╝░░╚═╝╚══════╝╚══════╝╚══════╝");
+	ft_printf("\n\n%s", RESET_COLOR);
+}
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -27,6 +50,7 @@ int	main(int argc, char **argv, char **envp)
 	init_signals();
 	parse_envp(&tools);
 	implement_tools(&tools);
+	print_welcome();
 	minishell_loop(&tools);
 	return (0);
 }
