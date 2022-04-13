@@ -6,7 +6,7 @@
 /*   By: fpolycar <fpolycar@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/15 13:35:26 by fpolycar      #+#    #+#                 */
-/*   Updated: 2022/04/13 13:47:21 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/04/13 14:16:23 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ char	**expander(t_tools *tools, char **str)
 	tmp = NULL;
 	while (str[i] != NULL)
 	{
-		if (str[i][ft_strlen(str[i]) - 1] != '\'' && dollar_sign(str[i]) != 0
+		if (str[i][dollar_sign(str[i]) - 2] != '\'' && dollar_sign(str[i]) != 0
 			&& str[i][dollar_sign(str[i])] != '\0')
 		{
 			tmp = detect_dollar_sign(tools, str[i]);
@@ -95,7 +95,7 @@ char	*expander_str(t_tools *tools, char *str)
 	char	*tmp;
 
 	tmp = NULL;
-	if (str[ft_strlen(str) - 1] != '\'' && dollar_sign(str) != 0
+	if (str[dollar_sign(str) - 2] != '\'' && dollar_sign(str) != 0
 		&& str[dollar_sign(str)] != '\0')
 	{
 		tmp = detect_dollar_sign(tools, str);
