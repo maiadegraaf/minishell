@@ -6,7 +6,7 @@
 /*   By: fpolycar <fpolycar@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/15 13:35:26 by fpolycar      #+#    #+#                 */
-/*   Updated: 2022/04/13 14:16:23 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/04/13 15:57:06 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,23 @@ int	loop_if_dollar_sign(t_tools *tools, char *str, char **tmp, int j)
 	return (ret);
 }
 
+int	handle_digit_after_dollar(int j, char *str)
+{
+	int	i;
+
+	i = j;
+	if (str[j] == '$')
+	{
+		if (ft_isdigit(str[j + 1]) == 1)
+		{
+			while (ft_isdigit(str[j + 1]) == 1)
+				j++;
+			j++;
+		}
+	}
+	return (j - i);
+}
+
 char	*detect_dollar_sign(t_tools *tools, char *str)
 {
 	int		j;
@@ -53,6 +70,7 @@ char	*detect_dollar_sign(t_tools *tools, char *str)
 	tmp = ft_strdup("\0");
 	while (str[j])
 	{
+		j += handle_digit_after_dollar(j, str);
 		if (str[j] == '$')
 			j += loop_if_dollar_sign(tools, str, &tmp, j);
 		else
