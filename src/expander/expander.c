@@ -6,7 +6,7 @@
 /*   By: fpolycar <fpolycar@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/15 13:35:26 by fpolycar      #+#    #+#                 */
-/*   Updated: 2022/04/07 17:03:10 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/04/13 11:16:29 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,13 +75,16 @@ char	**expander(t_tools *tools, char **str)
 	i = 0;
 	tmp = NULL;
 	while (str[i] != NULL)
-	{	
-		if (str[i][ft_strlen(str[i]) - 1] != '\'' && dollar_sign(str[i]) != 0)
+	{
+		if (str[i][ft_strlen(str[i]) - 1] != '\'' && dollar_sign(str[i]) != 0
+			&& str[i][dollar_sign(str[i])] != '\0')
 		{
 			tmp = detect_dollar_sign(tools, str[i]);
 			free(str[i]);
 			str[i] = tmp;
 		}
+		str[i] = delete_quotes(str[i], '\"');
+		str[i] = delete_quotes(str[i], '\'');
 		i++;
 	}
 	return (str);
@@ -92,11 +95,14 @@ char	*expander_str(t_tools *tools, char *str)
 	char	*tmp;
 
 	tmp = NULL;
-	if (str[ft_strlen(str) - 1] != '\'' && dollar_sign(str) != 0)
+	if (str[ft_strlen(str) - 1] != '\'' && dollar_sign(str) != 0
+		&& str[dollar_sign(str)] != '\0')
 	{
 		tmp = detect_dollar_sign(tools, str);
 		free(str);
 		str = tmp;
 	}
+	str = delete_quotes(str, '\"');
+	str = delete_quotes(str, '\'');
 	return (str);
 }
