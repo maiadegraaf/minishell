@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/14 13:46:41 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/04/13 11:04:53 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/04/13 11:55:41 by maiadegraaf   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include "utils.h"
 # include "error.h"
 # include "lexor.h"
+# include "color.h"
 # include "builtins.h"
 # include "executor.h"
 
