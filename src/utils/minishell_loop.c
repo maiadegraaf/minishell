@@ -6,10 +6,9 @@
 /*   By: fpolycar <fpolycar@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/24 16:06:58 by fpolycar      #+#    #+#                 */
-/*   Updated: 2022/04/14 11:48:07 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/04/14 13:51:58 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "minishell.h"
 
@@ -55,6 +54,7 @@ int	prepare_executor(t_tools *tools)
 int	minishell_loop(t_tools *tools)
 {
 	tools->args = readline("\033[1;36mminishell\033[34m$ \033[0m");
+	tools->args = ft_strtrim(tools->args, " ");
 	if (!tools->args)
 	{
 		ft_putendl_fd("exit", STDOUT_FILENO);
