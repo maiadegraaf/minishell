@@ -6,7 +6,7 @@
 /*   By: fpolycar <fpolycar@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/15 13:35:26 by fpolycar      #+#    #+#                 */
-/*   Updated: 2022/04/14 12:50:59 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/04/14 14:48:46 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,16 @@ char	*detect_dollar_sign(t_tools *tools, char *str)
 	while (str[j])
 	{
 		j += handle_digit_after_dollar(j, str);
-		if (str[j] == '$')
+		if (str[j] == '$' && str[j + 1] != '\"' && str[j + 1] != '?')
 			j += loop_if_dollar_sign(tools, str, &tmp, j);
+		if (str[j + 1] == '?')
+		{
+			if (tools->pipes != 0)
+				tmp = ft_itoa(tools->pid[tools->pipes]);
+			else
+				tmp = char_to_str('0');
+			j += ft_strlen(tmp) + 1;
+		}
 		else
 		{
 			tmp2 = char_to_str(str[j++]);
@@ -94,7 +102,6 @@ char	**expander(t_tools *tools, char **str)
 	tmp = NULL;
 	while (str[i] != NULL)
 	{
-		printf("exit = %d", WEXITSTATUS(tools->pid[tools->pipes]));
 		if (str[i][dollar_sign(str[i]) - 2] != '\'' && dollar_sign(str[i]) != 0
 			&& str[i][dollar_sign(str[i])] != '\0')
 		{

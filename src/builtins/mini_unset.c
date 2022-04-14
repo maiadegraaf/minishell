@@ -6,7 +6,7 @@
 /*   By: maiadegraaf <maiadegraaf@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 10:13:32 by maiadegraaf   #+#    #+#                 */
-/*   Updated: 2022/03/24 15:58:06 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/04/14 15:04:20 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,15 @@ int	mini_unset(t_tools *tools, t_simple_cmds *simple_cmd)
 	char	**tmp;
 
 	if (!simple_cmd->str[1])
+	{
 		ft_putendl_fd("unset: not enough arguments", STDERR_FILENO);
+		return (EXIT_FAILURE);
+	}
 	if (equal_sign(simple_cmd->str[1]) != 0)
+	{
 		ft_putendl_fd("unset: invalid parameter name", STDERR_FILENO);
+		return (EXIT_FAILURE);
+	}
 	else
 	{
 		tmp = del_var(tools->envp, simple_cmd->str[1]);
