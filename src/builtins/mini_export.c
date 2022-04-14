@@ -6,7 +6,7 @@
 /*   By: fpolycar <fpolycar@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/24 16:07:21 by fpolycar      #+#    #+#                 */
-/*   Updated: 2022/04/01 16:01:31 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/04/14 11:45:26 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,15 @@ int	check_parameter(char *str)
 	{
 		ft_putendl_fd("export: bad assignment", STDERR_FILENO);
 		return (2);
+	}
+	while (str[i] != '=')
+	{
+		if (str[i] == '|')
+		{
+			ft_putendl_fd("export: not valid in this context", STDERR_FILENO);
+			return (3);
+		}
+		i++;
 	}
 	return (0);
 }
