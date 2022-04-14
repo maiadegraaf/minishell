@@ -6,7 +6,7 @@
 /*   By: maiadegraaf <maiadegraaf@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/11 17:42:39 by maiadegraaf   #+#    #+#                 */
-/*   Updated: 2022/04/14 13:17:41 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/04/14 16:57:21 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,20 @@ char	*send_expander(t_tools *tools, char *line)
 	return (tmp);
 }
 
-int	create_heredoc(t_heredoc *heredoc, bool quotes, t_tools *tools)
+int	create_heredoc(t_heredoc *heredoc, bool quotes,
+	t_tools *tools, char *file_name)
 {
 	int		fd;
 	char	*line;
 	int		del_len;
 
 	del_len = ft_strlen(heredoc->del);
-	fd = open("build/tmp_heredoc_file.txt", O_CREAT | O_RDWR | O_TRUNC, 0644);
+	fd = open(file_name, O_CREAT | O_RDWR | O_TRUNC, 0644);
 	ft_putstr_fd("\033[1;34m> \033[0m", STDERR_FILENO);
 	line = get_next_line(STDIN_FILENO);
-	while (ft_strncmp(heredoc->del, line, del_len))
+	while (line && (ft_strncmp(heredoc->del, line, ft_strlen(line) - 1)
+			|| ft_strncmp(heredoc->del, line, del_len))
+		&& !g_global.stop_heredoc)
 	{
 		if (quotes == false)
 			line = send_expander(tools, line);
@@ -43,32 +46,52 @@ int	create_heredoc(t_heredoc *heredoc, bool quotes, t_tools *tools)
 		ft_putstr_fd("\033[1;34m> \033[0m", STDERR_FILENO);
 		line = get_next_line(STDIN_FILENO);
 	}
+	if (!line)
+		ft_putstr_fd("\n", STDERR_FILENO);
+	if (g_global.stop_heredoc || !line)
+		return (EXIT_FAILURE);
 	close(fd);
 	return (EXIT_SUCCESS);
 }
 
-int	ft_heredoc(t_tools *tools, t_heredoc *heredoc)
+int	ft_heredoc(t_tools *tools, t_heredoc *heredoc, char *file_name)
 {
 	bool	quotes;
+	int		sl;
 
+	sl = EXIT_SUCCESS;
 	if (heredoc->del[0] == '\"'
 		&& heredoc->del[ft_strlen(heredoc->del) - 1] == '\"')
 		quotes = true;
 	else
 		quotes = false;
-	create_heredoc(heredoc, quotes, tools);
+	g_global.stop_heredoc = 0;
+	g_global.in_heredoc = 1;
+	sl = create_heredoc(heredoc, quotes, tools, file_name);
+	g_global.in_heredoc = 0;
 	tools->heredoc = true;
-	return (EXIT_SUCCESS);
+	return (sl);
 }
 
 int	send_heredoc(t_tools *tools, t_simple_cmds *cmd)
 {
 	t_heredoc	*start;
+	static int	i = 0;
+	char		*num;
+	int			sl;
 
 	start = cmd->heredoc;
+	sl = EXIT_SUCCESS;
 	while (cmd->heredoc)
 	{	
-		ft_heredoc(tools, cmd->heredoc);
+		if (cmd->hd_file_name)
+			free(cmd->hd_file_name);
+		num = ft_itoa(i++);
+		cmd->hd_file_name = ft_strjoin("build/.tmp_heredoc_file", num);
+		free(num);
+		sl = ft_heredoc(tools, cmd->heredoc, cmd->hd_file_name);
+		if (sl)
+			return (reset_tools(tools));
 		cmd->heredoc = cmd->heredoc->next;
 	}
 	cmd->heredoc = start;

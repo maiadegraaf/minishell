@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/14 13:46:41 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/04/13 11:55:41 by maiadegraaf   ########   odam.nl         */
+/*   Updated: 2022/04/14 16:56:49 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,14 @@ char	*delete_quotes(char *str, char c);
 
 //builtins
 int		(*builtin_arr(char *str))(t_tools *tools, t_simple_cmds *simple_cmd);
+
+typedef struct s_global
+{
+	int	error_num;
+	int	stop_heredoc;
+	int	in_heredoc;
+}	t_global;
+
+t_global	g_global;
 
 #endif

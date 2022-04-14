@@ -4,6 +4,7 @@
 		"stdio.h": "c",
 		"readline.h": "c",
 		"libft.h": "c",
-		"executor.h": "c"
+		"executor.h": "c",
+		"sstream": "c"
 	}
 }

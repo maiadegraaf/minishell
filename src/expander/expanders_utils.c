@@ -6,7 +6,7 @@
 /*   By: fpolycar <fpolycar@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/31 16:08:47 by fpolycar      #+#    #+#                 */
-/*   Updated: 2022/04/13 15:35:02 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/04/14 17:37:47 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	after_dol_lenght(char *str, int j)
 
 char	*delete_quotes(char *str, char c)
 {
-	int i;
+	int	i;
 	int	j;
 
 	i = 0;

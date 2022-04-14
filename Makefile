@@ -34,7 +34,7 @@ FLAGS	=	-Wall -Werror -Wextra -g #-fsanitize=address
 
 LIBFT	=	./libraries/libft/libft.a
 
-HEADER	=	$(wildcard ./includes/*.h) 
+HEADER	=	$(wildcard ./includes/*.h)
 
 READLINE_DIR = $(shell brew --prefix readline)
 
@@ -94,6 +94,7 @@ $(PATHO):
 clean:
 	@echo "Cleaning"
 	@rm -f $(OBJS)
+	@rm -f $(PATHB).tmp*
 	@make fclean -C libraries/libft
 
 fclean: clean

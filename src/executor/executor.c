@@ -6,17 +6,45 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/24 15:09:50 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/04/14 12:08:35 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/04/14 17:45:51 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
+char	*join_split_str(char **split_str, char *new_str)
+{
+	char	*tmp;
+	char	*add_space;
+	int		i;
+
+	tmp = ft_strdup(split_str[0]);
+	i = 1;
+	while (split_str[i])
+	{
+		new_str = tmp;
+		add_space = ft_strjoin(new_str, " ");
+		free(new_str);
+		tmp = ft_strjoin(add_space, split_str[i]);
+		free(add_space);
+		i++;
+		printf("%d->%s\n", i, tmp);
+	}
+	new_str = tmp;
+	return (new_str);
+}
+
 t_simple_cmds	*call_expander(t_tools *tools, t_simple_cmds *cmd)
 {
 	t_lexor	*start;
+	char	*joined_str;
 
 	cmd->str = expander(tools, cmd->str);
+	joined_str = join_split_str(cmd->str, NULL);
+	free_arr(cmd->str);
+	cmd->str = ft_split(joined_str, ' ');
+	printf(">%s<\n", joined_str);
+	free(joined_str);
 	start = cmd->redirections;
 	while (cmd->redirections)
 	{
@@ -40,6 +68,8 @@ int	pipe_wait(int *pid, int amount)
 		i++;
 	}
 	waitpid(pid[i], &status, 0);
+	if (WIFEXITED(status))
+		g_global.error_num = WEXITSTATUS(status);
 	return (EXIT_SUCCESS);
 }
 
@@ -61,14 +91,14 @@ int	ft_fork(t_tools *tools, int end[2], int fd_in, t_simple_cmds *cmd)
 	return (EXIT_SUCCESS);
 }
 
-int	check_fd_heredoc(t_tools *tools, int end[2])
+int	check_fd_heredoc(t_tools *tools, int end[2], t_simple_cmds *cmd)
 {
 	int	fd_in;
 
 	if (tools->heredoc)
 	{
 		close(end[0]);
-		fd_in = open("build/tmp_heredoc_file.txt", O_RDONLY);
+		fd_in = open(cmd->hd_file_name, O_RDONLY);
 	}
 	else
 		fd_in = end[0];
@@ -86,11 +116,12 @@ int	executor(t_tools *tools)
 		tools->simple_cmds = call_expander(tools, tools->simple_cmds);
 		if (tools->simple_cmds->next)
 			pipe(end);
+		send_heredoc(tools, tools->simple_cmds);
 		ft_fork(tools, end, fd_in, tools->simple_cmds);
 		close(end[1]);
 		if (tools->simple_cmds->prev)
 			close(fd_in);
-		fd_in = check_fd_heredoc(tools, end);
+		fd_in = check_fd_heredoc(tools, end, tools->simple_cmds);
 		if (tools->simple_cmds->next)
 			tools->simple_cmds = tools->simple_cmds->next;
 		else

@@ -6,7 +6,7 @@
 /*   By: fpolycar <fpolycar@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/24 16:06:58 by fpolycar      #+#    #+#                 */
-/*   Updated: 2022/04/14 13:51:58 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/04/14 17:32:54 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int	implement_tools(t_tools *tools)
 	tools->reset = false;
 	tools->pid = NULL;
 	tools->heredoc = false;
+	g_global.stop_heredoc = 0;
+	g_global.in_heredoc = 0;
 	return (1);
 }
 
@@ -32,7 +34,7 @@ int	reset_tools(t_tools *tools)
 		free(tools->pid);
 	implement_tools(tools);
 	tools->reset = true;
-	// system("leaks minishell");
+	system("leaks minishell");
 	minishell_loop(tools);
 	return (1);
 }

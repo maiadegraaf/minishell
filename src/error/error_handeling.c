@@ -6,7 +6,7 @@
 /*   By: maiadegraaf <maiadegraaf@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/16 09:57:33 by maiadegraaf   #+#    #+#                 */
-/*   Updated: 2022/04/13 12:58:02 by maiadegraaf   ########   odam.nl         */
+/*   Updated: 2022/04/14 13:54:25 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ int	ft_error(int error, t_tools *tools)
 	else if (error == 1)
 		ft_putstr_fd("memory error: unable to assign memory\n", STDERR_FILENO);
 	else if (error == 2)
-		ft_putstr_fd("syntax error: unable to locate closing quotation\n", STDERR_FILENO);
+		ft_putstr_fd("syntax error: unable to locate closing quotation\n",
+			STDERR_FILENO);
 	else if (error == 3)
 		ft_putstr_fd("Parser problem\n", STDERR_FILENO);
 	else if (error == 4)

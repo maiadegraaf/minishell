@@ -6,7 +6,7 @@
 /*   By: maiadegraaf <maiadegraaf@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/11 17:24:04 by maiadegraaf   #+#    #+#                 */
-/*   Updated: 2022/04/14 13:34:34 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/04/14 16:20:44 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,30 +29,31 @@ int	find_cmd(t_simple_cmds *cmd, t_tools *tools)
 	ft_putstr_fd("minishell: ", STDERR_FILENO);
 	ft_putstr_fd(cmd->str[0], STDERR_FILENO);
 	ft_putstr_fd(": command not found\n", STDERR_FILENO);
-	exit(EXIT_FAILURE);
-	return (1);
+	return (EXIT_FAILURE);
 }
 
 void	handle_cmd(t_simple_cmds *cmd, t_tools *tools)
 {
 	int	fd;
+	int	exit_code;
 
-	if (cmd->heredoc)
+	exit_code = 0;
+	if (tools->heredoc)
 	{
-		send_heredoc(tools, cmd);
-		fd = open("build/tmp_heredoc_file.txt", O_RDONLY);
+		fd = open(cmd->hd_file_name, O_RDONLY);
 		dup2(fd, STDIN_FILENO);
 		close(fd);
 	}
 	if (cmd->redirections)
 		handle_redirections(cmd, tools);
-	if (cmd->builtin)
+	if (cmd->builtin != NULL)
 	{
-		cmd->builtin(tools, cmd);
-		exit(EXIT_SUCCESS);
+		exit_code = cmd->builtin(tools, cmd);
+		exit(exit_code);
 	}
 	else if (cmd->str[0][0] != '\0')
-		find_cmd(cmd, tools);
+		exit_code = find_cmd(cmd, tools);
+	exit(exit_code);
 }
 
 void	dup_cmd(t_simple_cmds *cmd, t_tools *tools, int end[2], int fd_in)
@@ -76,13 +77,16 @@ void	single_cmd(t_simple_cmds *cmd, t_tools *tools)
 	tools->simple_cmds = call_expander(tools, tools->simple_cmds);
 	if (cmd->builtin)
 	{
-		cmd->builtin(tools, cmd);
+		g_global.error_num = cmd->builtin(tools, cmd);
 		return ;
 	}
+	send_heredoc(tools, cmd);
 	pid = fork();
 	if (pid < 0)
 		ft_error(5, tools);
 	if (pid == 0)
 		handle_cmd(cmd, tools);
 	waitpid(pid, &status, 0);
+	if (WIFEXITED(status))
+		g_global.error_num = WEXITSTATUS(status);
 }

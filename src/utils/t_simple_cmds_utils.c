@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 15:31:53 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/04/12 11:39:02 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/04/14 14:39:54 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ t_simple_cmds	*ft_simple_cmdsnew(char **str, t_heredoc *heredoc,
 	new_element->str = str;
 	new_element->builtin = builtin_arr(str[0]);
 	new_element->heredoc = heredoc;
+	new_element->hd_file_name = NULL;
 	new_element->num_redirections = num_redirections;
 	new_element->redirections = redirections;
 	new_element->next = NULL;
@@ -77,6 +78,8 @@ void	ft_simple_cmdsclear(t_simple_cmds **lst)
 		ft_lexorclear(&redirections_tmp);
 		if ((*lst)->str)
 			free_arr((*lst)->str);
+		if ((*lst)->hd_file_name)
+			free((*lst)->hd_file_name);
 		free(*lst);
 		*lst = tmp;
 	}
