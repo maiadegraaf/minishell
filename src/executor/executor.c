@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/24 15:09:50 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/04/12 15:06:51 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/04/13 16:02:19 by maiadegraaf   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,18 @@ t_simple_cmds	*call_expander(t_tools *tools, t_simple_cmds *cmd)
 	return (cmd);
 }
 
-int	pipe_wait(t_tools *tools)
+int	pipe_wait(int *pid, int amount)
 {
 	int	i;
 	int	status;
 
 	i = 0;
-	while (i < tools->pipes)
+	while (i < amount)
 	{
-		waitpid(tools->pid[i], &status, 0);
+		waitpid(pid[i], &status, 0);
 		i++;
 	}
-	waitpid(tools->pid[i], &status, 0);
+	waitpid(pid[i], &status, 0);
 	return (EXIT_SUCCESS);
 }
 
@@ -82,7 +82,7 @@ int	executor(t_tools *tools)
 		else
 			break ;
 	}
-	pipe_wait(tools);
+	pipe_wait(tools->pid, tools->pipes);
 	tools->simple_cmds = ft_simple_cmdsfirst(tools->simple_cmds);
 	return (0);
 }
