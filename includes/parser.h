@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 17:59:38 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/04/13 12:53:31 by maiadegraaf   ########   odam.nl         */
+/*   Updated: 2022/04/13 14:54:02 by maiadegraaf   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ typedef struct s_simple_cmds
 	int						(*builtin)(t_tools *, struct s_simple_cmds *);
 	int						num_redirections;
 	t_heredoc				*heredoc;
+	int						*heredoc_pid;
 	t_lexor					*redirections;
 	struct s_simple_cmds	*next;
 	struct s_simple_cmds	*prev;

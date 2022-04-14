@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/24 15:17:39 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/04/12 17:32:42 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/04/13 15:05:46 by maiadegraaf   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int				handle_redirections(t_simple_cmds *cmd, t_tools *tools);
 // executor
 int				executor(t_tools *tools);
 t_simple_cmds	*call_expander(t_tools *tools, t_simple_cmds *cmd);
+int				pipe_wait(int *pid, int amount);
 
 // handle_cmd
 int				find_cmd(t_simple_cmds *cmd, t_tools *tools);
