@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 15:28:22 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/04/12 11:37:07 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/04/14 12:02:06 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ int	*parser(t_tools *tools)
 	{
 		if (tools->lexor_list && tools->lexor_list->token == PIPE)
 			ft_lexordelone(&tools->lexor_list, tools->lexor_list->i);
+		// if (!tools->lexor_list)
+		// 	parser_error(0, tools, tools->lexor_list);
 		parser_tools = init_parser_tools(tools->lexor_list, tools);
 		node = initialize_cmd(&parser_tools);
 		if (!node)

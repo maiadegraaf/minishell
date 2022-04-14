@@ -6,20 +6,19 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 15:31:53 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/04/13 15:07:55 by maiadegraaf   ########   odam.nl         */
+/*   Updated: 2022/04/14 11:31:36 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
 
-t_heredoc	*ft_heredocnew(char *cmd, char *del)
+t_heredoc	*ft_heredocnew(char *del)
 {
 	t_heredoc	*new_element;
 
 	new_element = (t_heredoc *)malloc(sizeof(t_heredoc));
 	if (!new_element)
 		return (0);
-	new_element->cmd = cmd;
 	new_element->del = del;
 	new_element->next = NULL;
 	new_element->prev = NULL;
@@ -68,8 +67,6 @@ void	ft_heredocclear(t_heredoc **lst)
 	while (*lst)
 	{
 		tmp = (*lst)->next;
-		if ((*lst)->cmd)
-			free((*lst)->cmd);
 		free((*lst)->del);
 		free(*lst);
 		*lst = tmp;

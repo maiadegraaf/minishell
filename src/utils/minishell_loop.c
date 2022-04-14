@@ -6,7 +6,7 @@
 /*   By: fpolycar <fpolycar@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/24 16:06:58 by fpolycar      #+#    #+#                 */
-/*   Updated: 2022/04/13 15:47:55 by maiadegraaf   ########   odam.nl         */
+/*   Updated: 2022/04/14 11:48:07 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	implement_tools(t_tools *tools)
 	tools->lexor_list = NULL;
 	tools->reset = false;
 	tools->pid = NULL;
+	tools->heredoc = false;
 	return (1);
 }
 

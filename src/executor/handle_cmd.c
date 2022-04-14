@@ -6,7 +6,7 @@
 /*   By: maiadegraaf <maiadegraaf@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/11 17:24:04 by maiadegraaf   #+#    #+#                 */
-/*   Updated: 2022/04/13 16:06:06 by maiadegraaf   ########   odam.nl         */
+/*   Updated: 2022/04/14 13:34:34 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,15 @@ int	find_cmd(t_simple_cmds *cmd, t_tools *tools)
 
 void	handle_cmd(t_simple_cmds *cmd, t_tools *tools)
 {
+	int	fd;
+
 	if (cmd->heredoc)
+	{
 		send_heredoc(tools, cmd);
+		fd = open("build/tmp_heredoc_file.txt", O_RDONLY);
+		dup2(fd, STDIN_FILENO);
+		close(fd);
+	}
 	if (cmd->redirections)
 		handle_redirections(cmd, tools);
 	if (cmd->builtin)

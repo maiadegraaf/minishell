@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/24 15:09:50 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/04/13 16:02:19 by maiadegraaf   ########   odam.nl         */
+/*   Updated: 2022/04/14 12:08:35 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,20 @@ int	ft_fork(t_tools *tools, int end[2], int fd_in, t_simple_cmds *cmd)
 	return (EXIT_SUCCESS);
 }
 
+int	check_fd_heredoc(t_tools *tools, int end[2])
+{
+	int	fd_in;
+
+	if (tools->heredoc)
+	{
+		close(end[0]);
+		fd_in = open("build/tmp_heredoc_file.txt", O_RDONLY);
+	}
+	else
+		fd_in = end[0];
+	return (fd_in);
+}
+
 int	executor(t_tools *tools)
 {
 	int		end[2];
@@ -76,7 +90,7 @@ int	executor(t_tools *tools)
 		close(end[1]);
 		if (tools->simple_cmds->prev)
 			close(fd_in);
-		fd_in = end[0];
+		fd_in = check_fd_heredoc(tools, end);
 		if (tools->simple_cmds->next)
 			tools->simple_cmds = tools->simple_cmds->next;
 		else
