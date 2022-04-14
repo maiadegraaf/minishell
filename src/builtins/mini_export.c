@@ -6,7 +6,7 @@
 /*   By: fpolycar <fpolycar@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/24 16:07:21 by fpolycar      #+#    #+#                 */
-/*   Updated: 2022/04/14 11:45:26 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/04/14 15:03:22 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,23 +41,23 @@ int	check_parameter(char *str)
 	if (ft_isdigit(str[0]))
 	{
 		ft_putendl_fd("export: not an identifier", STDERR_FILENO);
-		return (1);
+		return (EXIT_FAILURE);
 	}
 	if (str[0] == '=')
 	{
 		ft_putendl_fd("export: bad assignment", STDERR_FILENO);
-		return (2);
+		return (EXIT_FAILURE);
 	}
 	while (str[i] != '=')
 	{
 		if (str[i] == '|')
 		{
 			ft_putendl_fd("export: not valid in this context", STDERR_FILENO);
-			return (3);
+			return (EXIT_FAILURE);
 		}
 		i++;
 	}
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 char	**whileloop_add_var(char **arr, char **rtn, char *str)
@@ -122,6 +122,8 @@ int	mini_export(t_tools *tools, t_simple_cmds *simple_cmd)
 				}
 			}
 		}
+		else
+			return (EXIT_FAILURE);
 	}
 	return (EXIT_SUCCESS);
 }
