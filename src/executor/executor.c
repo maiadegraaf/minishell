@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/24 15:09:50 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/04/14 17:45:51 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/04/15 15:41:35 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,8 @@ char	*join_split_str(char **split_str, char *new_str)
 t_simple_cmds	*call_expander(t_tools *tools, t_simple_cmds *cmd)
 {
 	t_lexor	*start;
-	char	*joined_str;
 
 	cmd->str = expander(tools, cmd->str);
-	joined_str = join_split_str(cmd->str, NULL);
-	free_arr(cmd->str);
-	cmd->str = ft_split(joined_str, ' ');
-	printf(">%s<\n", joined_str);
-	free(joined_str);
 	start = cmd->redirections;
 	while (cmd->redirections)
 	{

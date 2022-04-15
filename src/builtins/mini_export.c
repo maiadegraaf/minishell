@@ -6,7 +6,7 @@
 /*   By: fpolycar <fpolycar@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/24 16:07:21 by fpolycar      #+#    #+#                 */
-/*   Updated: 2022/04/14 15:03:22 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/04/15 16:03:30 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,10 @@ int	variable_exist(t_tools *tools, char *str)
 	int	i;
 
 	i = 0;
-	if (str[equal_sign(str)] == '"' || str[equal_sign(str)] == '\'')
-		delete_quotes_value(str);
+	if (str[equal_sign(str)] == '\"')
+		delete_quotes(str, '\"');
+	if (str[equal_sign(str)] == '\'')
+		delete_quotes(str, '\'');
 	while (tools->envp[i])
 	{
 		if (ft_strncmp(tools->envp[i],
@@ -43,6 +45,8 @@ int	check_parameter(char *str)
 		ft_putendl_fd("export: not an identifier", STDERR_FILENO);
 		return (EXIT_FAILURE);
 	}
+	if (equal_sign(str) == 0)
+		return (EXIT_FAILURE);
 	if (str[0] == '=')
 	{
 		ft_putendl_fd("export: bad assignment", STDERR_FILENO);
@@ -105,25 +109,28 @@ char	**add_var(char **arr, char *str)
 int	mini_export(t_tools *tools, t_simple_cmds *simple_cmd)
 {
 	char	**tmp;
+	int		i;
 
+	i = 1;
 	if (!simple_cmd->str[1])
 		mini_env(tools, simple_cmd);
 	else
 	{
-		if (check_parameter(simple_cmd->str[1]) == 0)
-		{
-			if (variable_exist(tools, simple_cmd->str[1]) == 0)
+		while (simple_cmd->str[i])
+		{	
+			printf("%s\n", simple_cmd->str[i]);
+			if (check_parameter(simple_cmd->str[i]) == 0
+				&& variable_exist(tools, simple_cmd->str[i]) == 0)
 			{
-				if (simple_cmd->str[1])
+				if (simple_cmd->str[i])
 				{
-					tmp = add_var(tools->envp, simple_cmd->str[1]);
+					tmp = add_var(tools->envp, simple_cmd->str[i]);
 					free_arr(tools->envp);
 					tools->envp = tmp;
 				}
 			}
+			i++;
 		}
-		else
-			return (EXIT_FAILURE);
 	}
 	return (EXIT_SUCCESS);
 }

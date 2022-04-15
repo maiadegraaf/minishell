@@ -6,7 +6,7 @@
 /*   By: fpolycar <fpolycar@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/15 13:35:26 by fpolycar      #+#    #+#                 */
-/*   Updated: 2022/04/15 11:59:24 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/04/15 15:37:25 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,9 +109,9 @@ char	**expander(t_tools *tools, char **str)
 			free(str[i]);
 			str[i] = tmp;
 		}
+		printf("%d\n\n", ft_strncmp(str[0], "export", ft_strlen(str[0]) - 1));
 		if (ft_strncmp(str[0], "export", ft_strlen(str[0]) - 1) != 0)
 		{
-			printf("sdfs");
 			str[i] = delete_quotes(str[i], '\"');
 			str[i] = delete_quotes(str[i], '\'');
 		}

@@ -6,18 +6,26 @@
 /*   By: maiadegraaf <maiadegraaf@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/11 17:24:04 by maiadegraaf   #+#    #+#                 */
-/*   Updated: 2022/04/14 16:20:44 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/04/15 15:41:39 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
+char	*join_split_str(char **split_str, char *new_str);
+
 int	find_cmd(t_simple_cmds *cmd, t_tools *tools)
 {
 	int		i;
 	char	*mycmd;
+	char	*joined_str;
 
 	i = 0;
+	joined_str = join_split_str(cmd->str, NULL);
+	free_arr(cmd->str);
+	cmd->str = ft_split(joined_str, ' ');
+	printf(">%s<\n", joined_str);
+	free(joined_str);
 	while (tools->paths[i])
 	{
 		mycmd = ft_strjoin(tools->paths[i], cmd->str[0]);
