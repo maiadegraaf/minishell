@@ -6,7 +6,7 @@
 /*   By: fpolycar <fpolycar@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/24 16:06:58 by fpolycar      #+#    #+#                 */
-/*   Updated: 2022/04/15 16:01:51 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/04/15 16:26:08 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	minishell_loop(t_tools *tools)
 {
 	char	*tmp;
 
-	tools->args = readline("\033[1;36mminishell\033[34m$ \033[0m");
+	tools->args = readline(READLINE_MSG);
 	tmp = ft_strtrim(tools->args, " ");
 	free(tools->args);
 	tools->args = tmp;
