@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 15:31:53 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/04/14 11:31:36 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/04/15 16:06:32 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ void	ft_heredocclear(t_heredoc **lst)
 	{
 		tmp = (*lst)->next;
 		free((*lst)->del);
+		(*lst)->del = NULL;
 		free(*lst);
 		*lst = tmp;
 	}

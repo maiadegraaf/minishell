@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/24 15:09:50 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/04/15 15:41:35 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/04/15 16:21:45 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ char	*join_split_str(char **split_str, char *new_str)
 		tmp = ft_strjoin(add_space, split_str[i]);
 		free(add_space);
 		i++;
-		printf("%d->%s\n", i, tmp);
 	}
 	new_str = tmp;
 	return (new_str);
