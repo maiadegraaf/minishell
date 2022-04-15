@@ -6,7 +6,7 @@
 /*   By: maiadegraaf <maiadegraaf@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 10:10:47 by maiadegraaf   #+#    #+#                 */
-/*   Updated: 2022/04/15 13:31:59 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/04/15 15:59:33 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,22 +41,21 @@ int	is_str_digit(char *str)
 
 void	determine_exit_code(char **str)
 {
-	int		exit_code;
+	int	exit_code;
 
-	if (is_str_digit(str[1]))
-	{
+	if (!str[1])
+		exit_code = 0;
+	else if (is_str_digit(str[1]))
 		exit_code = ft_atoi(str[1]);
-		free(str[1]);
-		exit(exit_code);
-	}
 	else
 	{
 		ft_putstr_fd("minishell: exit: ", STDERR_FILENO);
 		ft_putstr_fd(str[1], STDERR_FILENO);
 		ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
-		free_arr(str);
-		exit(255);
+		exit_code = 255;
 	}
+	free_arr(str);
+	exit(exit_code);
 }
 
 int	mini_exit(t_tools *tools, t_simple_cmds *simple_cmd)
@@ -64,9 +63,9 @@ int	mini_exit(t_tools *tools, t_simple_cmds *simple_cmd)
 	char	**str;
 
 	ft_putendl_fd("exit", STDERR_FILENO);
-	if (simple_cmd->str[2])
+	if (simple_cmd->str[1] && simple_cmd->str[2])
 	{
-		ft_putstr_fd("minishell: exit: too many arguments", STDERR_FILENO);
+		ft_putstr_fd("minishell: exit: too many arguments\n", STDERR_FILENO);
 		return (EXIT_FAILURE);
 	}
 	str = ft_arrdup(simple_cmd->str);
