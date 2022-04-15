@@ -6,7 +6,7 @@
 /*   By: maiadegraaf <maiadegraaf@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/11 17:42:39 by maiadegraaf   #+#    #+#                 */
-/*   Updated: 2022/04/15 16:31:45 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/04/15 17:29:35 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,7 @@ int	create_heredoc(t_heredoc *heredoc, bool quotes,
 
 	del_len = ft_strlen(heredoc->del);
 	fd = open(file_name, O_CREAT | O_RDWR | O_TRUNC, 0644);
-	ft_putstr_fd(HEREDOC_MSG, STDERR_FILENO);
-	line = get_next_line(STDIN_FILENO);
+	line = readline(HEREDOC_MSG);
 	while (line && (ft_strncmp(heredoc->del, line, ft_strlen(line) - 1)
 			|| line[0] == '\n') && !g_global.stop_heredoc)
 	{
@@ -42,14 +41,13 @@ int	create_heredoc(t_heredoc *heredoc, bool quotes,
 			line = send_expander(tools, line);
 		write(fd, line, ft_strlen(line));
 		free(line);
-		ft_putstr_fd(HEREDOC_MSG, STDERR_FILENO);
-		line = get_next_line(STDIN_FILENO);
+		line = readline(HEREDOC_MSG);
 	}
+	free(line);
 	if (!line)
 		ft_putstr_fd("\n", STDERR_FILENO);
 	if (g_global.stop_heredoc || !line)
 		return (EXIT_FAILURE);
-	free(line);
 	close(fd);
 	return (EXIT_SUCCESS);
 }

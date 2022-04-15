@@ -6,7 +6,7 @@
 /*   By: fpolycar <fpolycar@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/15 13:35:26 by fpolycar      #+#    #+#                 */
-/*   Updated: 2022/04/15 15:37:25 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/04/15 17:26:52 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,10 +75,8 @@ char	*detect_dollar_sign(t_tools *tools, char *str)
 			j += loop_if_dollar_sign(tools, str, &tmp, j);
 		if (str[j + 1] == '?')
 		{
-			if (tools->pipes != 0)
-				tmp = ft_itoa(tools->pid[tools->pipes]);
-			else
-				tmp = char_to_str('0');
+			free(tmp);
+			tmp = ft_itoa(g_global.error_num);
 			j += ft_strlen(tmp) + 1;
 		}
 		else
@@ -109,7 +107,6 @@ char	**expander(t_tools *tools, char **str)
 			free(str[i]);
 			str[i] = tmp;
 		}
-		printf("%d\n\n", ft_strncmp(str[0], "export", ft_strlen(str[0]) - 1));
 		if (ft_strncmp(str[0], "export", ft_strlen(str[0]) - 1) != 0)
 		{
 			str[i] = delete_quotes(str[i], '\"');
