@@ -1,7 +1,6 @@
 NAME = minishell
 MKDIR = mkdir
 
-
 CC = gcc
 
 LIBFTP = libraries/libft
@@ -19,14 +18,37 @@ PATHEX = src/executor/
 
 BUILD_PATHS = $(PATHB) $(PATHO)
 
-src	=	$(wildcard $(PATHS)*.c) \
-		$(wildcard $(PATHSL)*.c) \
-		$(wildcard $(PATHSP)*.c) \
-		$(wildcard $(PATHSB)*.c) \
-		$(wildcard $(PATHSU)*.c) \
-		$(wildcard $(PATHSE)*.c) \
-		$(wildcard $(PATHEX)*.c) \
-		$(wildcard $(PATHSEX)*.c)
+src	=	src/main.c \
+		src/signals.c \
+		src/lexor/handle_quotes.c \
+		src/lexor/handle_token.c \
+		src/lexor/token_reader.c \
+		src/parser/handle_redirections.c \
+		src/parser/parser.c \
+		src/parser/parser_utils.c \
+		src/builtins/builtins.c \
+		src/builtins/mini_cd.c \
+		src/builtins/mini_echo.c \
+		src/builtins/mini_env.c \
+		src/builtins/mini_exit.c \
+		src/builtins/mini_export.c \
+		src/builtins/mini_pwd.c \
+		src/builtins/mini_unset.c \
+		src/builtins/utils_builtins.c \
+		src/utils/minishell_loop.c \
+		src/utils/parse_envp.c \
+		src/utils/t_heredoc_utils.c \
+		src/utils/t_lexor_clear_utils.c \
+		src/utils/t_lexor_utils.c \
+		src/utils/t_simple_cmds_utils.c \
+		src/utils/utils.c \
+		src/error/error_handeling.c \
+		src/executor/check_redirections.c \
+		src/executor/executor.c \
+		src/executor/handle_cmd.c \
+		src/executor/heredoc.c \
+		src/expander/expander.c \
+		src/expander/expanders_utils.c
 
 OBJS	=	$(addprefix $(PATHO), $(notdir $(patsubst %.c, %.o, $(src))))
 
@@ -34,7 +56,14 @@ FLAGS	=	-Wall -Werror -Wextra -g #-fsanitize=address
 
 LIBFT	=	./libraries/libft/libft.a
 
-HEADER	=	$(wildcard ./includes/*.h)
+HEADER	=	.includes/builtins.h \
+			.includes/color.h \
+			.includes/error.h \
+			.includes/executor.h \
+			.includes/lexor.h \
+			.includes/minishell.h \
+			.includes/parser.h \
+			.includes/utils.h 
 
 READLINE_DIR = $(shell brew --prefix readline)
 
