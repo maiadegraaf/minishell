@@ -6,7 +6,7 @@
 /*   By: maiadegraaf <maiadegraaf@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/11 17:42:39 by maiadegraaf   #+#    #+#                 */
-/*   Updated: 2022/04/15 14:34:29 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/04/15 16:31:45 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,23 +33,23 @@ int	create_heredoc(t_heredoc *heredoc, bool quotes,
 
 	del_len = ft_strlen(heredoc->del);
 	fd = open(file_name, O_CREAT | O_RDWR | O_TRUNC, 0644);
-	ft_putstr_fd("\033[1;34m> \033[0m", STDERR_FILENO);
+	ft_putstr_fd(HEREDOC_MSG, STDERR_FILENO);
 	line = get_next_line(STDIN_FILENO);
 	while (line && (ft_strncmp(heredoc->del, line, ft_strlen(line) - 1)
-			|| ft_strncmp(heredoc->del, line, del_len))
-		&& !g_global.stop_heredoc)
+			|| line[0] == '\n') && !g_global.stop_heredoc)
 	{
 		if (quotes == false)
 			line = send_expander(tools, line);
 		write(fd, line, ft_strlen(line));
 		free(line);
-		ft_putstr_fd("\033[1;34m> \033[0m", STDERR_FILENO);
+		ft_putstr_fd(HEREDOC_MSG, STDERR_FILENO);
 		line = get_next_line(STDIN_FILENO);
 	}
 	if (!line)
 		ft_putstr_fd("\n", STDERR_FILENO);
 	if (g_global.stop_heredoc || !line)
 		return (EXIT_FAILURE);
+	free(line);
 	close(fd);
 	return (EXIT_SUCCESS);
 }
@@ -87,7 +87,7 @@ int	send_heredoc(t_tools *tools, t_simple_cmds *cmd)
 		if (cmd->hd_file_name)
 			free(cmd->hd_file_name);
 		num = ft_itoa(i++);
-		cmd->hd_file_name = ft_strjoin("build/.tmp_heredoc_file", num);
+		cmd->hd_file_name = ft_strjoin("build/.tmp_heredoc_file_", num);
 		free(num);
 		sl = ft_heredoc(tools, cmd->heredoc, cmd->hd_file_name);
 		if (sl)
