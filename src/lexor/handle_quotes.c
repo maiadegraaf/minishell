@@ -6,7 +6,7 @@
 /*   By: maiadegraaf <maiadegraaf@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/15 14:04:32 by maiadegraaf   #+#    #+#                 */
-/*   Updated: 2022/04/08 10:45:47 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/04/15 13:34:55 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,4 +26,3 @@ int	handle_quotes(int i, char *str, char del)
 	}
 	return (j);
 }
-

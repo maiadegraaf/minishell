@@ -6,7 +6,7 @@
 /*   By: maiadegraaf <maiadegraaf@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/11 17:42:39 by maiadegraaf   #+#    #+#                 */
-/*   Updated: 2022/04/14 16:57:21 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/04/15 14:34:29 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,10 @@ int	send_heredoc(t_tools *tools, t_simple_cmds *cmd)
 		free(num);
 		sl = ft_heredoc(tools, cmd->heredoc, cmd->hd_file_name);
 		if (sl)
+		{
+			g_global.error_num = 1;
 			return (reset_tools(tools));
+		}
 		cmd->heredoc = cmd->heredoc->next;
 	}
 	cmd->heredoc = start;

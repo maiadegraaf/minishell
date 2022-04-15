@@ -6,7 +6,7 @@
 /*   By: maiadegraaf <maiadegraaf@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/11 17:24:04 by maiadegraaf   #+#    #+#                 */
-/*   Updated: 2022/04/14 16:20:44 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/04/15 14:32:22 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	find_cmd(t_simple_cmds *cmd, t_tools *tools)
 	ft_putstr_fd("minishell: ", STDERR_FILENO);
 	ft_putstr_fd(cmd->str[0], STDERR_FILENO);
 	ft_putstr_fd(": command not found\n", STDERR_FILENO);
-	return (EXIT_FAILURE);
+	return (127);
 }
 
 void	handle_cmd(t_simple_cmds *cmd, t_tools *tools)
