@@ -6,7 +6,7 @@
 /*   By: maiadegraaf <maiadegraaf@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/11 17:24:04 by maiadegraaf   #+#    #+#                 */
-/*   Updated: 2022/04/15 16:21:51 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/04/15 17:50:08 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ int	find_cmd(t_simple_cmds *cmd, t_tools *tools)
 	joined_str = join_split_str(cmd->str, NULL);
 	free_arr(cmd->str);
 	cmd->str = ft_split(joined_str, ' ');
-	printf(">%s<\n", joined_str);
 	free(joined_str);
 	while (tools->paths[i])
 	{
