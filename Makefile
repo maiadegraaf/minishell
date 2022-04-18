@@ -49,7 +49,8 @@ src	=	src/main.c \
 		src/executor/heredoc.c \
 		src/executor/executor_utils.c \
 		src/expander/expander.c \
-		src/expander/expanders_utils.c
+		src/expander/expanders_utils.c \
+		src/expander/expanders_utils2.c
 
 OBJS	=	$(addprefix $(PATHO), $(notdir $(patsubst %.c, %.o, $(src))))
 
