@@ -6,7 +6,7 @@
 /*   By: maiadegraaf <maiadegraaf@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/11 17:24:04 by maiadegraaf   #+#    #+#                 */
-/*   Updated: 2022/04/18 12:49:56 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/04/18 16:23:59 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,18 +37,11 @@ int	find_cmd(t_simple_cmds *cmd, t_tools *tools)
 
 void	handle_cmd(t_simple_cmds *cmd, t_tools *tools)
 {
-	int	fd;
 	int	exit_code;
 
 	exit_code = 0;
-	if (tools->heredoc)
-	{
-		fd = open(cmd->hd_file_name, O_RDONLY);
-		dup2(fd, STDIN_FILENO);
-		close(fd);
-	}
 	if (cmd->redirections)
-		handle_redirections(cmd, tools);
+		check_redirections(cmd, tools);
 	if (cmd->builtin != NULL)
 	{
 		exit_code = cmd->builtin(tools, cmd);
@@ -78,7 +71,8 @@ void	single_cmd(t_simple_cmds *cmd, t_tools *tools)
 	int	status;
 
 	tools->simple_cmds = call_expander(tools, tools->simple_cmds);
-	if (cmd->builtin)
+	if (cmd->builtin == mini_cd || cmd->builtin == mini_exit
+		|| cmd->builtin == mini_export || cmd->builtin == mini_unset)
 	{
 		g_global.error_num = cmd->builtin(tools, cmd);
 		return ;

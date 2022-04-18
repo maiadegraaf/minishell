@@ -6,7 +6,7 @@
 /*   By: maiadegraaf <maiadegraaf@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 10:13:32 by maiadegraaf   #+#    #+#                 */
-/*   Updated: 2022/04/18 16:06:49 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/04/18 16:45:32 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	unset_error(t_simple_cmds *simple_cmd)
 	}
 	if (equal_sign(simple_cmd->str[1]) != 0)
 	{
-		ft_putendl_fd("minishell: unset: invalid parameter name",
+		ft_putendl_fd("minishell: unset: not a valid identifier",
 			STDERR_FILENO);
 		return (EXIT_FAILURE);
 	}

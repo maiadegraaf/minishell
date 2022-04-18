@@ -6,7 +6,7 @@
 /*   By: maiadegraaf <maiadegraaf@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/11 17:42:39 by maiadegraaf   #+#    #+#                 */
-/*   Updated: 2022/04/15 17:58:04 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/04/18 16:40:11 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,17 @@ char	*send_expander(t_tools *tools, char *line)
 	return (tmp);
 }
 
-int	create_heredoc(t_heredoc *heredoc, bool quotes,
+int	create_heredoc(t_lexor *heredoc, bool quotes,
 	t_tools *tools, char *file_name)
 {
 	int		fd;
 	char	*line;
 	int		del_len;
 
-	del_len = ft_strlen(heredoc->del);
+	del_len = ft_strlen(heredoc->str);
 	fd = open(file_name, O_CREAT | O_RDWR | O_TRUNC, 0644);
 	line = readline(HEREDOC_MSG);
-	while (line && ft_strncmp(heredoc->del, line, ft_strlen(line))
+	while (line && ft_strncmp(heredoc->str, line, ft_strlen(line))
 		&& !g_global.stop_heredoc)
 	{
 		if (quotes == false)
@@ -52,14 +52,14 @@ int	create_heredoc(t_heredoc *heredoc, bool quotes,
 	return (EXIT_SUCCESS);
 }
 
-int	ft_heredoc(t_tools *tools, t_heredoc *heredoc, char *file_name)
+int	ft_heredoc(t_tools *tools, t_lexor *heredoc, char *file_name)
 {
 	bool	quotes;
 	int		sl;
 
 	sl = EXIT_SUCCESS;
-	if (heredoc->del[0] == '\"'
-		&& heredoc->del[ft_strlen(heredoc->del) - 1] == '\"')
+	if (heredoc->str[0] == '\"'
+		&& heredoc->str[ft_strlen(heredoc->str) - 1] == '\"')
 		quotes = true;
 	else
 		quotes = false;
@@ -71,30 +71,41 @@ int	ft_heredoc(t_tools *tools, t_heredoc *heredoc, char *file_name)
 	return (sl);
 }
 
-int	send_heredoc(t_tools *tools, t_simple_cmds *cmd)
+char	*generate_heredoc_filename(void)
 {
-	t_heredoc	*start;
 	static int	i = 0;
 	char		*num;
-	int			sl;
+	char		*file_name;
 
-	start = cmd->heredoc;
+	num = ft_itoa(i++);
+	file_name = ft_strjoin("build/.tmp_heredoc_file_", num);
+	free(num);
+	return (file_name);
+}
+
+int	send_heredoc(t_tools *tools, t_simple_cmds *cmd)
+{
+	t_lexor	*start;
+	int		sl;
+
+	start = cmd->redirections;
 	sl = EXIT_SUCCESS;
-	while (cmd->heredoc)
+	while (cmd->redirections)
 	{	
-		if (cmd->hd_file_name)
-			free(cmd->hd_file_name);
-		num = ft_itoa(i++);
-		cmd->hd_file_name = ft_strjoin("build/.tmp_heredoc_file_", num);
-		free(num);
-		sl = ft_heredoc(tools, cmd->heredoc, cmd->hd_file_name);
-		if (sl)
+		if (cmd->redirections->token == LESS_LESS)
 		{
-			g_global.error_num = 1;
-			return (reset_tools(tools));
+			if (cmd->hd_file_name)
+				free(cmd->hd_file_name);
+			cmd->hd_file_name = generate_heredoc_filename();
+			sl = ft_heredoc(tools, cmd->redirections, cmd->hd_file_name);
+			if (sl)
+			{
+				g_global.error_num = 1;
+				return (reset_tools(tools));
+			}
 		}
-		cmd->heredoc = cmd->heredoc->next;
+		cmd->redirections = cmd->redirections->next;
 	}
-	cmd->heredoc = start;
+	cmd->redirections = start;
 	return (EXIT_SUCCESS);
 }

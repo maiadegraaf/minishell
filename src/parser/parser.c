@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 15:28:22 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/04/18 12:54:30 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/04/18 16:33:07 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_simple_cmds	*initialize_cmd(t_parser_tools *parser_tools)
 		}
 		arg_size--;
 	}
-	return (ft_simple_cmdsnew(str, parser_tools->heredoc,
+	return (ft_simple_cmdsnew(str,
 			parser_tools->num_redirections, parser_tools->redirections));
 }
 
