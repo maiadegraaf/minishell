@@ -6,7 +6,7 @@
 /*   By: fpolycar <fpolycar@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/31 16:08:47 by fpolycar      #+#    #+#                 */
-/*   Updated: 2022/04/15 16:01:44 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/04/18 12:59:41 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,24 @@ int	after_dol_lenght(char *str, int j)
 	return (i);
 }
 
+size_t quotes_lenght(char *str)
+{
+	int	i;
+	size_t	ret;
+
+	i = 0;
+	ret = 0;
+	while (str[i])
+	{
+		if (str[i] == '\'' || str[i] == '\"')
+		{
+			ret++;
+		}
+		i++;
+	}
+	return (ret);
+}
+
 char	*delete_quotes(char *str, char c)
 {
 	int	i;
@@ -56,7 +74,13 @@ char	*delete_quotes(char *str, char c)
 	j = 0;
 	while (str[i])
 	{
-		if (str[i] == c)
+		if (str[i] == c
+			&& ft_strlen(str + equal_sign(str)) == quotes_lenght(str))
+		{
+			ft_strlcpy(&str[i], "\'\'", 3);
+			break ;
+		}
+		else if (str[i] == c)
 		{
 			j = 0;
 			while (str[i + j] == c)
