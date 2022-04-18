@@ -6,7 +6,7 @@
 /*   By: maiadegraaf <maiadegraaf@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/15 16:15:48 by maiadegraaf   #+#    #+#                 */
-/*   Updated: 2022/04/14 11:31:11 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/04/18 13:02:00 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,10 @@ void	rm_redirections(t_parser_tools *parser_tools)
 		tmp = tmp->next;
 	if (!tmp || tmp->token == PIPE)
 		return ;
-	if (!tmp->next || !tmp->next->str)
+	if (!tmp->next)
 		parser_error(0, parser_tools->tools, parser_tools->lexor_list);
+	if (tmp->next->token)
+		parser_double_token_error(parser_tools->tools, parser_tools->lexor_list);
 	if (tmp->token == LESS_LESS)
 		handle_heredoc(parser_tools, tmp);
 	else if ((tmp->token >= GREAT
