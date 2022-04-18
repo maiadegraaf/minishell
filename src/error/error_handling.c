@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   error_handeling.c                                  :+:    :+:            */
+/*   error_handling.c                                   :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: maiadegraaf <maiadegraaf@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/16 09:57:33 by maiadegraaf   #+#    #+#                 */
-/*   Updated: 2022/04/18 14:28:18 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/04/18 17:54:34 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	parser_error(int error, t_tools *tools, t_lexor *lexor_list)
 	ft_error(error, tools);
 }
 
-void	parser_double_token_error(t_tools *tools, t_lexor *lexor_list,
+int	parser_double_token_error(t_tools *tools, t_lexor *lexor_list,
 	t_tokens token)
 {
 	ft_putstr_fd("minishell: syntax error near unexpected token ",
@@ -37,6 +37,7 @@ void	parser_double_token_error(t_tools *tools, t_lexor *lexor_list,
 		ft_putstr_fd("\n", STDERR_FILENO);
 	ft_lexorclear(&lexor_list);
 	reset_tools(tools);
+	return (EXIT_FAILURE);
 }
 
 int	export_error(char *c)
