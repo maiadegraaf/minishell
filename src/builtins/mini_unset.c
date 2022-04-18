@@ -6,7 +6,7 @@
 /*   By: maiadegraaf <maiadegraaf@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 10:13:32 by maiadegraaf   #+#    #+#                 */
-/*   Updated: 2022/04/14 15:04:20 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/04/18 16:06:49 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,20 +55,41 @@ char	**del_var(char **arr, char *str)
 	return (rtn);
 }
 
+int	unset_error(t_simple_cmds *simple_cmd)
+{
+	int		i;
+
+	i = 0;
+	if (!simple_cmd->str[1])
+	{
+		ft_putendl_fd("minishell: unset: not enough arguments", STDERR_FILENO);
+		return (EXIT_FAILURE);
+	}
+	while (simple_cmd->str[1][i])
+	{
+		if (simple_cmd->str[1][i++] == '/')
+		{
+			ft_putstr_fd("minishell: unset: `", STDERR_FILENO);
+			ft_putstr_fd(simple_cmd->str[1], STDERR_FILENO);
+			ft_putendl_fd("': not a valid identifier", STDERR_FILENO);
+			return (EXIT_FAILURE);
+		}
+	}
+	if (equal_sign(simple_cmd->str[1]) != 0)
+	{
+		ft_putendl_fd("minishell: unset: invalid parameter name",
+			STDERR_FILENO);
+		return (EXIT_FAILURE);
+	}
+	return (EXIT_SUCCESS);
+}
+
 int	mini_unset(t_tools *tools, t_simple_cmds *simple_cmd)
 {
 	char	**tmp;
 
-	if (!simple_cmd->str[1])
-	{
-		ft_putendl_fd("unset: not enough arguments", STDERR_FILENO);
+	if (unset_error(simple_cmd) == 1)
 		return (EXIT_FAILURE);
-	}
-	if (equal_sign(simple_cmd->str[1]) != 0)
-	{
-		ft_putendl_fd("unset: invalid parameter name", STDERR_FILENO);
-		return (EXIT_FAILURE);
-	}
 	else
 	{
 		tmp = del_var(tools->envp, simple_cmd->str[1]);
