@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/24 15:17:39 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/04/14 14:58:26 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/04/18 16:31:21 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,10 @@
 # include "minishell.h"
 
 // check_redirections
-int				check_outfile(t_lexor *redirections);
-int				check_infile(t_lexor *redirections);
-int				handle_redirections(t_simple_cmds *cmd, t_tools *tools);
+// int				check_outfile(t_lexor *redirections);
+// int				check_infile(t_lexor *redirections);
+// int				handle_redirections(t_simple_cmds *cmd, t_tools *tools);
+int				check_redirections(t_simple_cmds *cmd, t_tools *tools);
 
 // executor
 int				executor(t_tools *tools);
@@ -32,9 +33,6 @@ void			dup_cmd(t_simple_cmds *cmd, t_tools *tools,
 void			single_cmd(t_simple_cmds *cmd, t_tools *tools);
 
 // heredoc
-int				ft_heredoc(t_tools *tools, t_heredoc *heredoc, char *file_name);
-int				create_heredoc(t_heredoc *heredoc, bool quotes,
-					t_tools *tools, char *file_name);
 int				send_heredoc(t_tools *tools, t_simple_cmds *cmd);
 
 #endif

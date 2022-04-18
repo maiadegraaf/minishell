@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 15:28:22 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/04/14 12:02:06 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/04/18 16:33:07 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_simple_cmds	*initialize_cmd(t_parser_tools *parser_tools)
 		}
 		arg_size--;
 	}
-	return (ft_simple_cmdsnew(str, parser_tools->heredoc,
+	return (ft_simple_cmdsnew(str,
 			parser_tools->num_redirections, parser_tools->redirections));
 }
 
@@ -53,8 +53,8 @@ int	*parser(t_tools *tools)
 	{
 		if (tools->lexor_list && tools->lexor_list->token == PIPE)
 			ft_lexordelone(&tools->lexor_list, tools->lexor_list->i);
-		// if (!tools->lexor_list)
-		// 	parser_error(0, tools, tools->lexor_list);
+		if (!tools->lexor_list)
+			parser_error(0, tools, tools->lexor_list);
 		parser_tools = init_parser_tools(tools->lexor_list, tools);
 		node = initialize_cmd(&parser_tools);
 		if (!node)
@@ -66,41 +66,4 @@ int	*parser(t_tools *tools)
 		tools->lexor_list = parser_tools.lexor_list;
 	}
 	return (0);
-}
-
-void	print_parser(t_simple_cmds simple_cmds)
-{
-	int	i = 0;
-
-	t_simple_cmds *tmp = &simple_cmds;
-	while (tmp)
-	{
-		printf("\n>>>%i<<<\n", i++);
-		if (*tmp->str)
-		{
-			while (*tmp->str)
-			{
-				printf("%s\n", *tmp->str++);
-			}
-		}
-		printf("num redirections = %d\n", simple_cmds.num_redirections);
-		if (tmp->redirections)
-			printf("\nredirections:\n");
-		while (tmp->redirections)
-		{
-			printf("%s\t", tmp->redirections->str);
-			if (tmp->redirections->token == GREAT)
-				printf("GREAT\n");
-			else if (tmp->redirections->token == GREAT_GREAT)
-				printf("GREAT_GREAT\n");
-			else if (tmp->redirections->token == LESS)
-				printf("LESS\n");
-			else if (tmp->redirections->token == LESS_LESS)
-				printf("LESS_LESS\n");
-			tmp->redirections = tmp->redirections->next;
-		}
-		if (tmp->builtin)
-			printf("BUILTIN :)\n");
-		tmp = tmp->next;
-	}
 }

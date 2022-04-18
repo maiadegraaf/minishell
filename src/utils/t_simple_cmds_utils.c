@@ -6,13 +6,13 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 15:31:53 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/04/14 14:39:54 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/04/18 16:33:36 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
 
-t_simple_cmds	*ft_simple_cmdsnew(char **str, t_heredoc *heredoc,
+t_simple_cmds	*ft_simple_cmdsnew(char **str,
 	int num_redirections, t_lexor *redirections)
 {
 	t_simple_cmds	*new_element;
@@ -22,7 +22,6 @@ t_simple_cmds	*ft_simple_cmdsnew(char **str, t_heredoc *heredoc,
 		return (0);
 	new_element->str = str;
 	new_element->builtin = builtin_arr(str[0]);
-	new_element->heredoc = heredoc;
 	new_element->hd_file_name = NULL;
 	new_element->num_redirections = num_redirections;
 	new_element->redirections = redirections;
@@ -73,7 +72,7 @@ void	ft_simple_cmdsclear(t_simple_cmds **lst)
 	while (*lst)
 	{
 		tmp = (*lst)->next;
-		ft_heredocclear(&(*lst)->heredoc);
+		// ft_heredocclear(&(*lst)->heredoc);
 		redirections_tmp = (*lst)->redirections;
 		ft_lexorclear(&redirections_tmp);
 		if ((*lst)->str)

@@ -6,29 +6,24 @@
 /*   By: maiadegraaf <maiadegraaf@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/11 17:24:04 by maiadegraaf   #+#    #+#                 */
-/*   Updated: 2022/04/15 17:50:08 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/04/18 16:23:59 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
 char	*join_split_str(char **split_str, char *new_str);
+char	**resplit_str(char **double_arr);
 
 int	find_cmd(t_simple_cmds *cmd, t_tools *tools)
 {
 	int		i;
 	char	*mycmd;
-	char	*joined_str;
 
-	joined_str = join_split_str(cmd->str, NULL);
-	free_arr(cmd->str);
-	cmd->str = ft_split(joined_str, ' ');
-	free(joined_str);
 	i = 0;
-	joined_str = join_split_str(cmd->str, NULL);
-	free_arr(cmd->str);
-	cmd->str = ft_split(joined_str, ' ');
-	free(joined_str);
+	cmd->str = resplit_str(cmd->str);
+	if (!access(cmd->str[0], F_OK))
+		execve(cmd->str[0], cmd->str, tools->envp);
 	while (tools->paths[i])
 	{
 		mycmd = ft_strjoin(tools->paths[i], cmd->str[0]);
@@ -37,26 +32,16 @@ int	find_cmd(t_simple_cmds *cmd, t_tools *tools)
 		free(mycmd);
 		i++;
 	}
-	ft_putstr_fd("minishell: ", STDERR_FILENO);
-	ft_putstr_fd(cmd->str[0], STDERR_FILENO);
-	ft_putstr_fd(": command not found\n", STDERR_FILENO);
-	return (127);
+	return (cmd_not_found(cmd->str[0]));
 }
 
 void	handle_cmd(t_simple_cmds *cmd, t_tools *tools)
 {
-	int	fd;
 	int	exit_code;
 
 	exit_code = 0;
-	if (tools->heredoc)
-	{
-		fd = open(cmd->hd_file_name, O_RDONLY);
-		dup2(fd, STDIN_FILENO);
-		close(fd);
-	}
 	if (cmd->redirections)
-		handle_redirections(cmd, tools);
+		check_redirections(cmd, tools);
 	if (cmd->builtin != NULL)
 	{
 		exit_code = cmd->builtin(tools, cmd);
@@ -86,7 +71,8 @@ void	single_cmd(t_simple_cmds *cmd, t_tools *tools)
 	int	status;
 
 	tools->simple_cmds = call_expander(tools, tools->simple_cmds);
-	if (cmd->builtin)
+	if (cmd->builtin == mini_cd || cmd->builtin == mini_exit
+		|| cmd->builtin == mini_export || cmd->builtin == mini_unset)
 	{
 		g_global.error_num = cmd->builtin(tools, cmd);
 		return ;

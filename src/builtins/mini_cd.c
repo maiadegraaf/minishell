@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/15 15:17:04 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/04/12 15:55:28 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/04/18 14:00:54 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,30 @@ int	specific_path(t_tools *tools, char *str)
 	return (ret);
 }
 
+void	add_path_to_env(t_tools *tools)
+{
+	int		i;
+	char	*tmp;
+
+	i = 0;
+	while (tools->envp[i])
+	{
+		if (!ft_strncmp(tools->envp[i], "PWD=", 4))
+		{
+			tmp = ft_strjoin("PWD=", tools->pwd);
+			free(tools->envp[i]);
+			tools->envp[i] = tmp;
+		}
+		else if (!ft_strncmp(tools->envp[i], "OLDPWD=", 7) && tools->old_pwd)
+		{
+			tmp = ft_strjoin("OLDPWD=", tools->old_pwd);
+			free(tools->envp[i]);
+			tools->envp[i] = tmp;
+		}
+		i++;
+	}
+}
+
 int	mini_cd(t_tools *tools, t_simple_cmds *simple_cmd)
 {
 	int		ret;
@@ -63,5 +87,6 @@ int	mini_cd(t_tools *tools, t_simple_cmds *simple_cmd)
 	if (ret != 0)
 		return (EXIT_FAILURE);
 	change_path(tools);
+	add_path_to_env(tools);
 	return (EXIT_SUCCESS);
 }

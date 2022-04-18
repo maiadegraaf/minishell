@@ -37,18 +37,20 @@ src	=	src/main.c \
 		src/builtins/utils_builtins.c \
 		src/utils/minishell_loop.c \
 		src/utils/parse_envp.c \
-		src/utils/t_heredoc_utils.c \
 		src/utils/t_lexor_clear_utils.c \
 		src/utils/t_lexor_utils.c \
 		src/utils/t_simple_cmds_utils.c \
 		src/utils/utils.c \
 		src/error/error_handeling.c \
+		src/error/ft_error.c \
 		src/executor/check_redirections.c \
 		src/executor/executor.c \
 		src/executor/handle_cmd.c \
 		src/executor/heredoc.c \
+		src/executor/executor_utils.c \
 		src/expander/expander.c \
-		src/expander/expanders_utils.c
+		src/expander/expanders_utils.c \
+		src/expander/expanders_utils2.c
 
 OBJS	=	$(addprefix $(PATHO), $(notdir $(patsubst %.c, %.o, $(src))))
 
