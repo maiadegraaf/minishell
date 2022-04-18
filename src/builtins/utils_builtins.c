@@ -6,7 +6,7 @@
 /*   By: fpolycar <fpolycar@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/24 16:04:47 by fpolycar      #+#    #+#                 */
-/*   Updated: 2022/04/15 16:03:41 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/04/18 14:25:09 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,3 +52,15 @@ char	*delete_quotes_value(char *str)
 	free_arr(split_quotes);
 	return (str);
 }
+
+int	check_valid_identifier(char c)
+{
+	return (c == '|' || c == '<' || c == '>' || c == '[' || c == ']'
+		|| c == '\'' || c == '\"' || c == ' ' || c == ',' || c == '.'
+		|| c == ':' || c == '/' || c == '{' || c == '}' || c == '+'
+		|| c == '^' || c == '%' || c == '#' || c == '@' || c == '!'
+		|| c == '~'
+		|| c == '=' || c == '-' || c == '?' || c == '&' || c == '*');
+}
+
+// "\'\"\\$ ,.:/[{]}+=-?&*^%#@!~"

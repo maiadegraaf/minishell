@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/25 11:39:57 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/04/14 11:25:17 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/04/18 16:41:00 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,71 +25,50 @@ int	check_append_outfile(t_lexor *redirections)
 	return (fd);
 }
 
-int	check_outfile(t_lexor *redirections)
+int	handle_infile(t_tools *tools, char *file)
 {
-	t_lexor	*start;
-	int		fd;
+	int	fd;
 
-	start = redirections;
-	fd = 0;
-	while (redirections)
-	{
-		if (redirections->token == GREAT
-			|| redirections->token == GREAT_GREAT)
-		{
-			if (fd > 0)
-				close (fd);
-			fd = check_append_outfile(redirections);
-			if (fd < 0)
-				return (-1);
-		}
-		redirections = redirections->next;
-	}
-	redirections = start;
-	return (fd);
+	fd = open(file, O_RDONLY);
+	if (fd < 0)
+		return (ft_error(7, tools));
+	if (fd > 0 && dup2(fd, STDIN_FILENO) < 0)
+		return (ft_error(4, tools));
+	if (fd > 0)
+		close(fd);
+	return (EXIT_SUCCESS);
 }
 
-int	check_infile(t_lexor *redirections)
+int	handle_outfile(t_lexor *redirection, t_tools *tools)
 {
-	t_lexor	*start;
-	int		fd;
+	int	fd;
 
-	start = redirections;
-	fd = 0;
-	while (redirections)
-	{
-		if (redirections->token == LESS)
-		{
-			if (fd > 0)
-				close (fd);
-			fd = open(redirections->str, O_RDONLY);
-			if (fd < 0)
-				return (-1);
-		}
-		redirections = redirections->next;
-	}
-	redirections = start;
-	return (fd);
+	fd = check_append_outfile(redirection);
+	if (fd < 0)
+		return (ft_error(7, tools));
+	if (fd > 0 && dup2(fd, STDOUT_FILENO) < 0)
+		return (ft_error(4, tools));
+	if (fd > 0)
+		close(fd);
+	return (EXIT_SUCCESS);
 }
 
-int	handle_redirections(t_simple_cmds *cmd, t_tools *tools)
+int	check_redirections(t_simple_cmds *cmd, t_tools *tools)
 {
-	int	fd_in;
-	int	fd_out;
+	t_lexor	*start;
 
-	fd_in = check_infile(cmd->redirections);
-	if (fd_in < 0)
-		ft_error(7, tools);
-	if (fd_in > 0 && dup2(fd_in, STDIN_FILENO) < 0)
-		ft_error(4, tools);
-	if (fd_in > 0)
-		close(fd_in);
-	fd_out = check_outfile(cmd->redirections);
-	if (fd_out < 0)
-		ft_error (6, tools);
-	if (fd_out > 0 && dup2(fd_out, STDOUT_FILENO) < 0)
-		ft_error(4, tools);
-	if (fd_out > 0)
-		close(fd_out);
+	start = cmd->redirections;
+	while (cmd->redirections)
+	{
+		if (cmd->redirections->token == LESS)
+			handle_infile(tools, cmd->redirections->str);
+		else if (cmd->redirections->token == GREAT
+			|| cmd->redirections->token == GREAT_GREAT)
+			handle_outfile(cmd->redirections, tools);
+		else if (cmd->redirections->token == LESS_LESS)
+			handle_infile(tools, cmd->hd_file_name);
+		cmd->redirections = cmd->redirections->next;
+	}
+	cmd->redirections = start;
 	return (EXIT_SUCCESS);
 }

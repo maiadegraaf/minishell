@@ -6,7 +6,7 @@
 /*   By: fpolycar <fpolycar@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/24 16:07:21 by fpolycar      #+#    #+#                 */
-/*   Updated: 2022/04/15 16:03:30 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/04/18 14:27:29 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,24 +41,15 @@ int	check_parameter(char *str)
 
 	i = 0;
 	if (ft_isdigit(str[0]))
-	{
-		ft_putendl_fd("export: not an identifier", STDERR_FILENO);
-		return (EXIT_FAILURE);
-	}
+		return (export_error(str));
 	if (equal_sign(str) == 0)
 		return (EXIT_FAILURE);
 	if (str[0] == '=')
-	{
-		ft_putendl_fd("export: bad assignment", STDERR_FILENO);
-		return (EXIT_FAILURE);
-	}
+		return (export_error(str));
 	while (str[i] != '=')
 	{
-		if (str[i] == '|')
-		{
-			ft_putendl_fd("export: not valid in this context", STDERR_FILENO);
-			return (EXIT_FAILURE);
-		}
+		if (check_valid_identifier(str[i]))
+			return (export_error(str));
 		i++;
 	}
 	return (EXIT_SUCCESS);
@@ -118,7 +109,6 @@ int	mini_export(t_tools *tools, t_simple_cmds *simple_cmd)
 	{
 		while (simple_cmd->str[i])
 		{	
-			printf("%s\n", simple_cmd->str[i]);
 			if (check_parameter(simple_cmd->str[i]) == 0
 				&& variable_exist(tools, simple_cmd->str[i]) == 0)
 			{
