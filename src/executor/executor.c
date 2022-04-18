@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/24 15:09:50 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/04/18 12:50:16 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/04/18 15:12:03 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ int	executor(t_tools *tools)
 	fd_in = STDIN_FILENO;
 	while (tools->simple_cmds)
 	{
+		printf("%s\n", tools->simple_cmds->str[1]);
 		tools->simple_cmds = call_expander(tools, tools->simple_cmds);
 		if (tools->simple_cmds->next)
 			pipe(end);

@@ -6,7 +6,7 @@
 /*   By: fpolycar <fpolycar@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/24 16:07:21 by fpolycar      #+#    #+#                 */
-/*   Updated: 2022/04/18 14:00:39 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/04/18 15:08:25 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ int	mini_export(t_tools *tools, t_simple_cmds *simple_cmd)
 	int		i;
 
 	i = 1;
-	if (!simple_cmd->str[1])
+	if (!simple_cmd->str[1] || simple_cmd->str[1][0] == '\0')
 		mini_env(tools, simple_cmd);
 	else
 	{

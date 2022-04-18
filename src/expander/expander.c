@@ -6,7 +6,7 @@
 /*   By: fpolycar <fpolycar@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/15 13:35:26 by fpolycar      #+#    #+#                 */
-/*   Updated: 2022/04/15 17:26:52 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/04/18 15:51:49 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ char	*detect_dollar_sign(t_tools *tools, char *str)
 		j += handle_digit_after_dollar(j, str);
 		if (str[j] == '$' && str[j + 1] != '\"' && str[j + 1] != '?')
 			j += loop_if_dollar_sign(tools, str, &tmp, j);
-		if (str[j + 1] == '?')
+		else if (str[j] == '$' && str[j + 1] == '?')
 		{
 			free(tmp);
 			tmp = ft_itoa(g_global.error_num);
