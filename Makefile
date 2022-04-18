@@ -47,6 +47,7 @@ src	=	src/main.c \
 		src/executor/executor.c \
 		src/executor/handle_cmd.c \
 		src/executor/heredoc.c \
+		src/executor/executor_utils.c \
 		src/expander/expander.c \
 		src/expander/expanders_utils.c
 

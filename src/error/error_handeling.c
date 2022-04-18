@@ -6,7 +6,7 @@
 /*   By: maiadegraaf <maiadegraaf@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/16 09:57:33 by maiadegraaf   #+#    #+#                 */
-/*   Updated: 2022/04/15 13:34:48 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/04/18 13:02:33 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,35 @@ void	parser_error(int error, t_tools *tools, t_lexor *lexor_list)
 	ft_error(error, tools);
 }
 
+void	parser_double_token_error(t_tools *tools, t_lexor *lexor_list,
+	t_tokens token)
+{
+	ft_putstr_fd("minishell: syntax error near unexpected token ",
+		STDERR_FILENO);
+	if (token == GREAT)
+		ft_putstr_fd("GREAT\n", STDERR_FILENO);
+	else if (token == GREAT_GREAT)
+		ft_putstr_fd("GREAT_GREAT\n", STDERR_FILENO);
+	else if (token == LESS)
+		ft_putstr_fd("LESS\n", STDERR_FILENO);
+	else if (token == LESS_LESS)
+		ft_putstr_fd("LESS_LESS\n", STDERR_FILENO);
+	ft_lexorclear(&lexor_list);
+	reset_tools(tools);
+}
+
 void	lexor_error(int error, t_tools *tools)
 {
 	ft_lexorclear(&tools->lexor_list);
 	ft_error(error, tools);
+}
+
+int	cmd_not_found(char *str)
+{
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
+	ft_putstr_fd(str, STDERR_FILENO);
+	ft_putstr_fd(": command not found\n", STDERR_FILENO);
+	return (127);
 }
 
 /**
