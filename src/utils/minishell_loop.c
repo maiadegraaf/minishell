@@ -6,7 +6,7 @@
 /*   By: fpolycar <fpolycar@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/24 16:06:58 by fpolycar      #+#    #+#                 */
-/*   Updated: 2022/04/15 17:23:15 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/04/18 12:21:31 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	reset_tools(t_tools *tools)
 		free(tools->pid);
 	implement_tools(tools);
 	tools->reset = true;
-	system("leaks minishell");
+	// system("leaks minishell");
 	minishell_loop(tools);
 	return (1);
 }

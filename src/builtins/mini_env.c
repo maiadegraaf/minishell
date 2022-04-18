@@ -6,7 +6,7 @@
 /*   By: maiadegraaf <maiadegraaf@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/16 12:09:05 by maiadegraaf   #+#    #+#                 */
-/*   Updated: 2022/04/06 14:15:37 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/04/18 11:26:31 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ int	mini_env(t_tools *tools, t_simple_cmds *simple_cmd)
 {
 	int		i;
 	char	*tmp;
-	(void) simple_cmd;
 
+	(void) simple_cmd;
 	i = 0;
 	while (tools->envp[i])
 	{
