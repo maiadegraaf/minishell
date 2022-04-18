@@ -6,7 +6,7 @@
 /*   By: fpolycar <fpolycar@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/24 16:07:21 by fpolycar      #+#    #+#                 */
-/*   Updated: 2022/04/18 14:27:29 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/04/18 16:44:38 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,10 @@ char	**add_var(char **arr, char *str)
 	size_t	i;
 
 	i = 0;
-	if (str[equal_sign(str)] == '"' || str[equal_sign(str)] == '\'')
-		delete_quotes_value(str);
+	if (str[equal_sign(str)] == '\"')
+		delete_quotes(str, '\"');
+	if (str[equal_sign(str)] == '\'')
+		delete_quotes(str, '\'');
 	while (arr[i] != NULL)
 		i++;
 	rtn = ft_calloc(sizeof(char *), i + 2);
@@ -103,12 +105,12 @@ int	mini_export(t_tools *tools, t_simple_cmds *simple_cmd)
 	int		i;
 
 	i = 1;
-	if (!simple_cmd->str[1])
+	if (!simple_cmd->str[1] || simple_cmd->str[1][0] == '\0')
 		mini_env(tools, simple_cmd);
 	else
 	{
 		while (simple_cmd->str[i])
-		{	
+		{
 			if (check_parameter(simple_cmd->str[i]) == 0
 				&& variable_exist(tools, simple_cmd->str[i]) == 0)
 			{

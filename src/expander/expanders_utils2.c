@@ -1,27 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   mini_env.c                                         :+:    :+:            */
+/*   expanders_utils2.c                                 :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: maiadegraaf <maiadegraaf@student.codam.      +#+                     */
+/*   By: fpolycar <fpolycar@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/02/16 12:09:05 by maiadegraaf   #+#    #+#                 */
-/*   Updated: 2022/04/18 14:02:43 by fpolycar      ########   odam.nl         */
+/*   Created: 2022/04/18 16:20:01 by fpolycar      #+#    #+#                 */
+/*   Updated: 2022/04/18 16:32:01 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "minishell.h"
 #include "builtins.h"
 
-int	mini_env(t_tools *tools, t_simple_cmds *simple_cmd)
+int	question_mark(char **tmp)
 {
-	int		i;
-
-	(void) simple_cmd;
-	i = 0;
-	while (tools->envp[i])
-	{
-		ft_putendl_fd(tools->envp[i], STDOUT_FILENO);
-		i++;
-	}
-	return (EXIT_SUCCESS);
+	free(*tmp);
+	*tmp = ft_itoa(g_global.error_num);
+	return (ft_strlen(*tmp) + 1);
 }
