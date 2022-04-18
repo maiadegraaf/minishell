@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/25 11:39:57 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/04/18 16:41:00 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/04/18 17:08:32 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,35 +25,48 @@ int	check_append_outfile(t_lexor *redirections)
 	return (fd);
 }
 
-int	handle_infile(t_tools *tools, char *file)
+int	handle_infile(char *file)
 {
 	int	fd;
 
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
-		return (ft_error(7, tools));
+	{
+		ft_putstr_fd("minishell: infile: No such file or directory\n",
+			STDERR_FILENO);
+		return (EXIT_FAILURE);
+	}
 	if (fd > 0 && dup2(fd, STDIN_FILENO) < 0)
-		return (ft_error(4, tools));
+	{
+		ft_putstr_fd("minishell: pipe error\n", STDERR_FILENO);
+		return (EXIT_FAILURE);
+	}
 	if (fd > 0)
 		close(fd);
 	return (EXIT_SUCCESS);
 }
 
-int	handle_outfile(t_lexor *redirection, t_tools *tools)
+int	handle_outfile(t_lexor *redirection)
 {
 	int	fd;
 
 	fd = check_append_outfile(redirection);
 	if (fd < 0)
-		return (ft_error(7, tools));
+	{
+		ft_putstr_fd("minishell: outfile: Error\n", STDERR_FILENO);
+		return (EXIT_FAILURE);
+	}
 	if (fd > 0 && dup2(fd, STDOUT_FILENO) < 0)
-		return (ft_error(4, tools));
+	{
+		ft_putstr_fd("minishell: pipe error\n", STDERR_FILENO);
+		return (EXIT_FAILURE);
+	}
 	if (fd > 0)
 		close(fd);
 	return (EXIT_SUCCESS);
 }
 
-int	check_redirections(t_simple_cmds *cmd, t_tools *tools)
+int	check_redirections(t_simple_cmds *cmd)
 {
 	t_lexor	*start;
 
@@ -61,12 +74,21 @@ int	check_redirections(t_simple_cmds *cmd, t_tools *tools)
 	while (cmd->redirections)
 	{
 		if (cmd->redirections->token == LESS)
-			handle_infile(tools, cmd->redirections->str);
+		{
+			if (handle_infile(cmd->redirections->str))
+				return (EXIT_FAILURE);
+		}
 		else if (cmd->redirections->token == GREAT
 			|| cmd->redirections->token == GREAT_GREAT)
-			handle_outfile(cmd->redirections, tools);
+		{
+			if (handle_outfile(cmd->redirections))
+				return (EXIT_FAILURE);
+		}
 		else if (cmd->redirections->token == LESS_LESS)
-			handle_infile(tools, cmd->hd_file_name);
+		{
+			if (handle_infile(cmd->hd_file_name))
+				return (EXIT_FAILURE);
+		}
 		cmd->redirections = cmd->redirections->next;
 	}
 	cmd->redirections = start;

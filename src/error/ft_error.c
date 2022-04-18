@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/18 14:12:23 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/04/18 14:12:29 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/04/18 16:59:29 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,5 @@ int	ft_error(int error, t_tools *tools)
 	else if (error == 8)
 		ft_putendl_fd("Path does not exist", STDERR_FILENO);
 	reset_tools(tools);
-	return (EXIT_SUCCESS);
+	return (EXIT_FAILURE);
 }
