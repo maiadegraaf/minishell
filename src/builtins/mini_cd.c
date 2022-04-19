@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/15 15:17:04 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/04/18 14:00:54 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/04/18 18:14:00 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,11 @@ int	mini_cd(t_tools *tools, t_simple_cmds *simple_cmd)
 	{
 		ret = chdir(simple_cmd->str[1]);
 		if (ret != 0)
-			ft_putendl_fd("Path does not exist", STDERR_FILENO);
+		{
+			ft_putstr_fd("minishell: ", STDERR_FILENO);
+			ft_putstr_fd(simple_cmd->str[1], STDERR_FILENO);
+			perror(" ");
+		}
 	}
 	if (ret != 0)
 		return (EXIT_FAILURE);

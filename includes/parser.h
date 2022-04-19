@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 17:59:38 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/04/18 16:32:35 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/04/18 17:53:55 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ typedef struct s_simple_cmds
 
 int				parse_envp(t_tools *tools);
 int				find_pwd(t_tools *tools);
-int				*parser(t_tools *tools);
+int				parser(t_tools *tools);
 
 //parser_utils
 t_parser_tools	init_parser_tools(t_lexor *lexor_list, t_tools *tools);

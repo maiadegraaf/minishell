@@ -41,7 +41,7 @@ src	=	src/main.c \
 		src/utils/t_lexor_utils.c \
 		src/utils/t_simple_cmds_utils.c \
 		src/utils/utils.c \
-		src/error/error_handeling.c \
+		src/error/error_handling.c \
 		src/error/ft_error.c \
 		src/executor/check_redirections.c \
 		src/executor/executor.c \

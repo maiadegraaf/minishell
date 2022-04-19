@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/18 14:12:23 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/04/18 14:12:29 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/04/18 18:10:33 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ int	ft_error(int error, t_tools *tools)
 {
 	ft_putstr_fd("minishell: ", STDERR_FILENO);
 	if (error == 0)
-		ft_putstr_fd("syntax error: unexpected 'newline'\n", STDERR_FILENO);
+		ft_putstr_fd("syntax error near unexpected token 'newline'\n",
+			STDERR_FILENO);
 	else if (error == 1)
 		ft_putstr_fd("memory error: unable to assign memory\n", STDERR_FILENO);
 	else if (error == 2)
@@ -43,5 +44,5 @@ int	ft_error(int error, t_tools *tools)
 	else if (error == 8)
 		ft_putendl_fd("Path does not exist", STDERR_FILENO);
 	reset_tools(tools);
-	return (EXIT_SUCCESS);
+	return (EXIT_FAILURE);
 }

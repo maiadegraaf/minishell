@@ -1,0 +1,18 @@
+total 176
+drwxr-xr-x  17 mgraaf  piscine    578 Apr 18 17:24 .
+drwx------  24 mgraaf  piscine    816 Apr 12 15:35 ..
+drwxr-xr-x  19 mgraaf  piscine    646 Apr 18 17:15 .git
+-rw-r--r--   1 mgraaf  piscine     37 Apr 15 17:47 .gitignore
+-rw-r--r--   1 mgraaf  piscine     85 Apr 15 17:47 .gitmodules
+drwxr-xr-x   5 mgraaf  piscine    170 Apr 15 17:47 .vscode
+-rw-r--r--   1 mgraaf  piscine   3274 Apr 18 17:13 Makefile
+drwxr-xr-x  18 mgraaf  piscine    612 Mar 28 12:53 Unity
+-rw-r--r--   1 mgraaf  piscine      0 Apr 18 17:24 banaan
+drwxr-xr-x   6 mgraaf  piscine    204 Apr 18 17:15 build
+drwxr-xr-x  10 mgraaf  piscine    340 Apr 18 17:13 includes
+drwxr-xr-x   3 mgraaf  piscine    102 Feb 14 12:06 libraries
+-rwxr-xr-x   1 mgraaf  piscine  62860 Apr 18 17:15 minishell
+drwxr-xr-x  12 mgraaf  piscine    408 Apr 18 12:45 src
+drwxr-xr-x  11 mgraaf  piscine    374 Apr 15 17:47 test
+-rwxrwxrwx   1 mgraaf  piscine   8922 Apr 18 15:02 tester.sh
+drwxr-xr-x   3 mgraaf  piscine    102 Apr 15 17:47 utilities

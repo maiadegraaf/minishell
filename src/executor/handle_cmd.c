@@ -6,7 +6,7 @@
 /*   By: maiadegraaf <maiadegraaf@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/11 17:24:04 by maiadegraaf   #+#    #+#                 */
-/*   Updated: 2022/04/18 16:23:59 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/04/18 17:09:16 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ void	handle_cmd(t_simple_cmds *cmd, t_tools *tools)
 
 	exit_code = 0;
 	if (cmd->redirections)
-		check_redirections(cmd, tools);
+		if (check_redirections(cmd))
+			exit(1);
 	if (cmd->builtin != NULL)
 	{
 		exit_code = cmd->builtin(tools, cmd);
