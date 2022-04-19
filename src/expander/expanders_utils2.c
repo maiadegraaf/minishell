@@ -1,19 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   lexor.h                                            :+:    :+:            */
+/*   expanders_utils2.c                                 :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
+/*   By: fpolycar <fpolycar@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/02/17 17:55:06 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/04/08 10:55:02 by fpolycar      ########   odam.nl         */
+/*   Created: 2022/04/18 16:20:01 by fpolycar      #+#    #+#                 */
+/*   Updated: 2022/04/18 16:32:01 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LEXOR_H
-# define LEXOR_H
-# include "minishell.h"
+#include "minishell.h"
+#include "builtins.h"
 
-int		handle_quotes(int i, char *str, char del);
-
-#endif
+int	question_mark(char **tmp)
+{
+	free(*tmp);
+	*tmp = ft_itoa(g_global.error_num);
+	return (ft_strlen(*tmp) + 1);
+}

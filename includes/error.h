@@ -6,7 +6,7 @@
 /*   By: maiadegraaf <maiadegraaf@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/16 10:20:00 by maiadegraaf   #+#    #+#                 */
-/*   Updated: 2022/03/17 15:18:37 by maiadegraaf   ########   odam.nl         */
+/*   Updated: 2022/04/18 18:10:43 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,14 @@
 # define ERROR_H
 # include "minishell.h"
 
+void	parser_error(int error, t_tools *tools, t_lexor *lexor_list);
+int		parser_double_token_error(t_tools *tools, t_lexor *lexor_list,
+			t_tokens token);
 void	lexor_error(int error, t_tools *tools);
-void	ft_error(int error, t_tools *tools);
+int		cmd_not_found(char *str);
+int		export_error(char *c);
+
+//ft_error
+int		ft_error(int error, t_tools *tools);
 
 #endif

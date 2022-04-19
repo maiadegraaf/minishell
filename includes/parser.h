@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 17:59:38 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/03/21 15:23:48 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/04/19 15:10:01 by maiadegraaf   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,12 @@ typedef struct s_tools
 	char					**envp;
 	struct s_simple_cmds	*simple_cmds;
 	t_lexor					*lexor_list;
-	int						in;
-	int						out;
-	int						err;
 	char					*pwd;
 	char					*old_pwd;
 	int						pipes;
+	int						*pid;
+	bool					heredoc;
+	bool					reset;
 }	t_tools;
 
 typedef struct s_simple_cmds
@@ -60,16 +60,18 @@ typedef struct s_simple_cmds
 	char					**str;
 	int						(*builtin)(t_tools *, struct s_simple_cmds *);
 	int						num_redirections;
+	char					*hd_file_name;
 	t_lexor					*redirections;
 	struct s_simple_cmds	*next;
+	struct s_simple_cmds	*prev;
 }	t_simple_cmds;
 
 int				parse_envp(t_tools *tools);
 int				find_pwd(t_tools *tools);
-int				*parser(t_tools *tools);
+int				parser(t_tools *tools);
 
 //parser_utils
-t_parser_tools	init_parser_tools(t_lexor *lexor_list);
+t_parser_tools	init_parser_tools(t_lexor *lexor_list, t_tools *tools);
 void			count_pipes(t_lexor *lexor_list, t_tools *tools);
 int				count_args(t_lexor *lexor_list);
 t_lexor			*find_next_cmd(t_lexor *lexor_lst);

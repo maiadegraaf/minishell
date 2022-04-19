@@ -6,71 +6,100 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/24 15:09:50 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/03/15 10:05:42 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/04/18 17:26:25 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
-int	find_cmd(char **args, char **paths, char **envp)
+t_simple_cmds	*call_expander(t_tools *tools, t_simple_cmds *cmd)
 {
-	int		i;
-	char	*mycmd;
+	t_lexor	*start;
+
+	cmd->str = expander(tools, cmd->str);
+	start = cmd->redirections;
+	while (cmd->redirections)
+	{
+		cmd->redirections->str
+			= expander_str(tools, cmd->redirections->str);
+		cmd->redirections = cmd->redirections->next;
+	}
+	cmd->redirections = start;
+	return (cmd);
+}
+
+int	pipe_wait(int *pid, int amount)
+{
+	int	i;
+	int	status;
 
 	i = 0;
-	fprintf(stderr, "in find_cmd\n");
-	while (paths[i])
+	while (i < amount)
 	{
-		mycmd = ft_strjoin(paths[i], args[0]);
-		fprintf(stderr, "%i\n", i);
-		if (!access(mycmd, F_OK))
-			execve(mycmd, args, envp);
-		free(mycmd);
+		waitpid(pid[i], &status, 0);
 		i++;
 	}
-	printf("HELO\n");
-	return (1);
+	waitpid(pid[i], &status, 0);
+	if (WIFEXITED(status))
+		g_global.error_num = WEXITSTATUS(status);
+	return (EXIT_SUCCESS);
+}
+
+int	ft_fork(t_tools *tools, int end[2], int fd_in, t_simple_cmds *cmd)
+{
+	static int	i = 0;
+
+	if (tools->reset == true)
+	{
+		i = 0;
+		tools->reset = false;
+	}
+	tools->pid[i] = fork();
+	if (tools->pid[i] < 0)
+		ft_error(5, tools);
+	if (tools->pid[i] == 0)
+		dup_cmd(cmd, tools, end, fd_in);
+	i++;
+	return (EXIT_SUCCESS);
+}
+
+int	check_fd_heredoc(t_tools *tools, int end[2], t_simple_cmds *cmd)
+{
+	int	fd_in;
+
+	if (tools->heredoc)
+	{
+		close(end[0]);
+		fd_in = open(cmd->hd_file_name, O_RDONLY);
+	}
+	else
+		fd_in = end[0];
+	return (fd_in);
 }
 
 int	executor(t_tools *tools)
 {
-	int		i;
 	int		end[2];
-	pid_t	ret;
-	int		status;
+	int		fd_in;
 
-	i = 0;
-	while (i < tools->pipes + 1)
+	fd_in = STDIN_FILENO;
+	while (tools->simple_cmds)
 	{
-		check_infile(tools);
-		dup2(tools->in, 0);
-		close(tools->in);
-		if (i == tools->pipes)
-			check_outfile(tools);
-		else
-		{
+		tools->simple_cmds = call_expander(tools, tools->simple_cmds);
+		if (tools->simple_cmds->next)
 			pipe(end);
-			tools->out = end[1];
-			tools->in = end[0];
-		}
-		fprintf(stderr, "\nb4 dup out: in = %d out = %d\nend[0] = %d, end[1] = %d\n", tools->in, tools->out, end[0], end[1]);
-		dup2(tools->out, 1);
-		close(tools->out);
-		ret = fork();
-		if (ret < 0)
-		{
-			perror("Fork: ");
-			exit(0);
-		}
-		if (ret == 0)
-		{
-			fprintf(stderr, "\nb4 find_cmd: %s\nin = %d out = %d\n", tools->simple_cmds->str[0], tools->in, tools->out);
-			find_cmd(tools->simple_cmds->str, tools->paths, tools->envp);
-		}
-		i++;
-		fprintf(stderr, "\nguess who's back\n");
-		ft_simple_cmds_rm_first(&tools->simple_cmds);
+		send_heredoc(tools, tools->simple_cmds);
+		ft_fork(tools, end, fd_in, tools->simple_cmds);
+		close(end[1]);
+		if (tools->simple_cmds->prev)
+			close(fd_in);
+		fd_in = check_fd_heredoc(tools, end, tools->simple_cmds);
+		if (tools->simple_cmds->next)
+			tools->simple_cmds = tools->simple_cmds->next;
+		else
+			break ;
 	}
-	waitpid(ret, &status, 0);
+	pipe_wait(tools->pid, tools->pipes);
+	tools->simple_cmds = ft_simple_cmdsfirst(tools->simple_cmds);
 	return (0);
 }

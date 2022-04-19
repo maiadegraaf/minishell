@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/15 15:20:00 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/03/17 10:14:05 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/04/18 14:17:35 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int		mini_exit(t_tools *tools, t_simple_cmds *simple_cmd);
 
 int		mini_continue(t_tools *tools, t_simple_cmds *simple_cmd);
 
-int		equal_sign(char *str);
+size_t	equal_sign(char *str);
+int		check_valid_identifier(char c);
 
 #endif

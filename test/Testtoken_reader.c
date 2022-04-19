@@ -6,7 +6,7 @@
 /*   By: fpolycar <fpolycar@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/28 11:12:08 by fpolycar      #+#    #+#                 */
-/*   Updated: 2022/03/21 10:57:39 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/04/19 15:13:23 by maiadegraaf   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 #include "lexor.h"
 #include "minishell.h"
 
-
-t_tools *test_tools;
+t_tools test_tools;
 
 void setUp(void) {
     // set stuff up here
@@ -27,17 +26,15 @@ void tearDown(void) {
 
 void init_test(char *line)
 {
-    if (!test_tools->args)
-        reset_tools(test_tools);
-    test_tools->args = line;
-    token_reader(test_tools);
+    test_tools.args = line;
+    token_reader(&test_tools);
 }
 
 void assert_token(int token, char *expected)
 {
-    TEST_ASSERT_EQUAL_STRING(expected, test_tools->lexor_list->str);
-    TEST_ASSERT_EQUAL_INT(token, test_tools->lexor_list->token);
-    test_tools->lexor_list = test_tools->lexor_list->next;
+    TEST_ASSERT_EQUAL_STRING(expected, test_tools.lexor_list->str);
+    TEST_ASSERT_EQUAL_INT(token, test_tools.lexor_list->token);
+    test_tools.lexor_list = test_tools.lexor_list->next;
 }
 
 void test_lexer_1(void)
@@ -129,18 +126,65 @@ void test_lexer_10(void)
     assert_token(0, "bla=\"t est\"");
 }
 
+void test_lexer_11(void)
+{
+    init_test("test\n\ntest\ftest\rtest\ttest");
+    assert_token(0, "test");
+    assert_token(0, "test");
+    assert_token(0, "test");
+    assert_token(0, "test");
+    assert_token(0, "test");
+}
+
+void test_lexer_12(void)
+{
+    init_test("test|test|test>test<test");
+    assert_token(0, "test");
+    assert_token(PIPE, NULL);
+    assert_token(0, "test");
+    assert_token(PIPE, NULL);
+    assert_token(0, "test");
+    assert_token(GREAT, NULL);
+    assert_token(0, "test");
+    assert_token(LESS, NULL);
+    assert_token(0, "test");
+}
+
+void test_lexer_13(void)
+{
+    init_test("test\"test\"test \"test\"test");
+    assert_token(0, "test\"test\"test");
+    assert_token(0, "\"test\"test");
+}
+
 int main(void)
 {
     UNITY_BEGIN();
     RUN_TEST(test_lexer_1);
+    ft_lexorclear(&test_tools.lexor_list);
     RUN_TEST(test_lexer_2);
+    ft_lexorclear(&test_tools.lexor_list);
     RUN_TEST(test_lexer_3);
+    ft_lexorclear(&test_tools.lexor_list);
     RUN_TEST(test_lexer_4);
+    ft_lexorclear(&test_tools.lexor_list);
     RUN_TEST(test_lexer_5);
+    ft_lexorclear(&test_tools.lexor_list);
     RUN_TEST(test_lexer_6);
+    ft_lexorclear(&test_tools.lexor_list);
     RUN_TEST(test_lexer_7);
+    ft_lexorclear(&test_tools.lexor_list);
     RUN_TEST(test_lexer_8);
+    ft_lexorclear(&test_tools.lexor_list);
     RUN_TEST(test_lexer_9);
+    ft_lexorclear(&test_tools.lexor_list);
     RUN_TEST(test_lexer_10);
+    ft_lexorclear(&test_tools.lexor_list);
+    RUN_TEST(test_lexer_11);
+    ft_lexorclear(&test_tools.lexor_list);
+     RUN_TEST(test_lexer_12);
+    ft_lexorclear(&test_tools.lexor_list);
+    RUN_TEST(test_lexer_13);
+    ft_lexorclear(&test_tools.lexor_list);
     return UNITY_END();
 }
