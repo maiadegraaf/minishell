@@ -6,7 +6,7 @@
 /*   By: fpolycar <fpolycar@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/31 16:08:47 by fpolycar      #+#    #+#                 */
-/*   Updated: 2022/04/18 15:42:30 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/04/19 10:34:35 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ int	after_dol_lenght(char *str, int j)
 
 	i = j + 1;
 	while (str[i] != '\0' && str[i] != '$' && str[i] != ' '
-		&& str[i] != '\"' && str[i] != '\'' && str[i] != '=' && str[i] != '-')
+		&& str[i] != '\"' && str[i] != '\'' && str[i] != '=' && str[i] != '-'
+		&& str[i] != ':')
 		i++;
 	return (i);
 }
