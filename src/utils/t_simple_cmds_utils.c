@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 15:31:53 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/04/18 16:33:36 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/04/19 15:13:32 by maiadegraaf   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ void	ft_simple_cmdsclear(t_simple_cmds **lst)
 	while (*lst)
 	{
 		tmp = (*lst)->next;
-		// ft_heredocclear(&(*lst)->heredoc);
 		redirections_tmp = (*lst)->redirections;
 		ft_lexorclear(&redirections_tmp);
 		if ((*lst)->str)

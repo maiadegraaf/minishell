@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/15 11:42:32 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/03/29 14:25:04 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/04/19 15:10:36 by maiadegraaf   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,6 @@ int	(*builtin_arr(char *str))(t_tools *tools, t_simple_cmds *simple_cmd)
 		}
 		i++;
 	}
+	printf("return null from builtin\n");
 	return (NULL);
 }

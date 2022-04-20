@@ -6,12 +6,13 @@
 /*   By: fpolycar <fpolycar@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/28 11:12:08 by fpolycar      #+#    #+#                 */
-/*   Updated: 2022/04/08 10:40:58 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/04/19 15:13:23 by maiadegraaf   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "unity.h"
 #include "lexor.h"
+#include "minishell.h"
 
 t_tools test_tools;
 
