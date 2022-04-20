@@ -6,7 +6,7 @@
 /*   By: fpolycar <fpolycar@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/24 16:06:58 by fpolycar      #+#    #+#                 */
-/*   Updated: 2022/04/20 14:59:50 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/04/20 15:16:11 by maiadegraaf   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int	implement_tools(t_tools *tools)
 	g_global.stop_heredoc = 0;
 	g_global.in_cmd = 0;
 	g_global.in_heredoc = 0;
+	parse_envp(tools);
 	init_signals();
 	return (1);
 }

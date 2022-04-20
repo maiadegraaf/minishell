@@ -125,6 +125,7 @@ clean:
 	@echo "Cleaning"
 	@rm -f $(OBJS)
 	@rm -f $(PATHB).tmp*
+	@rmdir $(PATHO) $(PATHB)
 	@make fclean -C libraries/libft
 
 fclean: clean

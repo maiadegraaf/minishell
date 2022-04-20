@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/14 13:46:41 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/04/20 14:59:41 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/04/20 15:18:00 by maiadegraaf   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ typedef struct s_global
 	int	error_num;
 	int	stop_heredoc;
 	int	in_cmd;
-	int in_heredoc;
+	int	in_heredoc;
 }	t_global;
 
 t_global	g_global;
