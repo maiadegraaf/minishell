@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/24 15:09:50 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/04/18 17:26:25 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/04/20 11:01:49 by maiadegraaf   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,9 @@ t_simple_cmds	*call_expander(t_tools *tools, t_simple_cmds *cmd)
 	start = cmd->redirections;
 	while (cmd->redirections)
 	{
-		cmd->redirections->str
-			= expander_str(tools, cmd->redirections->str);
+		if (cmd->redirections->token != LESS_LESS)
+			cmd->redirections->str
+				= expander_str(tools, cmd->redirections->str);
 		cmd->redirections = cmd->redirections->next;
 	}
 	cmd->redirections = start;

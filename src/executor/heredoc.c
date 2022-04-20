@@ -6,7 +6,7 @@
 /*   By: maiadegraaf <maiadegraaf@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/11 17:42:39 by maiadegraaf   #+#    #+#                 */
-/*   Updated: 2022/04/19 15:25:34 by maiadegraaf   ########   odam.nl         */
+/*   Updated: 2022/04/20 11:03:59 by maiadegraaf   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,15 @@ int	ft_heredoc(t_tools *tools, t_lexor *heredoc, char *file_name)
 	int		sl;
 
 	sl = EXIT_SUCCESS;
-	if (heredoc->str[0] == '\"'
-		&& heredoc->str[ft_strlen(heredoc->str) - 1] == '\"')
+	if ((heredoc->str[0] == '\"'
+			&& heredoc->str[ft_strlen(heredoc->str) - 1] == '\"')
+		|| (heredoc->str[0] == '\''
+			&& heredoc->str[ft_strlen(heredoc->str) - 1] == '\''))
 		quotes = true;
 	else
 		quotes = false;
+	delete_quotes(heredoc->str, '\"');
+	delete_quotes(heredoc->str, '\'');
 	g_global.stop_heredoc = 0;
 	g_global.in_heredoc = 1;
 	sl = create_heredoc(heredoc, quotes, tools, file_name);
