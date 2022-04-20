@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/14 13:46:41 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/04/20 10:33:49 by maiadegraaf   ########   odam.nl         */
+/*   Updated: 2022/04/20 10:42:24 by maiadegraaf   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,11 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
+# include <fcntl.h>
+# include <unistd.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <stdbool.h>
-# include "pipex.h"
 # include "parser.h"
 # include "utils.h"
 # include "error.h"

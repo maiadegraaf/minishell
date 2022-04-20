@@ -6,7 +6,7 @@
 /*   By: fpolycar <fpolycar@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/08 14:35:54 by fpolycar      #+#    #+#                 */
-/*   Updated: 2022/04/15 17:17:36 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/04/20 10:52:37 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,5 @@ void	init_signals(void)
 {
 	rl_event_hook = event;
 	signal(SIGINT, sigint_handler);
+	signal(SIGQUIT, SIG_IGN);
 }

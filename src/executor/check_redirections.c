@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/25 11:39:57 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/04/18 17:08:32 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/04/20 14:26:29 by maiadegraaf   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ int	check_append_outfile(t_lexor *redirections)
 {
 	int	fd;
 
-	if (redirections->token == GREAT)
+	if (redirections->token == GREAT_GREAT)
 		fd = open(redirections->str,
-				O_CREAT | O_RDWR | O_TRUNC | O_APPEND, 0644);
+				O_CREAT | O_RDWR | O_APPEND, 0644);
 	else
 		fd = open(redirections->str,
 				O_CREAT | O_RDWR | O_TRUNC, 0644);

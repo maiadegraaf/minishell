@@ -1,5 +1,0 @@
-*.o
-libft.a
-minishell
-build
-.DS_Store

@@ -111,7 +111,6 @@ $(NAME): $(LIBFT) $(OBJS) $(HEADERS)
 	@$(CC) $(FLAGS) $(LIBFT) $(OBJS) $(READLINE_LIB) -o $(NAME)
 
 	@echo "Success"
-	
 
 $(LIBFT):
 	@$(MAKE) -C ./libraries/libft

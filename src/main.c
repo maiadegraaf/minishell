@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/14 12:04:02 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/04/19 15:13:39 by maiadegraaf   ########   odam.nl         */
+/*   Updated: 2022/04/20 14:27:32 by maiadegraaf   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	main(int argc, char **argv, char **envp)
 	}
 	tools.envp = ft_arrdup(envp);
 	init_signals();
-	parse_envp(&tools);
+	find_pwd(&tools);
 	implement_tools(&tools);
 	printf("\n%s\n\n", WELCOME_MSG);
 	minishell_loop(&tools);
