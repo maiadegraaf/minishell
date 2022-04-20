@@ -6,23 +6,11 @@
 /*   By: maiadegraaf <maiadegraaf@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/11 17:42:39 by maiadegraaf   #+#    #+#                 */
-/*   Updated: 2022/04/19 10:30:28 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/04/19 15:25:34 by maiadegraaf   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/executor.h"
-
-char	*send_expander(t_tools *tools, char *line)
-{
-	char	*tmp;
-
-	tmp = ft_strtrim(line, "\n");
-	free(line);
-	line = expander_str(tools, tmp);
-	tmp = ft_strjoin(line, "\n");
-	free(line);
-	return (tmp);
-}
 
 int	create_heredoc(t_lexor *heredoc, bool quotes,
 	t_tools *tools, char *file_name)
@@ -38,8 +26,9 @@ int	create_heredoc(t_lexor *heredoc, bool quotes,
 		&& !g_global.stop_heredoc)
 	{
 		if (quotes == false)
-			line = send_expander(tools, line);
+			line = expander_str(tools, line);
 		write(fd, line, ft_strlen(line));
+		write(fd, "\n", 1);
 		free(line);
 		line = readline(HEREDOC_MSG);
 	}
