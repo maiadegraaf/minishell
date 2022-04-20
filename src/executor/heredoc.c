@@ -6,7 +6,7 @@
 /*   By: maiadegraaf <maiadegraaf@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/11 17:42:39 by maiadegraaf   #+#    #+#                 */
-/*   Updated: 2022/04/20 11:03:59 by maiadegraaf   ########   odam.nl         */
+/*   Updated: 2022/04/20 15:00:08 by fpolycar      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,6 @@ int	create_heredoc(t_lexor *heredoc, bool quotes,
 		line = readline(HEREDOC_MSG);
 	}
 	free(line);
-	if (!line)
-		ft_putstr_fd("\n", STDERR_FILENO);
 	if (g_global.stop_heredoc || !line)
 		return (EXIT_FAILURE);
 	close(fd);
