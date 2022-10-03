@@ -6,12 +6,12 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/18 10:27:43 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/03/16 11:48:36 by maiadegraaf   ########   odam.nl         */
+/*   Updated: 2022/10/03 17:56:15 by maiadegraaf   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
-#include "lexor.h"
+#include "lexer.h"
 
 t_tokens	check_token(int c)
 {
@@ -32,26 +32,26 @@ t_tokens	check_token(int c)
 	return (0);
 }
 
-int	handle_token(char *str, int i, t_lexor **lexor_list)
+int	handle_token(char *str, int i, t_lexer **lexer_list)
 {
 	t_tokens	token;
 
 	token = check_token(str[i]);
 	if (token == GREAT && check_token(str[i + 1]) == GREAT)
 	{
-		if (!add_node(NULL, GREAT_GREAT, lexor_list))
+		if (!add_node(NULL, GREAT_GREAT, lexer_list))
 			return (-1);
 		return (2);
 	}
 	else if (token == LESS && check_token(str[i + 1]) == LESS)
 	{
-		if (!add_node(NULL, LESS_LESS, lexor_list))
+		if (!add_node(NULL, LESS_LESS, lexer_list))
 			return (-1);
 		return (2);
 	}
 	else if (token)
 	{
-		if (!add_node(NULL, token, lexor_list))
+		if (!add_node(NULL, token, lexer_list))
 			return (-1);
 		return (1);
 	}	

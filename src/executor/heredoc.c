@@ -6,13 +6,13 @@
 /*   By: maiadegraaf <maiadegraaf@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/11 17:42:39 by maiadegraaf   #+#    #+#                 */
-/*   Updated: 2022/10/03 16:40:04 by maiadegraaf   ########   odam.nl         */
+/*   Updated: 2022/10/03 17:56:15 by maiadegraaf   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/executor.h"
 
-int	create_heredoc(t_lexor *heredoc, bool quotes,
+int	create_heredoc(t_lexer *heredoc, bool quotes,
 	t_tools *tools, char *file_name)
 {
 	int		fd;
@@ -37,7 +37,7 @@ int	create_heredoc(t_lexor *heredoc, bool quotes,
 	return (EXIT_SUCCESS);
 }
 
-int	ft_heredoc(t_tools *tools, t_lexor *heredoc, char *file_name)
+int	ft_heredoc(t_tools *tools, t_lexer *heredoc, char *file_name)
 {
 	bool	quotes;
 	int		sl;
@@ -74,7 +74,7 @@ char	*generate_heredoc_filename(void)
 
 int	send_heredoc(t_tools *tools, t_simple_cmds *cmd)
 {
-	t_lexor	*start;
+	t_lexer	*start;
 	int		sl;
 
 	start = cmd->redirections;

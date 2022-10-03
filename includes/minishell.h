@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/14 13:46:41 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/04/20 15:18:00 by maiadegraaf   ########   odam.nl         */
+/*   Updated: 2022/10/03 17:56:15 by maiadegraaf   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # include "parser.h"
 # include "utils.h"
 # include "error.h"
-# include "lexor.h"
+# include "lexer.h"
 # include "color.h"
 # include "builtins.h"
 # include "executor.h"

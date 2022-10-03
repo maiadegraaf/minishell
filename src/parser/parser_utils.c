@@ -6,28 +6,28 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/04 11:52:02 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/04/18 16:36:48 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/10/03 17:56:15 by maiadegraaf   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_parser_tools	init_parser_tools(t_lexor *lexor_list, t_tools *tools)
+t_parser_tools	init_parser_tools(t_lexer *lexer_list, t_tools *tools)
 {
 	t_parser_tools	parser_tools;
 
-	parser_tools.lexor_list = lexor_list;
+	parser_tools.lexer_list = lexer_list;
 	parser_tools.redirections = NULL;
 	parser_tools.num_redirections = 0;
 	parser_tools.tools = tools;
 	return (parser_tools);
 }
 
-void	count_pipes(t_lexor *lexor_list, t_tools *tools)
+void	count_pipes(t_lexer *lexer_list, t_tools *tools)
 {
-	t_lexor	*tmp;
+	t_lexer	*tmp;
 
-	tmp = lexor_list;
+	tmp = lexer_list;
 	tools->pipes = 0;
 	while (tmp)
 	{
@@ -37,13 +37,13 @@ void	count_pipes(t_lexor *lexor_list, t_tools *tools)
 	}
 }
 
-int	count_args(t_lexor *lexor_list)
+int	count_args(t_lexer *lexer_list)
 {
-	t_lexor	*tmp;
+	t_lexer	*tmp;
 	int		i;
 
 	i = 0;
-	tmp = lexor_list;
+	tmp = lexer_list;
 	while (tmp && tmp->token != PIPE)
 	{
 		if (tmp->i >= 0)
@@ -53,9 +53,9 @@ int	count_args(t_lexor *lexor_list)
 	return (i);
 }
 
-t_lexor	*find_next_cmd(t_lexor *lexor_lst)
+t_lexer	*find_next_cmd(t_lexer *lexer_lst)
 {
-	while (lexor_lst && lexor_lst->token != PIPE)
-		lexor_lst = lexor_lst->next;
-	return (lexor_lst);
+	while (lexer_lst && lexer_lst->token != PIPE)
+		lexer_lst = lexer_lst->next;
+	return (lexer_lst);
 }

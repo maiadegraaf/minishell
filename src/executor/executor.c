@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/24 15:09:50 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/04/20 14:41:24 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/10/03 17:56:15 by maiadegraaf   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 t_simple_cmds	*call_expander(t_tools *tools, t_simple_cmds *cmd)
 {
-	t_lexor	*start;
+	t_lexer	*start;
 
 	cmd->str = expander(tools, cmd->str);
 	start = cmd->redirections;

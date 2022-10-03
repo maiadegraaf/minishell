@@ -6,13 +6,13 @@
 /*   By: maiadegraaf <maiadegraaf@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/13 11:11:43 by maiadegraaf   #+#    #+#                 */
-/*   Updated: 2022/04/13 11:14:20 by maiadegraaf   ########   odam.nl         */
+/*   Updated: 2022/10/03 17:56:15 by maiadegraaf   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
 
-t_lexor	*ft_lexorclear_one(t_lexor **lst)
+t_lexer	*ft_lexerclear_one(t_lexer **lst)
 {
 	if ((*lst)->str)
 	{
@@ -24,28 +24,28 @@ t_lexor	*ft_lexorclear_one(t_lexor **lst)
 	return (NULL);
 }
 
-void	ft_lexordel_first(t_lexor **lst)
+void	ft_lexerdel_first(t_lexer **lst)
 {
-	t_lexor	*node;
+	t_lexer	*node;
 
 	node = *lst;
 	*lst = node->next;
-	ft_lexorclear_one(&node);
+	ft_lexerclear_one(&node);
 	if (*lst)
 		(*lst)->prev = NULL;
 }
 
-void	ft_lexordelone(t_lexor **lst, int key)
+void	ft_lexerdelone(t_lexer **lst, int key)
 {
-	t_lexor	*node;
-	t_lexor	*prev;
-	t_lexor	*start;
+	t_lexer	*node;
+	t_lexer	*prev;
+	t_lexer	*start;
 
 	start = *lst;
 	node = start;
 	if ((*lst)->i == key)
 	{
-		ft_lexordel_first(lst);
+		ft_lexerdel_first(lst);
 		return ;
 	}
 	while (node && node->i != key)
@@ -59,13 +59,13 @@ void	ft_lexordelone(t_lexor **lst, int key)
 		prev->next = NULL;
 	if (prev->next)
 		prev->next->prev = prev;
-	ft_lexorclear_one(&node);
+	ft_lexerclear_one(&node);
 	*lst = start;
 }
 
-void	ft_lexorclear(t_lexor **lst)
+void	ft_lexerclear(t_lexer **lst)
 {
-	t_lexor	*tmp;
+	t_lexer	*tmp;
 
 	if (!*lst)
 		return ;

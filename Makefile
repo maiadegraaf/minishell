@@ -7,7 +7,7 @@ LIBFTP = libraries/libft
 PATHB = build/
 PATHO = build/objs/
 PATHS = src/
-PATHSL = src/lexor/
+PATHSL = src/lexer/
 PATHSP = src/parser/
 PATHSB = src/builtins/
 PATHSEX = src/expander/
@@ -20,9 +20,9 @@ BUILD_PATHS = $(PATHB) $(PATHO)
 
 src	=	src/main.c \
 		src/signals.c \
-		src/lexor/handle_quotes.c \
-		src/lexor/handle_token.c \
-		src/lexor/token_reader.c \
+		src/lexer/handle_quotes.c \
+		src/lexer/handle_token.c \
+		src/lexer/token_reader.c \
 		src/parser/handle_redirections.c \
 		src/parser/parser.c \
 		src/parser/parser_utils.c \
@@ -37,8 +37,8 @@ src	=	src/main.c \
 		src/builtins/utils_builtins.c \
 		src/utils/minishell_loop.c \
 		src/utils/parse_envp.c \
-		src/utils/t_lexor_clear_utils.c \
-		src/utils/t_lexor_utils.c \
+		src/utils/t_lexer_clear_utils.c \
+		src/utils/t_lexer_utils.c \
 		src/utils/t_simple_cmds_utils.c \
 		src/utils/utils.c \
 		src/error/error_handling.c \
@@ -62,7 +62,7 @@ HEADER	=	.includes/builtins.h \
 			.includes/color.h \
 			.includes/error.h \
 			.includes/executor.h \
-			.includes/lexor.h \
+			.includes/lexer.h \
 			.includes/minishell.h \
 			.includes/parser.h \
 			.includes/utils.h 

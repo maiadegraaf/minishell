@@ -6,11 +6,11 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 17:11:20 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/04/08 10:45:54 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/10/03 17:56:15 by maiadegraaf   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexor.h"
+#include "lexer.h"
 
 int	is_whitespace(char c)
 {
@@ -27,18 +27,18 @@ int	skip_spaces(char *str, int i)
 	return (j);
 }
 
-int	add_node(char *str, t_tokens token, t_lexor **lexor_list)
+int	add_node(char *str, t_tokens token, t_lexer **lexer_list)
 {
-	t_lexor	*node;
+	t_lexer	*node;
 
-	node = ft_lexornew(str, token);
+	node = ft_lexernew(str, token);
 	if (!node)
 		return (0);
-	ft_lexoradd_back(lexor_list, node);
+	ft_lexeradd_back(lexer_list, node);
 	return (1);
 }
 
-int	read_words(int i, char *str, t_lexor **lexor_list)
+int	read_words(int i, char *str, t_lexer **lexer_list)
 {
 	int	j;
 
@@ -52,7 +52,7 @@ int	read_words(int i, char *str, t_lexor **lexor_list)
 		else
 			j++;
 	}
-	if (!add_node(ft_substr(str, i, j), 0, lexor_list))
+	if (!add_node(ft_substr(str, i, j), 0, lexer_list))
 		return (-1);
 	return (j);
 }
@@ -68,9 +68,9 @@ int	token_reader(t_tools *tools)
 		j = 0;
 		i += skip_spaces(tools->args, i);
 		if (check_token(tools->args[i]))
-			j = handle_token(tools->args, i, &tools->lexor_list);
+			j = handle_token(tools->args, i, &tools->lexer_list);
 		else
-			j = read_words(i, tools->args, &tools->lexor_list);
+			j = read_words(i, tools->args, &tools->lexer_list);
 		if (j < 0)
 			return (0);
 		i += j;

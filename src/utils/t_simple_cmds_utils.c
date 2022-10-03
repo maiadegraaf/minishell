@@ -6,14 +6,14 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 15:31:53 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/10/03 16:39:35 by maiadegraaf   ########   odam.nl         */
+/*   Updated: 2022/10/03 17:56:15 by maiadegraaf   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
 
 t_simple_cmds	*ft_simple_cmdsnew(char **str,
-	int num_redirections, t_lexor *redirections)
+	int num_redirections, t_lexer *redirections)
 {
 	t_simple_cmds	*new_element;
 
@@ -53,7 +53,7 @@ void	ft_simple_cmds_rm_first(t_simple_cmds **lst)
 	if (!*lst)
 		return ;
 	tmp = (*lst)->next;
-	ft_lexorclear(&(*lst)->redirections);
+	ft_lexerclear(&(*lst)->redirections);
 	free(*lst);
 	*lst = tmp;
 }
@@ -61,7 +61,7 @@ void	ft_simple_cmds_rm_first(t_simple_cmds **lst)
 void	ft_simple_cmdsclear(t_simple_cmds **lst)
 {
 	t_simple_cmds	*tmp;
-	t_lexor			*redirections_tmp;
+	t_lexer			*redirections_tmp;
 
 	if (!*lst)
 		return ;
@@ -69,7 +69,7 @@ void	ft_simple_cmdsclear(t_simple_cmds **lst)
 	{
 		tmp = (*lst)->next;
 		redirections_tmp = (*lst)->redirections;
-		ft_lexorclear(&redirections_tmp);
+		ft_lexerclear(&redirections_tmp);
 		if ((*lst)->str)
 			free_arr((*lst)->str);
 		if ((*lst)->hd_file_name)

@@ -6,7 +6,7 @@
 /*   By: fpolycar <fpolycar@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/24 16:06:58 by fpolycar      #+#    #+#                 */
-/*   Updated: 2022/04/25 10:46:03 by maiadegraaf   ########   odam.nl         */
+/*   Updated: 2022/10/03 17:56:15 by maiadegraaf   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	minishell_loop(t_tools *tools);
 int	implement_tools(t_tools *tools)
 {
 	tools->simple_cmds = NULL;
-	tools->lexor_list = NULL;
+	tools->lexer_list = NULL;
 	tools->reset = false;
 	tools->pid = NULL;
 	tools->heredoc = false;

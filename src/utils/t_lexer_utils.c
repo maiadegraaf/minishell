@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   t_lexor_utils.c                              :+:    :+:            */
+/*   t_lexer_utils.c                              :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
@@ -12,12 +12,12 @@
 
 #include "utils.h"
 
-t_lexor	*ft_lexornew(char *str, int token)
+t_lexer	*ft_lexernew(char *str, int token)
 {
-	t_lexor		*new_element;
+	t_lexer		*new_element;
 	static int	i = 0;
 
-	new_element = (t_lexor *)malloc(sizeof(t_lexor));
+	new_element = (t_lexer *)malloc(sizeof(t_lexer));
 	if (!new_element)
 		return (0);
 	new_element->str = str;
@@ -28,9 +28,9 @@ t_lexor	*ft_lexornew(char *str, int token)
 	return (new_element);
 }
 
-void	ft_lexoradd_back(t_lexor **lst, t_lexor *new)
+void	ft_lexeradd_back(t_lexer **lst, t_lexer *new)
 {
-	t_lexor	*tmp;
+	t_lexer	*tmp;
 
 	tmp = *lst;
 	if (*lst == NULL)

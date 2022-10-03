@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 17:59:38 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/04/19 15:10:01 by maiadegraaf   ########   odam.nl         */
+/*   Updated: 2022/10/03 17:56:15 by maiadegraaf   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,19 +23,19 @@ typedef enum s_tokens
 	LESS_LESS,
 }	t_tokens;
 
-typedef struct s_lexor
+typedef struct s_lexer
 {
 	char			*str;
 	t_tokens		token;
 	int				i;
-	struct s_lexor	*next;
-	struct s_lexor	*prev;
-}	t_lexor;
+	struct s_lexer	*next;
+	struct s_lexer	*prev;
+}	t_lexer;
 
 typedef struct s_parser_tools
 {
-	t_lexor			*lexor_list;
-	t_lexor			*redirections;
+	t_lexer			*lexer_list;
+	t_lexer			*redirections;
 	int				num_redirections;
 	struct s_tools	*tools;
 }	t_parser_tools;
@@ -46,7 +46,7 @@ typedef struct s_tools
 	char					**paths;
 	char					**envp;
 	struct s_simple_cmds	*simple_cmds;
-	t_lexor					*lexor_list;
+	t_lexer					*lexer_list;
 	char					*pwd;
 	char					*old_pwd;
 	int						pipes;
@@ -61,7 +61,7 @@ typedef struct s_simple_cmds
 	int						(*builtin)(t_tools *, struct s_simple_cmds *);
 	int						num_redirections;
 	char					*hd_file_name;
-	t_lexor					*redirections;
+	t_lexer					*redirections;
 	struct s_simple_cmds	*next;
 	struct s_simple_cmds	*prev;
 }	t_simple_cmds;
@@ -71,14 +71,14 @@ int				find_pwd(t_tools *tools);
 int				parser(t_tools *tools);
 
 //parser_utils
-t_parser_tools	init_parser_tools(t_lexor *lexor_list, t_tools *tools);
-void			count_pipes(t_lexor *lexor_list, t_tools *tools);
-int				count_args(t_lexor *lexor_list);
-t_lexor			*find_next_cmd(t_lexor *lexor_lst);
+t_parser_tools	init_parser_tools(t_lexer *lexer_list, t_tools *tools);
+void			count_pipes(t_lexer *lexer_list, t_tools *tools);
+int				count_args(t_lexer *lexer_list);
+t_lexer			*find_next_cmd(t_lexer *lexer_lst);
 
 //handle_redirections
-int				add_new_redirection(t_lexor *tmp, t_parser_tools *parser_tools);
-int				handle_heredoc(t_parser_tools *parser_tools, t_lexor *tmp);
+int				add_new_redirection(t_lexer *tmp, t_parser_tools *parser_tools);
+int				handle_heredoc(t_parser_tools *parser_tools, t_lexer *tmp);
 void			rm_redirections(t_parser_tools *parser_tools);
 
 #endif

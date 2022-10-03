@@ -6,11 +6,11 @@
 /*   By: maiadegraaf <maiadegraaf@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/15 14:04:32 by maiadegraaf   #+#    #+#                 */
-/*   Updated: 2022/04/15 13:34:55 by mgraaf        ########   odam.nl         */
+/*   Updated: 2022/10/03 17:56:15 by maiadegraaf   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexor.h"
+#include "lexer.h"
 
 int	handle_quotes(int i, char *str, char del)
 {

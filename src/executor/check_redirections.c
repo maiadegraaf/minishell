@@ -6,13 +6,13 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/25 11:39:57 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/04/20 15:15:17 by maiadegraaf   ########   odam.nl         */
+/*   Updated: 2022/10/03 17:56:15 by maiadegraaf   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
-int	check_append_outfile(t_lexor *redirections)
+int	check_append_outfile(t_lexer *redirections)
 {
 	int	fd;
 
@@ -46,7 +46,7 @@ int	handle_infile(char *file)
 	return (EXIT_SUCCESS);
 }
 
-int	handle_outfile(t_lexor *redirection)
+int	handle_outfile(t_lexer *redirection)
 {
 	int	fd;
 
@@ -68,7 +68,7 @@ int	handle_outfile(t_lexor *redirection)
 
 int	check_redirections(t_simple_cmds *cmd)
 {
-	t_lexor	*start;
+	t_lexer	*start;
 
 	start = cmd->redirections;
 	while (cmd->redirections)
