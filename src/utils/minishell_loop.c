@@ -6,7 +6,7 @@
 /*   By: fpolycar <fpolycar@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/24 16:06:58 by fpolycar      #+#    #+#                 */
-/*   Updated: 2022/04/20 15:16:11 by maiadegraaf   ########   odam.nl         */
+/*   Updated: 2022/04/25 10:46:03 by maiadegraaf   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int	reset_tools(t_tools *tools)
 	free(tools->args);
 	if (tools->pid)
 		free(tools->pid);
+	free_arr(tools->paths);
 	implement_tools(tools);
 	tools->reset = true;
 	minishell_loop(tools);
