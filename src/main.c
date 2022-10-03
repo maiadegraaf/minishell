@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/14 12:04:02 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/04/20 15:16:22 by maiadegraaf   ########   odam.nl         */
+/*   Updated: 2022/10/03 16:38:34 by maiadegraaf   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,7 @@
 int	main(int argc, char **argv, char **envp)
 {
 	t_tools	tools;
-	int		i;
 
-	i = 0;
 	if (argc != 1 || argv[1])
 	{
 		printf("This program does not accept arguments\n");

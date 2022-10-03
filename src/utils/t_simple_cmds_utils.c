@@ -6,7 +6,7 @@
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 15:31:53 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/04/19 15:13:32 by maiadegraaf   ########   odam.nl         */
+/*   Updated: 2022/10/03 16:39:35 by maiadegraaf   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ t_simple_cmds	*ft_simple_cmdsnew(char **str,
 void	ft_simple_cmdsadd_back(t_simple_cmds **lst, t_simple_cmds *new)
 {
 	t_simple_cmds	*tmp;
-	t_simple_cmds	*prev;
 
 	tmp = *lst;
 	if (*lst == NULL)
@@ -42,10 +41,7 @@ void	ft_simple_cmdsadd_back(t_simple_cmds **lst, t_simple_cmds *new)
 		return ;
 	}
 	while (tmp->next != NULL)
-	{
-		prev = tmp;
 		tmp = tmp->next;
-	}
 	tmp->next = new;
 	new->prev = tmp;
 }

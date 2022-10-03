@@ -6,7 +6,7 @@
 /*   By: maiadegraaf <maiadegraaf@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/11 17:42:39 by maiadegraaf   #+#    #+#                 */
-/*   Updated: 2022/04/20 15:00:08 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/10/03 16:40:04 by maiadegraaf   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,7 @@ int	create_heredoc(t_lexor *heredoc, bool quotes,
 {
 	int		fd;
 	char	*line;
-	int		del_len;
 
-	del_len = ft_strlen(heredoc->str);
 	fd = open(file_name, O_CREAT | O_RDWR | O_TRUNC, 0644);
 	line = readline(HEREDOC_MSG);
 	while (line && ft_strncmp(heredoc->str, line, ft_strlen(heredoc->str))

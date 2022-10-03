@@ -31,7 +31,6 @@ t_lexor	*ft_lexornew(char *str, int token)
 void	ft_lexoradd_back(t_lexor **lst, t_lexor *new)
 {
 	t_lexor	*tmp;
-	t_lexor	*prev;
 
 	tmp = *lst;
 	if (*lst == NULL)
@@ -40,10 +39,7 @@ void	ft_lexoradd_back(t_lexor **lst, t_lexor *new)
 		return ;
 	}
 	while (tmp->next != NULL)
-	{
-		prev = tmp;
 		tmp = tmp->next;
-	}
 	tmp->next = new;
 	new->prev = tmp;
 }

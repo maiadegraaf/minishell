@@ -6,7 +6,7 @@
 /*   By: maiadegraaf <maiadegraaf@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 10:13:32 by maiadegraaf   #+#    #+#                 */
-/*   Updated: 2022/04/18 16:45:32 by fpolycar      ########   odam.nl         */
+/*   Updated: 2022/10/03 16:39:00 by maiadegraaf   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,8 @@ char	**del_var(char **arr, char *str)
 {
 	char	**rtn;
 	size_t	i;
-	size_t	j;
 
 	i = 0;
-	j = 0;
 	while (arr[i] != NULL)
 		i++;
 	rtn = ft_calloc(sizeof(char *), i + 1);
