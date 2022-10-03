@@ -39,7 +39,8 @@ We didn't have to implement && and ||, or wildcards, as well as any special symb
 ### What Is Bash and How Does It Work?
 The shell is a program that the user can use to interact with an operating system's services. Bash is the GNU shell, and is currently the most common shell program.  We took the challenge of recreating bash very literally, so the first thing we did was learn how bash actually works with the help of [this article](https://www.cs.purdue.edu/homes/grr/SystemsProgrammingBook/Book/Chapter5-WritingYourOwnShell.pdf).  Essentially it breaks down the process into 4 steps: `lexer` → `parser` → `expander` → `executor`, which we replicated in our project. 
 
-![minishell 001](https://user-images.githubusercontent.com/68693691/193665086-42b4bee6-23ac-40d5-85b6-e79befa269bf.png)
+![bash steps](https://user-images.githubusercontent.com/68693691/193665518-0c0c7fec-38a9-4f6c-91ca-fef606abfb0d.png)
+
 
 I'll delve further into each step in the implementation section bellow.
 
