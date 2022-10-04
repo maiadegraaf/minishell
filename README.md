@@ -49,7 +49,7 @@ I'll delve further into each step in the implementation section bellow.
 The program is run without arguments (and will throw an error if any are used).  A command prompt will then show up, which implemented through [readline](https://www.man7.org/linux/man-pages/man3/readline.3.html), which was recommended by the subject.  This also allowed us to use the built-in history function.  Once a line has been inputted it checks for any unclosed quotes.  If it doesn't find any it sends the line to the lexer.
 
 ### The Lexer
-The lexer takes as the entered line as input. It then reads through the line word by word, using white space as delimiters.  First it checks wether or not the word is a token, ie: `|`, `<`, `<<`, `>`, or `>>`, and otherwise it assumes it is a word.  Which it then adds to the following linked list:
+The lexer, also called the tokenizer, takes as the entered line as input. It then reads through the line word by word, using white space as delimiters.  First it checks wether or not the word is a token, ie: `|`, `<`, `<<`, `>`, or `>>`, and otherwise it assumes it is a word.  Which it then adds to the following linked list:
 
 ```C
 typedef struct s_lexer
@@ -61,7 +61,27 @@ typedef struct s_lexer
 	struct s_lexer	*prev;
 }	t_lexer;
 ```
-Each node contains either a string containing the word or a token.  We also assign each node an index, this is so that we can easily delete them later.
+Each node contains either a `char *` containing the word or a `t_token`.  We also assign each node an index so that we can easily delete them later.
+
+### The Parser
+The lexer then gets sent to the parser which then groups the different nodes together based on the tokens.  Each group becomes a command.
+
+```C
+typedef struct s_simple_cmds
+{
+	char					**str;
+	int						(*builtin)(t_tools *, struct s_simple_cmds *);
+	int						num_redirections;
+	char					*hd_file_name;
+	t_lexer					*redirections;
+	struct s_simple_cmds	*next;
+	struct s_simple_cmds	*prev;
+}	t_simple_cmds;
+```
+
+The first thing the parser does is loop through the lexer list until it encounters a pipe.  It then takes all the nodes before the pipe as one command.  Then it checks for redirections, which it stores in the `*redirections` linked list, which holds both the token and the filename or delimiter in the case of a heredoc.  When the nodes are added to the `*redirections` list, they are deleted from the lexer list.  Next it checks if the first word is a builtin, in which case it stores a pointer to the corresponding function. The parser then combines all remaining words into a 2D array, to be passed to execve or the builtin later on.  
+
+### Executor
 
 
 ## Installation
