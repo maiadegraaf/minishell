@@ -69,11 +69,11 @@ The lexer then gets sent to the parser which then groups the different nodes tog
 ```C
 typedef struct s_simple_cmds
 {
-	char                  **str;
+	char                    **str;
 	int                    (*builtin)(t_tools *, struct s_simple_cmds *);
-	int                   num_redirections;
+	int                    num_redirections;
 	char                   *hd_file_name;
-	t_lexer               *redirections;
+	t_lexer                 *redirections;
 	struct s_simple_cmds	*next;
 	struct s_simple_cmds	*prev;
 }	t_simple_cmds;
