@@ -55,7 +55,7 @@ The lexer, also called the tokenizer, takes as the entered line as input. It the
 typedef struct s_lexer
 {
 	char    	*str;
-	t_tokens      token;
+	t_tokens        token;
 	int		i;
 	struct s_lexer	*next;
 	struct s_lexer	*prev;
