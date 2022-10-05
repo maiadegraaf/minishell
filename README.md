@@ -46,7 +46,7 @@ I'll delve further into each step in the implementation section bellow.
 
 ## Implementation
 
-The program is run without arguments (and will throw an error if any are used).  A command prompt will then show up, which implemented through [readline](https://www.man7.org/linux/man-pages/man3/readline.3.html), which was recommended by the subject.  This also allowed us to use the built-in history function.  Once a line has been inputted it checks for any unclosed quotes.  If it doesn't find any it sends the line to the lexer.
+The program is run without arguments (and will throw an error if any are used).  The program essentially comprises of two functions that call each other indefinitely.  The first, `minishell_loop` performs the functions of minishell, the other cleans up and prepares for the next line.  In `minishell_loop`, a command prompt shows up, which is implemented through [readline](https://www.man7.org/linux/man-pages/man3/readline.3.html).  This also allowed us to use the built-in history function.  Once a line has been inputted it checks for any unclosed quotes.  If it doesn't find any it sends the line to the lexer.
 
 ### The Lexer
 The lexer, also called the tokenizer, takes as the entered line as input. It then reads through the line word by word, using white space as delimiters.  First it checks wether or not the word is a token, ie: `|`, `<`, `<<`, `>`, or `>>`, and otherwise it assumes it is a word.  Which it then adds to the following linked list:
@@ -82,6 +82,9 @@ typedef struct s_simple_cmds
 The first thing the parser does is loop through the lexer list until it encounters a pipe.  It then takes all the nodes before the pipe as one command.  Then it checks for redirections, which it stores in the `*redirections` linked list, which holds both the token and the filename or delimiter in the case of a heredoc.  When the nodes are added to the `*redirections` list, they are deleted from the lexer list.  Next it checks if the first word is a builtin, in which case it stores a pointer to the corresponding function. The parser then combines all remaining words into a 2D array, to be passed to execve or the builtin later on.  
 
 ### Executor
+#### Single Command
+When the parser returns the simple_cmds table back to `minishell_loop`, a simple check is done to determine how many commands there are. It handles a single command differently than multiple.  This is because, like in bash, builtin commands, specifically `cd`, `exit`, `export`, and `unset` cannot be run in a separate process, as then the environmentally variable cannot be properly altered.  So if there is only one command, and it is one of the aforementioned builtins, it is executed and the function returns back to the `minishell_loop`.  
+#### Multiple Command
 
 
 ## Installation
