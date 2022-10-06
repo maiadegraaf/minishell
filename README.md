@@ -10,6 +10,22 @@
 
 *A mini recreation of bash.  Implementing previously learned concepts like file descriptors and processes.  Made with [Alfred Polycarpe](https://github.com/Alfredpoly).*
 
+## Table of Contents
+- [The Challenge](#the-challenge)
+  - [What Is Bash and How Does It Work?](#what-is-bash-and-how-does-it-work)
+- [Implementation](#implementation)
+  - [The Lexer](#the-lexer)
+  - [The Parser](#the-parser)
+  - [Builtins](#builtins)
+  - [Executor](#executor)
+    - [Expander](#expander)
+    - [Heredoc](#heredoc)
+    - [Single Command](#single-command)
+    - [Multiple Commands](#multiple-commands)
+  - [Reset](#reset)
+- [My Take Away](#my-take-away)
+- [Installation](#installation)
+
 ## The Challenge
 This was probably the biggest project I've done so far, as well as the first one I did as a group.  The goal was to create a mini version of bash, I say mini but it was still a huge project.  We had to learn how bash takes arguments, parses them, and executes them. We had to incorporate the following features:
 - Display a promt while waiting for a new commmand.
