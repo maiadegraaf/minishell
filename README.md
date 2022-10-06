@@ -93,16 +93,56 @@ As `>` and `file` are already deleted from the lexer list when they are added to
 This process is repeated until the end of the lexer list.
 
 ### Builtins
-We handle builtins, as discussed above through storing a function pointer in the `t_simple_cmds`.
+We handle builtins, as discussed above through storing a function pointer in the `t_simple_cmds`.  We achieve this by sending the the first word of a command to a function `builtin_arr` which loops through a static array of the different builtin functions.  If it finds a corresponding function it returns it to the parser, else it returns `NULL`.  For me, this was a way to learn about function pointers, which I had never worked with before. Also by determining the builtin at the parser stage, it greatly simplifies the executor as executing the builtin requires just two lines of code:
+``` C
+if (cmd->builtin != NULL)
+  cmd->builtin(tools, cmd);
+```
+The builtins we incorporated (as per the subject) are:
+| Command | Description |
+|---|---|
+|`cd`| Changes the working directory of the current shell execution environment and updates the environment variables `PWD` and `OLDPWD`. <br>Without arguments it change the working directory to the home directory.  <br>`-` changes the directory to the `OLDPWD`. |
+|`echo`| Displays a line of text<br>Optional flag `-n`: do not output the trailing newline|
+|`env` | Displays the environment variables|
+|`exit`| Terminates the shell.<br>Accepts optional argument `n`, which sets the exit status to `n`. |
+|`export`| Accepts arguments `name[=value]`.<br>Adds name to the environment.  Set's value of name to `value`.<br>If no argument is given, displays list of exported variables.|
+|`pwd`| Shows the current directory as an absolute path.|
+|`unset`|Accepts argument `name`. <br> Removes the variable `name` from the environment.|
 
 ### Executor
-When the parser returns the simple_cmds table back to `minishell_loop`, a simple check is done to determine how many commands there are, as they are handled by different functions.  However, with the exception of a few builtins, the commands are ultimately executed by the same function `handle_cmd`, which finds, and if successful, executes the command.
+When the parser returns the `t_simple_cmds` list back to `minishell_loop`, a simple check is done to determine how many commands there are, as they are handled by different functions.  However, with the exception of a few builtins, the commands are ultimately executed by the same function `handle_cmd`, which finds, and if successful, executes the command.
+
+#### Expander
+Before a node from `t_simple_cmds` is handled it is expanded.  The expander takes variables, identified by `$`, and replaces them with their value from the environment variables.  Such that `$USER` becomes `mgraaf`, and `$?` is replaced with the exit code.
+
+#### Heredoc
+Before creating a child process, the parent process executes heredocs.  We handled heredocs by creating a temporary file to write the input to.  The filename is stored in the related `t_simple_cmds` node so that it can be used to replace `STDIN`.  If there are multiple heredocs in a single `t_simple_cmds` node, then the file name ultimately stored would be that of the last heredoc. Using a file comes with limitations and security issues however we felt it was the simplest way dealing with it, and is close to how bash does it.
 
 #### Single Command
-Like in bash, builtin commands, specifically `cd`, `exit`, `export`, and `unset` cannot be run in a separate process, as then the environmentally variable cannot be properly altered.  If there is only one command, and it is one of the aforementioned builtins, it is executed in the parent process and the function returns back to the `minishell_loop`. If the command is not a builtin the single command function does create a new process in order to successfully execute it using execve.
+Like in bash, builtin commands, specifically `cd`, `exit`, `export`, and `unset` cannot be run in a separate process, as then the environmentally variable cannot be properly altered.  If there is only one command, and it is one of the aforementioned builtins, it is executed in the parent process and the function returns back to the `minishell_loop`. If the command is not a builtin the single command function creates a new process and sends the command to `handle_cmd`.
 
 #### Multiple Commands
-If there are multiple commands, 
+If there are multiple commands, the executor loops through each `t_simple_cmds` node and creates a child process for it using `fork()`, and  using `pipe()` creates a pipe in order to send the output of one command as the input to the next.  Checkout [pipex](https://github.com/maiadegraaf/pipex) to learn more about these functions.
+
+Essentially for each command the following happens:
+1. The command is expanded.
+2. A pipe is created with `end[0]` and `end[1]`, except the last command.
+3. Using `fork()` a child process is created. In the child process:
+   1. With the exception of the first command, `dup2` replaces `STDIN` with the output of the previous command.
+   2. With the exception of the last command, `dup2` replaces `STDOUT` with `end[1]`.
+   3. In the case of redirections, the `STDIN` or `STDOUT` is replaced with their respective file descriptors. 
+   4. `handle_cmd` finds and executes the command.
+4. `end[0]` is stored for the next command.
+
+The parent process then waits for all the children to end, then returns back to the `minishell_loop`.
+
+### Reset
+The program then does a full reset, freeing all nodes that have not been freed or deleted yet, and resets various variables so that the program can start again by displaying a new prompt.
+
+## My Take Away
+As previously mentioned, this was the first project I did in a group, which for me was an overall joyful experience.  This is a huge and daunting project and doing it alone would have been a massive challenge.  What I think we did well was dividing up the different parts of the project while also supporting each other if we ran into issues.  Although I wrote most of the lexer and parser, Alfred did contribute to both.  I also wrote the executor while Alfred worked on the builtins and expander.
+
+By far the hardest part of this project was handling all the edge cases.  Before handing in the project we had done our best to manage all of the ones we we're aware of, which was a considerable list.  Often by solving one case, we would break another part of our code.  The easiest way to handle an edge case was by replicating and understanding the way bash does it.  However in some cases it was a complete mystery which only made it more confusing.  Only once we handed in the project the first time did we discover how many edge cases there truly were as each person who evaluated us found new holes in our program.  In the end we passed the second time we handed it in, after correcting all the issues.
 
 ## Installation
 ### Clone the repository:
@@ -111,5 +151,32 @@ git clone https://github.com/maiadegraaf/minishell.git
 cd minishell
 make
 ```
+### Run Minishell
+```
+./minishell
+```
 
 ### Some commands to try:
+
+As this project is made to mimic bash, you can try any commands you normally would try in bash.
+
+If you really can't think of anything try some of these:
+```
+ls -la | grep a | tr 'a-z' 'A-Z' > file
+```
+
+```
+cat << EOF > file
+cat file
+```
+
+```
+ls | rev > file
+cat file
+rev file | cat
+```
+
+*to exit the program:*
+```
+exit
+```
