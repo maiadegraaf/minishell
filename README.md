@@ -79,15 +79,21 @@ typedef struct s_simple_cmds
 }	t_simple_cmds;
 ```
 
-The first thing the parser does is loop through the lexer list until it encounters a pipe.  It then takes all the nodes before the pipe as one command, and creates a node in the `t_simple_cmds` struct.  
+The first thing the parser does is loop through the lexer list until it encounters a pipe.  It then takes all the nodes before the pipe as one command, and creates a node in the `t_simple_cmds` struct.  If it doesn't find a pipe it takes all the (remaining) nodes as one command.
 
 ![parser 001](https://user-images.githubusercontent.com/68693691/194295673-3c9e17c3-d5ab-40dc-82ef-72b909f4acb3.png)
+*The parser takes the `t_lexer` list (left) and converts it into the `t_simple_cmds` list (right)*
 
+For each command it first checks for redirections, which it stores in the `*redirections` linked list, which holds both the token and the filename or delimiter in the case of a heredoc.  When the nodes are added to the `*redirections` list, they are deleted from the lexer list.  Next it checks if the first word is a builtin, in which case it stores a function pointer to the corresponding function, more on this bellow. As the redirections have been removed from the lexer list, the parser can easily combines all remaining words into a 2D array, which is a required execve argument.  It also makes it easier to handle situations where the words may be seperated by redirections, for example:
+```
+cat > file -e
+```
+As `>` and `file` are already deleted from the lexer list when they are added to the redirections list, all that remains is `cat` and `-e`.  Which then can easily be added into an array.
 
-Then it checks for redirections, which it stores in the `*redirections` linked list, which holds both the token and the filename or delimiter in the case of a heredoc.  When the nodes are added to the `*redirections` list, they are deleted from the lexer list.  Next it checks if the first word is a builtin, in which case it stores a function pointer to the corresponding function, more on this bellow. As the redirections have been removed from the lexer list, the parser can easily combines all remaining words into a 2D array, which is a required execve argument.  The same process is applied to create 
+This process is repeated until the end of the lexer list.
 
 ### Builtins
-We handle builtins, as discussed above through storing a function pointer in the command table.  
+We handle builtins, as discussed above through storing a function pointer in the `t_simple_cmds`.
 
 ### Executor
 When the parser returns the simple_cmds table back to `minishell_loop`, a simple check is done to determine how many commands there are, as they are handled by different functions.  However, with the exception of a few builtins, the commands are ultimately executed by the same function `handle_cmd`, which finds, and if successful, executes the command.
