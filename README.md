@@ -79,10 +79,19 @@ typedef struct s_simple_cmds
 }	t_simple_cmds;
 ```
 
-The first thing the parser does is loop through the lexer list until it encounters a pipe.  It then takes all the nodes before the pipe as one command.  Then it checks for redirections, which it stores in the `*redirections` linked list, which holds both the token and the filename or delimiter in the case of a heredoc.  When the nodes are added to the `*redirections` list, they are deleted from the lexer list.  Next it checks if the first word is a builtin, in which case it stores a pointer to the corresponding function. The parser then combines all remaining words into a 2D array, to be passed to execve or the builtin later on.  
+The first thing the parser does is loop through the lexer list until it encounters a pipe.  It then takes all the nodes before the pipe as one command, and creates a node in the `t_simple_cmds` struct.  
+
+```
+[ls -la] | 
+```
+
+Then it checks for redirections, which it stores in the `*redirections` linked list, which holds both the token and the filename or delimiter in the case of a heredoc.  When the nodes are added to the `*redirections` list, they are deleted from the lexer list.  Next it checks if the first word is a builtin, in which case it stores a function pointer to the corresponding function, more on this bellow. As the redirections have been removed from the lexer list, the parser can easily combines all remaining words into a 2D array, which is a required execve argument.  The same process is applied to create 
+
+### Builtins
+We handle builtins, as discussed above through storing a function pointer in the command table.  
 
 ### Executor
-When the parser returns the simple_cmds table back to `minishell_loop`, a simple check is done to determine how many commands there are, as they are handled by different functions.  However, with the exception of a few builtins, the commands are ultimately executed by the same function.
+When the parser returns the simple_cmds table back to `minishell_loop`, a simple check is done to determine how many commands there are, as they are handled by different functions.  However, with the exception of a few builtins, the commands are ultimately executed by the same function `handle_cmd`, which finds, and if successful, executes the command.
 
 #### Single Command
 Like in bash, builtin commands, specifically `cd`, `exit`, `export`, and `unset` cannot be run in a separate process, as then the environmentally variable cannot be properly altered.  If there is only one command, and it is one of the aforementioned builtins, it is executed in the parent process and the function returns back to the `minishell_loop`. If the command is not a builtin the single command function does create a new process in order to successfully execute it using execve.
