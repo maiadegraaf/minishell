@@ -81,9 +81,8 @@ typedef struct s_simple_cmds
 
 The first thing the parser does is loop through the lexer list until it encounters a pipe.  It then takes all the nodes before the pipe as one command, and creates a node in the `t_simple_cmds` struct.  
 
-```
-[ls -la] | 
-```
+![parser 001](https://user-images.githubusercontent.com/68693691/194295673-3c9e17c3-d5ab-40dc-82ef-72b909f4acb3.png)
+
 
 Then it checks for redirections, which it stores in the `*redirections` linked list, which holds both the token and the filename or delimiter in the case of a heredoc.  When the nodes are added to the `*redirections` list, they are deleted from the lexer list.  Next it checks if the first word is a builtin, in which case it stores a function pointer to the corresponding function, more on this bellow. As the redirections have been removed from the lexer list, the parser can easily combines all remaining words into a 2D array, which is a required execve argument.  The same process is applied to create 
 
