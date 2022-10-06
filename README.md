@@ -160,20 +160,22 @@ make
 
 As this project is made to mimic bash, you can try any commands you normally would try in bash.
 
-If you really can't think of anything try some of these:
+If you really can't think of anything try some of the following.  You do have to enter each line separately as the program doesn't handle new lines.
 ```
-ls -la | grep a | tr 'a-z' 'A-Z' > file
+ls -la | grep a | tr 'a-z' 'A-Z'
 ```
 
 ```
 cat << EOF > file
 cat file
+rm file
 ```
 
 ```
 ls | rev > file
 cat file
 rev file | cat
+rm file
 ```
 
 *to exit the program:*
